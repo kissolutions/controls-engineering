@@ -1,0 +1,45 @@
+# KIS Controls Engineering
+
+**Repository:** `kissolutions/controls-engineering`  
+**Status:** Architecture scaffold / proposed domain lifecycle — not an approved production process
+
+This repository defines **controls engineering**, from contractual source intake and scope identification through equipment/device/point inventory, design basis, functional narrative, controller and network architecture, submittals, field verification, and closeout.
+
+It does **not** own program logic patterns or generation of controller code. Those are the responsibility of the sibling `kissolutions/bas-logic-gen` team and package.
+
+## Package context
+
+| Source / package | Authority |
+|---|---|
+| [knowledgebase_wikijs](https://github.com/kissolutions/knowledgebase_wikijs) | Shared KIS engineering framework, cross-domain vocabulary, knowledge taxonomy, generic processes and authoritative physical device facts |
+| **controls-engineering** (this repository) | Domain-specific controls lifecycle, canonical engineering data contracts, work products, intake/verification processes, review gates and engineering-to-logic interface |
+| [bas-logic-gen](https://github.com/kissolutions/bas-logic-gen) | Vendor-neutral behavior patterns, platform code archetypes, program construction, logic verification and tests |
+| [lv-lighting-design](https://github.com/kissolutions/lv-lighting-design) | Independent LV lighting domain; a beta-tested example of source reconciliation, physical-first extraction, editable review, accepted configurations and milestone packages |
+
+The parent [KIS Systems Engineering Framework v1.0](https://github.com/kissolutions/knowledgebase_wikijs/blob/main/governance-and-doctrine/systems-engineering-framework-v1.md) supplies the five-phase lifecycle, process/work-product/milestone distinction, evidence and requirements terminology, and snapshot/acceptance/baseline contracts.
+
+## Start here
+
+1. [Agent entry point](CLAUDE.md)
+2. [Repository boundaries](docs/governance-and-doctrine/repository-boundary.md)
+3. [Domain package contract](docs/governance-and-doctrine/domain-package-contract.md)
+4. [Controls engineering lifecycle — proposed](docs/design-playbooks/controls-engineering-lifecycle.md)
+5. [Canonical engineering vocabulary — proposed](docs/ontology/canonical-model/README.md)
+6. [M1 Source & Scope Intake](docs/design-playbooks/processes/m1-source-scope-intake.md)
+7. [M2 Engineering Inventory](docs/design-playbooks/processes/m2-engineering-inventory.md)
+8. [Engineering-to-logic handoff](docs/interfaces/engineering-to-logic-handoff.md)
+9. [Migration plan](docs/governance-and-doctrine/legacy-bas-playbook-migration.md)
+
+## Working principles
+
+- **Facts before engineering proposals:** record exactly what the source establishes; keep unsupported values unresolved, not inferred.
+- **One authoritative project record:** explicitly designate the editable project workbook/registers. JSON/XML, schedules, generated PDF markups and infographics are derived unless formally named the primary editable record.
+- **Separate identity from display:** source tags and presentation labels may change; canonical IDs and reconciled annotation references persist.
+- **Separate scope from physical existence:** record work actions, responsibility, scope disposition, interfaces and existing condition without pretending all observed equipment is in KIS's work scope.
+- **Preserve reviewed work:** engineering acceptance protects selected attributes/configurations, while snapshots and configuration baselines preserve entire identified states; they are distinct acts.
+- **Independent source verification:** passing validators doesn't establish that all contractual responsibilities or physical points were found.
+- **Retain legitimate parallelism:** networking, narratives, drawing tracks and at-risk logic handoff may proceed from properly identified, versioned inputs with change-impact tracking.
+
+## Maturity
+
+This scaffold is a **proposal**, intended to be piloted and refined using a partially completed controls project before schemas, editable-register mappings or cross-package interfaces become binding. Current `bas-logic-gen` content remains where it is until migration is reviewed. No real-project source documents, credentials or confidential deliverables should be committed to this public repository.
