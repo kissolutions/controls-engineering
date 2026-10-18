@@ -1,0 +1,29 @@
+# Do not publish client-specific engineering sources or generated project deliverables
+projects/
+project-data/
+private/
+secrets/
+*.env
+.env*
+*.pfx
+*.p12
+*.key
+*.pem
+*.kdbx
+*.eml
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+.DS_Store
+Thumbs.db
+# Project-instance spreadsheets, PDFs, CAD and archives are never checked in by default.
+*.xlsx
+*.xlsm
+*.xls
+*.pdf
+*.dwg
+*.dxf
+*.rvt
+*.zip
+# Use approved synthetic fixtures under examples/ if a file exception is needed.
