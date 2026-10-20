@@ -43,3 +43,12 @@ The parent [KIS Systems Engineering Framework v1.0](https://github.com/kissoluti
 ## Maturity
 
 This scaffold is a **proposal**, intended to be piloted and refined using a partially completed controls project before schemas, editable-register mappings or cross-package interfaces become binding. Current `bas-logic-gen` content remains where it is until migration is reviewed. No real-project source documents, credentials or confidential deliverables should be committed to this public repository.
+
+## Official workbook templates
+
+The following owner-accepted v1.0 blank workbook structures are the official templates for new controls-engineering projects:
+
+- [Project Engineering Register (PER) v1.0](templates/project-engineering-register/PROJECT_PER_v1.0.xlsx) — project-level scopes, work packages, requirements/evidence, RFIs, engineering issues, operational actions, progress and management views.
+- [Equipment / Device / Points v1.0](templates/equipment-device-points/Equipment_Device_Points_Template_v1.0.xlsx) — standalone physical equipment, device and point inventory deliverable, using stable IDs and cross-references to the PER.
+
+**Initialization:** Copy each blank template into approved project storage; never populate the repository template with client/project data. Designate the project copies and revisions in the project source/baseline register. Preserve the provided identity, validation and relationship fields. Engineering contents require project-specific source reconciliation and review; accepting the blank template does not accept any project engineering.
