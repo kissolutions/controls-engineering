@@ -44,3 +44,12 @@ The initial lifecycle documents are **proposals for pilot review**, not automati
 - [Legacy migration](docs/governance-and-doctrine/legacy-bas-playbook-migration.md)
 
 Treat all M1–M6 labels in these initial files as **provisional mappings**, pending pilot/owner review. Do not overwrite the independently versioned legacy controls stages in bas-logic-gen.
+
+## Official workbook initialization
+
+Before opening a new project PER or engineering inventory, retrieve the versioned templates from this repository (rather than reconstructing the workbook structure):
+
+- `templates/project-engineering-register/PROJECT_PER_v1.0.xlsx` — canonical project-level register / PM-PE work management views.
+- `templates/equipment-device-points/Equipment_Device_Points_Template_v1.0.xlsx` — independent EQUIPMENT / DEVICE LIST / IO LIST deliverable.
+
+Instantiate copies in authorized project storage and identify those copies as authoritative for that project. Never write live project data back into the framework templates. Relate inventory rows to PER scopes, work packages, source records and engineering dispositions through stable IDs; unresolved relationships remain unverified, not invented. Project-specific progress, issues, and acceptance do not flow from the generic template.
