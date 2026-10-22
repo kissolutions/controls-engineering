@@ -19,6 +19,10 @@ Structure revision, owner-accepted after a pilot on a live project (pilot data n
 **Scope progress is derived**
 - `SCOPE PROGRESS` tab removed. `SCOPE DASHBOARD` derives per-column scope progress as the equal-weight average over WPs whose Primary Scope is that scope (blank and `--` excluded), plus WPs gate complete and a blocked-WP count. The scope Blocked? (X) remains human-managed.
 
+**Scope work actions**
+- New `SCOPES` column R `Work Actions` carries the M1 action vocabulary (furnish, install, remove, replace, modify, rewire, reprogram, integrate, monitor, test, document, coordinate). Warning-style dropdown: pick one or type several separated by `; `. Blank = not yet established.
+- Removed the action-list dropdown that v1.0 had on `SCOPES` column C (Functional / Drawing Boundary, a free-text field).
+
 **Other**
 - `RFI REGISTER` Primary WP dropdown uses `ValidWorkPackageIDs` (survives Excel round trips).
 - `REGISTRY GUIDE` rewritten as generic guidance, including when to split work packages and the rule for verbatim names (file, folder, document title and drawing-label quotes are copied exactly).
