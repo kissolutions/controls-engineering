@@ -46,9 +46,9 @@ This scaffold is a **proposal**, intended to be piloted and refined using a part
 
 ## Official workbook templates
 
-The following owner-accepted v1.0 blank workbook structures are the official templates for new controls-engineering projects:
+The following owner-accepted blank workbook structures are the official templates for new controls-engineering projects:
 
-- [Project Engineering Register (PER) v1.0](templates/project-engineering-register/PROJECT_PER_v1.0.xlsx) — project-level scopes, work packages, requirements/evidence, RFIs, engineering issues, operational actions, progress and management views.
+- [Project Engineering Register (PER) v1.1](templates/project-engineering-register/PROJECT_PER_v1.1.xlsx) — project-level scopes, work package definitions and progress, requirements/evidence, RFIs, engineering issues, operational actions and management views. See the [PER template changelog](templates/project-engineering-register/CHANGELOG.md).
 - [Equipment / Device / Points v1.0](templates/equipment-device-points/Equipment_Device_Points_Template_v1.0.xlsx) — standalone physical equipment, device and point inventory deliverable, using stable IDs and cross-references to the PER.
 
 **Initialization:** Copy each blank template into approved project storage; never populate the repository template with client/project data. Designate the project copies and revisions in the project source/baseline register. Preserve the provided identity, validation and relationship fields. Engineering contents require project-specific source reconciliation and review; accepting the blank template does not accept any project engineering.
