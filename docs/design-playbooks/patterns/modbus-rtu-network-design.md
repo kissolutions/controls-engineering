@@ -36,3 +36,11 @@ Use project engineering registers as the authoritative data source where availab
 Preserve gateway configuration backup, device map revisions, tested request examples, expected response values, and as-built physical order. Link the Modbus Communications Troubleshooting playbook.
 
 **Status:** Draft; requires field pilot and engineering acceptance.
+
+## Reusable engineering calculators
+
+- [Modbus RTU Network Performance](https://github.com/kissolutions/knowledgebase_wikijs/blob/draft/modbus-communications/engineering/calculators/communications/modbus-rtu-network-performance.md) — polling time, utilization and minimum baud rate.
+- [Modbus RTU Timeout and Retry Impact](https://github.com/kissolutions/knowledgebase_wikijs/blob/draft/modbus-communications/engineering/calculators/communications/modbus-rtu-timeout-retry-impact.md) — degraded scan time.
+- [RS-485 Electrical Loading](https://github.com/kissolutions/knowledgebase_wikijs/blob/draft/modbus-communications/engineering/calculators/communications/rs485-electrical-loading.md) — electrical receiver loading.
+
+Use the canonical calculator pages for equations and assumptions; preserve project-specific inputs and results in project engineering data.
