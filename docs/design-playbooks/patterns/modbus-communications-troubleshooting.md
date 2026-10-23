@@ -74,3 +74,11 @@ An exception shows a Modbus-speaking endpoint answered, **not necessarily the in
 All required devices respond; decoded values are plausible; normal polling cycle meets design needs; no unexpected exceptions/timeouts over an agreed observation period; saved as-left gateway configuration and topology match field installation.
 
 **Status:** Draft; pilot with an actual gateway/sensor network before canonical release.
+
+## Reusable engineering calculators
+
+- [Modbus RTU Network Performance](https://github.com/kissolutions/knowledgebase_wikijs/blob/draft/modbus-communications/engineering/calculators/communications/modbus-rtu-network-performance.md) — polling time, utilization and minimum baud rate.
+- [Modbus RTU Timeout and Retry Impact](https://github.com/kissolutions/knowledgebase_wikijs/blob/draft/modbus-communications/engineering/calculators/communications/modbus-rtu-timeout-retry-impact.md) — degraded scan time.
+- [RS-485 Electrical Loading](https://github.com/kissolutions/knowledgebase_wikijs/blob/draft/modbus-communications/engineering/calculators/communications/rs485-electrical-loading.md) — electrical receiver loading.
+
+Use the canonical calculator pages for equations and assumptions; preserve project-specific inputs and results in project engineering data.
