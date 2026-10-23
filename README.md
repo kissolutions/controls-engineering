@@ -48,7 +48,17 @@ This scaffold is a **proposal**, intended to be piloted and refined using a part
 
 The following owner-accepted blank workbook structures are the official templates for new controls-engineering projects:
 
-- [Project Engineering Register (PER) v1.1](templates/project-engineering-register/PROJECT_PER_v1.1.xlsx) — project-level scopes, work package definitions and progress, requirements/evidence, RFIs, engineering issues, operational actions and management views. See the [PER template changelog](templates/project-engineering-register/CHANGELOG.md).
+- [Project Engineering Register (PER) v1.2](templates/project-engineering-register/PROJECT_PER_v1.2.xlsx) — project-level scopes, work package definitions and progress, requirements/evidence, RFIs, engineering issues, operational actions and management views. See the [PER template changelog](templates/project-engineering-register/CHANGELOG.md).
 - [Equipment / Device / Points v1.0](templates/equipment-device-points/Equipment_Device_Points_Template_v1.0.xlsx) — standalone physical equipment, device and point inventory deliverable, using stable IDs and cross-references to the PER.
 
 **Initialization:** Copy each blank template into approved project storage; never populate the repository template with client/project data. Designate the project copies and revisions in the project source/baseline register. Preserve the provided identity, validation and relationship fields. Engineering contents require project-specific source reconciliation and review; accepting the blank template does not accept any project engineering.
+
+## Controls design patterns (draft)
+
+- [ATS/generator monitoring interfaces](docs/design-playbooks/patterns/ats-generator-status-monitoring.md)
+- [CHW primary/secondary plant architecture](docs/design-playbooks/patterns/chw-primary-secondary-plant.md)
+- [HVAC PLC staged availability](docs/design-playbooks/patterns/hvac-plc-staged-availability.md)
+- [Field as-found evidence pattern](docs/design-playbooks/patterns/as-found-verification.md)
+- [PLC point ownership and I/O sizing contract — candidate](docs/engineering-data/point-allocation-and-counting-proposal.md)
+
+These design patterns are **draft decision aids**, not project requirements or validated controller selections. Document source, assumptions, alternatives and owner approval in each project PER.

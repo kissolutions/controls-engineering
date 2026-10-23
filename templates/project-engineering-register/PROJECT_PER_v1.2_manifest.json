@@ -1,0 +1,17 @@
+{
+  "version": "v1.2",
+  "date": "2026-10-23",
+  "status": "owner-accepted blank template structure; no project content acceptance",
+  "filename": "PROJECT_PER_v1.2.xlsx",
+  "sha256": "061cd9373310e354a0b0e6fbe8752496f4aab7b3feff2cf34c599592e814e695",
+  "bytes": 264659,
+  "sheets": 20,
+  "formulas_preserved": 15795,
+  "styled_cells_preserved": 26083,
+  "validations_preserved": 29,
+  "nonproject_exceptions": [
+    "PUNCH LIST/RFI LEGACY built-in formula seeds, thresholds and Open defaults",
+    "SB1/SB2 synthetic formula tests"
+  ],
+  "publisher_note": "No client/project data in template; compare source SHA-256 before publishing; formulas preserved but Excel recalc required after opening."
+}

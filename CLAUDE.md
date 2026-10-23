@@ -49,7 +49,11 @@ Treat all M1–M6 labels in these initial files as **provisional mappings**, pen
 
 Before opening a new project PER or engineering inventory, retrieve the versioned templates from this repository (rather than reconstructing the workbook structure):
 
-- `templates/project-engineering-register/PROJECT_PER_v1.1.xlsx` — canonical project-level register / PM-PE work management views (changes: `templates/project-engineering-register/CHANGELOG.md`).
+- `templates/project-engineering-register/PROJECT_PER_v1.2.xlsx` — canonical project-level register / PM-PE work management views (changes: `templates/project-engineering-register/CHANGELOG.md`).
 - `templates/equipment-device-points/Equipment_Device_Points_Template_v1.0.xlsx` — independent EQUIPMENT / DEVICE LIST / IO LIST deliverable.
 
 Instantiate copies in authorized project storage and identify those copies as authoritative for that project. Never write live project data back into the framework templates. Relate inventory rows to PER scopes, work packages, source records and engineering dispositions through stable IDs; unresolved relationships remain unverified, not invented. Project-specific progress, issues, and acceptance do not flow from the generic template.
+
+## Architecture / plant takeoff guardrails
+
+When sizing PLC, remote I/O, networks or gateways, separate the **signal source**, **physical termination**, **I/O resource**, **logic owner**, **enclosure**, and **Work Package**. Counts must distinguish hardwired base, excluded, conditional and network points. Never conflate backup CPU, network redundancy, hot backup and certified redundant-controller capabilities. See [`docs/engineering-data/point-allocation-and-counting-proposal.md`](docs/engineering-data/point-allocation-and-counting-proposal.md) and draft plant patterns in [`docs/design-playbooks/patterns/`](docs/design-playbooks/patterns/).

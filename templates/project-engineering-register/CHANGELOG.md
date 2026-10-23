@@ -2,6 +2,10 @@
 
 Blank workbook template for the Project Engineering Register (PER). Copy it into authorized project storage before use; never enter project data in this repository copy.
 
+## v1.2 — 2026-10-23
+
+Owner-requested blank template promoted from a revised working workbook. **Project-specific data was removed prior to commit.** The 20-sheet workbook preserves the submitted dashboard and strategic column changes, spreadsheet color/fill conventions, 15,795 formulas, 26,083 styled cells and 29 data-validation rules. The REGISTRY GUIDE was rewritten generically. Synthetic SB1/SB2 formula tests, preconfigured legacy threshold helpers and default Open status remain as test/schema mechanics, **not project records**. The v1.1 workbook is retained for version history. See `PROJECT_PER_v1.2_manifest.json`; run `scripts/validate_blank_per.py` before modifying or releasing another template. Acceptance here covers template structure only, not engineering data or field behavior.
+
 ## v1.1 — 2026-10-22
 
 Structure revision, owner-accepted after a pilot on a live project (pilot data not included). Minor version: the register contract, ID schemes and record tabs are unchanged; the work package and progress views changed.

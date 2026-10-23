@@ -26,3 +26,7 @@ page_status: draft
 **Limits:** no live SharePoint/Drive link is a substitute for authorized file contents; no scope entry is auto-approved solely because it appears in a contractor's preliminary takeoff. Incomplete source access is a documented limitation, not permission to fill gaps.
 
 **Process evidence:** process revision; source/register input revisions; project/scope; output register/review package revisions; reviewer/findings/disposition; approved tailoring.
+
+## Standard project register template
+
+Initialize a new project with [`PROJECT_PER_v1.2.xlsx`](../../../templates/project-engineering-register/PROJECT_PER_v1.2.xlsx); do not retype/rebuild the register schema or copy a prior project workbook. The published template is blank; the project copy's populated source, scope, issues and activity records remain provisional until reviewed.
