@@ -33,5 +33,16 @@ def validate(path):
     if len(issues)>30:print(' - and',len(issues)-30,'more')
     return int(bool(issues))
 if __name__=='__main__':
-    if len(sys.argv)!=2:sys.exit('Usage: validate_blank_per.py PATH.xlsx')
-    sys.exit(validate(sys.argv[1]))
+    if len(sys.argv)==2:
+        candidate=sys.argv[1]
+    elif len(sys.argv)==1:
+        folder=Path(__file__).resolve().parent.parent/'templates'/'project-engineering-register'
+        versions=[]
+        for file in folder.glob('PROJECT_PER_v*.xlsx'):
+            matched=re.fullmatch(r'PROJECT_PER_v(\d+)\.(\d+)\.xlsx',file.name)
+            if matched:versions.append(((int(matched.group(1)),int(matched.group(2))),file))
+        if not versions:sys.exit('No versioned PER template found')
+        candidate=max(versions)[1]
+    else:sys.exit('Usage: validate_blank_per.py [PATH.xlsx]')
+    sys.exit(validate(candidate))
+

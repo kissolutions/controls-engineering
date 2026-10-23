@@ -1,0 +1,27 @@
+name: Validate latest blank PER template
+on:
+  pull_request:
+    paths:
+      - 'templates/project-engineering-register/**'
+      - 'scripts/validate_blank_per.py'
+      - '.github/workflows/validate-per-template.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'templates/project-engineering-register/**'
+      - 'scripts/validate_blank_per.py'
+      - '.github/workflows/validate-per-template.yml'
+jobs:
+  blank-master:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validator
+        run: python -m pip install 'openpyxl==3.1.5'
+      - name: Check latest version for project data
+        run: python scripts/validate_blank_per.py

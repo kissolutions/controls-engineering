@@ -62,3 +62,5 @@ The following owner-accepted blank workbook structures are the official template
 - [PLC point ownership and I/O sizing contract — candidate](docs/engineering-data/point-allocation-and-counting-proposal.md)
 
 These design patterns are **draft decision aids**, not project requirements or validated controller selections. Document source, assumptions, alternatives and owner approval in each project PER.
+
+**Proposal tracking:** [P1–P12 October 2026 disposition](docs/governance-and-doctrine/change-proposal-disposition-2026-10-23.md).
