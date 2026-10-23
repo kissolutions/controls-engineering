@@ -1,48 +1,91 @@
 #!/usr/bin/env python3
-"""Check that a published PER is a BLANK initialization template (not a project archive)."""
-import re,sys
+"""Verify a released blank PER template, rather than a populated project copy."""
+import re
+import sys
+import zipfile
 from pathlib import Path
 from openpyxl import load_workbook
-DATA={'DASHBOARD':3,'SCOPE DASHBOARD':5,'WP PROGRESS':2,'BLOCKED ITEMS REPORT':5,'SCOPES':5,'WORK PACKAGES':2,'RFI LEGACY':3,'SYSTEM MODEL':5,'RFI REGISTER':5,'ISSUES':5,'PUNCH LIST':3,'SOURCES':5,'RECORDS':5,'LINKS':5,'CHANGE LOG':5,'BASELINES':5,'INTAKE QUEUE':5}
-TEST={'REGISTRY GUIDE','SB1 FORMULA TESTS','SB2 CHECKS'}
-LEAK=re.compile(r'https?://(?:drive|docs)\.google\.com/|file:///|\\\\[^\\]',re.I)
-def seed(s,c):
-    if s=='RFI LEGACY':return (c.column in (18,19,20) and c.value==1) or (c.coordinate=='B3' and c.value==1)
-    if s=='PUNCH LIST':return (c.column in (20,21,22) and c.value==1) or (c.column==17 and c.value=='Open') or (c.coordinate=='B3' and c.value==1)
+
+SHEETS = [
+    "DASHBOARD", "SCOPE DASHBOARD", "WP PROGRESS", "BLOCKED ITEMS REPORT",
+    "SCOPES", "WORK PACKAGES", "SYSTEM MODEL", "RFI REGISTER", "ISSUES",
+    "PUNCH LIST", "REGISTRY GUIDE", "SOURCES", "RECORDS", "LINKS",
+    "CHANGE LOG", "BASELINES", "INTAKE QUEUE",
+]
+START = {
+    "DASHBOARD": 3, "SCOPE DASHBOARD": 5, "WP PROGRESS": 2,
+    "BLOCKED ITEMS REPORT": 5, "SCOPES": 5, "WORK PACKAGES": 2,
+    "SYSTEM MODEL": 5, "RFI REGISTER": 5, "ISSUES": 5, "PUNCH LIST": 3,
+    "SOURCES": 5, "RECORDS": 5, "LINKS": 5, "CHANGE LOG": 5,
+    "BASELINES": 5, "INTAKE QUEUE": 5,
+}
+REMOVED = ("RFI LEGACY", "SB1 FORMULA TESTS", "SB2 CHECKS")
+LEAK = re.compile(r"https?://(?:drive|docs)\.google\.com/|file:///|\\\\[^\\]", re.I)
+
+def intentional_default(sheet, cell):
+    if sheet == "PUNCH LIST":
+        return ((cell.column in (20, 21, 22) and cell.value == 1)
+                or (cell.column == 17 and cell.value == "Open")
+                or (cell.coordinate == "B3" and cell.value == 1))
     return False
+
 def validate(path):
-    w=load_workbook(path);issues=[];fcount=0
-    for name in (set(DATA)|TEST)-set(w.sheetnames):issues.append('Missing sheet '+name)
-    if w._external_links:issues.append('External workbook links remain')
+    issues = []
+    w = load_workbook(path)
+    if w.sheetnames != SHEETS:
+        issues.append("Incorrect sheet set/order; expected 17 operational worksheets")
+    if w._external_links:
+        issues.append("External workbook link remains")
+    try:
+        with zipfile.ZipFile(path) as z:
+            damaged = z.testzip()
+            if damaged:
+                issues.append(f"Damaged ZIP member: {damaged}")
+    except Exception as exc:
+        issues.append(f"Unreadable XLSX ZIP: {exc}")
+    formulas = 0
     for s in w:
         for row in s:
             for c in row:
-                if c.value is None:continue
-                if c.data_type=='f':
-                    fcount+=1
-                    if '#REF!' in c.value:issues.append(s.title+'!'+c.coordinate+' broken formula')
+                if c.value is None:
                     continue
-                if s.title in DATA and c.row>=DATA[s.title] and not seed(s.title,c):issues.append(s.title+'!'+c.coordinate+' contains nonformula data')
-                if LEAK.search(str(c.value)) or c.hyperlink:issues.append(s.title+'!'+c.coordinate+' private link')
-                if c.comment and s.title in DATA:issues.append(s.title+'!'+c.coordinate+' comment')
-    if w.properties.lastModifiedBy not in (None,'KIS Solutions'):issues.append('Personal author metadata')
-    if fcount<10000:issues.append('Unexpected formula loss '+str(fcount))
-    if w['DASHBOARD']['U2'].value!='Engineering Scope / Scope of Work':issues.append('Dashboard v1.2 layout mismatch')
-    print(('FAIL' if issues else 'PASS'),Path(path).name, fcount,'formulas')
-    for s in issues[:30]:print(' -',s)
-    if len(issues)>30:print(' - and',len(issues)-30,'more')
+                value = str(c.value)
+                if any(tag in value for tag in REMOVED):
+                    issues.append(f"{s.title}!{c.coordinate} references removed worksheet")
+                if c.data_type == "f":
+                    formulas += 1
+                    if "#REF!" in value:
+                        issues.append(f"{s.title}!{c.coordinate} broken formula")
+                    continue
+                if s.title in START and c.row >= START[s.title] and not intentional_default(s.title, c):
+                    issues.append(f"{s.title}!{c.coordinate} nonformula project data")
+                if LEAK.search(value) or c.hyperlink:
+                    issues.append(f"{s.title}!{c.coordinate} leaked path or hyperlink")
+                if c.comment and s.title in START:
+                    issues.append(f"{s.title}!{c.coordinate} has a comment")
+    for name in w.defined_names.values():
+        if any(tag in str(name.attr_text) for tag in REMOVED):
+            issues.append(f"Defined name {name.name} references removed sheet")
+    if formulas != 14127:
+        issues.append(f"Unexpected formula count {formulas}; v1.2 distribution has 14127")
+    if sum(len(s.data_validations.dataValidation) for s in w) != 29:
+        issues.append("Unexpected number of data validation rules")
+    if w["DASHBOARD"]["U2"].value != "Engineering Scope / Scope of Work":
+        issues.append("Dashboard v1.2 header mismatch")
+    if w.properties.creator not in (None, "KIS Solutions") or w.properties.lastModifiedBy not in (None, "KIS Solutions"):
+        issues.append("Personal editor/creator property remains")
+    print(("FAIL" if issues else "PASS"), Path(path).name, len(w.sheetnames), "sheets,", formulas, "formulas")
+    for issue in issues[:30]:
+        print("  -", issue)
+    if len(issues) > 30:
+        print(f"  ... and {len(issues)-30} additional findings")
     return int(bool(issues))
-if __name__=='__main__':
-    if len(sys.argv)==2:
-        candidate=sys.argv[1]
-    elif len(sys.argv)==1:
-        folder=Path(__file__).resolve().parent.parent/'templates'/'project-engineering-register'
-        versions=[]
-        for file in folder.glob('PROJECT_PER_v*.xlsx'):
-            matched=re.fullmatch(r'PROJECT_PER_v(\d+)\.(\d+)\.xlsx',file.name)
-            if matched:versions.append(((int(matched.group(1)),int(matched.group(2))),file))
-        if not versions:sys.exit('No versioned PER template found')
-        candidate=max(versions)[1]
-    else:sys.exit('Usage: validate_blank_per.py [PATH.xlsx]')
-    sys.exit(validate(candidate))
 
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        source = Path(sys.argv[1])
+    elif len(sys.argv) == 1:
+        source = Path(__file__).resolve().parent.parent / "templates/project-engineering-register/PROJECT_PER_v1.2.xlsx"
+    else:
+        sys.exit("Usage: validate_blank_per.py [PROJECT_PER_v1.2.xlsx]")
+    sys.exit(validate(source))

@@ -4,6 +4,6 @@
 
 Before beginning a project, copy the master file to project-controlled storage and create a project revision. Never record project scope, client names, network/serial data, customer documents, personal links, prices or source extracts in this public framework. Engineering acceptance, progress and baselines are not granted by using a template.
 
-v1.2 retains the revised DASHBOARD and SCOPE DASHBOARD, separated WORK PACKAGES and WP PROGRESS, independent PUNCH LIST / ISSUES / RFI REGISTER, traceability registers and two **synthetic** formula-test tabs. The `REGISTRY GUIDE` documents the generic data contract.
+v1.2 contains **17 operational sheets**, retaining revised dashboards, separate WORK PACKAGES / WP PROGRESS, the independent PUNCH LIST / ISSUES / RFI REGISTER and traceability registers. The retired hidden `RFI LEGACY` worksheet and two synthetic test tabs are **not** included. Their [QA cases](tests/PER_v1.2_QA.md) and [optional project consistency script](../../scripts/check_project_per.py) remain in this framework, rather than project copies. The `REGISTRY GUIDE` documents the generic data contract.
 
 **Validate:** `python scripts/validate_blank_per.py templates/project-engineering-register/PROJECT_PER_v1.2.xlsx` (requires `openpyxl`). See [changelog](CHANGELOG.md) and [manifest](PROJECT_PER_v1.2_manifest.json).

@@ -3,15 +3,24 @@
   "date": "2026-10-23",
   "status": "owner-accepted blank template structure; no project content acceptance",
   "filename": "PROJECT_PER_v1.2.xlsx",
-  "sha256": "061cd9373310e354a0b0e6fbe8752496f4aab7b3feff2cf34c599592e814e695",
-  "bytes": 264659,
-  "sheets": 20,
-  "formulas_preserved": 15795,
-  "styled_cells_preserved": 26083,
+  "sha256": "d9b61ad2a3d99c2ffdef9d4b181388c8fac63b000354f8c39b1a2fea8c082720",
+  "bytes": 225922,
+  "sheets": 17,
+  "formulas_preserved": 14127,
+  "styled_cells_preserved": 19147,
   "validations_preserved": 29,
-  "nonproject_exceptions": [
-    "PUNCH LIST/RFI LEGACY built-in formula seeds, thresholds and Open defaults",
-    "SB1/SB2 synthetic formula tests"
+  "removed_auxiliary_sheets": [
+    "RFI LEGACY",
+    "SB1 FORMULA TESTS",
+    "SB2 CHECKS"
   ],
-  "publisher_note": "No client/project data in template; compare source SHA-256 before publishing; formulas preserved but Excel recalc required after opening."
+  "validation_notes": [
+    "No operational formulas/reference ranges dependent on removed sheets",
+    "QA cases moved to templates/project-engineering-register/tests/PER_v1.2_QA.md",
+    "Blank-master validation and optional project WP consistency script in scripts/"
+  ],
+  "nonproject_exceptions": [
+    "PUNCH LIST default Open state and formula helper seeds only"
+  ],
+  "publisher_note": "Same-day correction of initially committed 20-sheet v1.2. Formula caches not validated in Microsoft Excel; recalculate on opening."
 }
