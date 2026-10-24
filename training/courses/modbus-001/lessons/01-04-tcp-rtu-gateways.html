@@ -1,0 +1,22 @@
+<article class="card learning-block" id="learn-gateway" hidden>
+  <div class="sectiontag">01.4 · Academic learning · Translation and routing</div>
+  <h2>TCP-to-RTU gateways</h2>
+  <p class="lead">A gateway is an interface between communications domains. One Ethernet connection can access many downstream addresses, but those serial requests still share limited RTU airtime.</p>
+  <h3>Trace a request end to end</h3>
+  <ol>
+    <li>The BAS or PLC TCP client opens the configured gateway IP and Modbus TCP port (commonly 502).</li>
+    <li>The Modbus TCP MBAP header carries a <strong>Unit Identifier</strong>; the gateway uses its configuration to identify the target serial route.</li>
+    <li>The gateway forwards/translates the request onto the selected RTU port with the proper RTU framing.</li>
+    <li>The addressed sensor returns an RTU response; the gateway presents the corresponding Modbus TCP response to the client.</li>
+  </ol>
+  <div class="callout">Two downstream ports do <strong>not</strong> automatically make duplicate slave IDs unambiguous through a single gateway IP/port. Confirm the manufacturer's exact routing modes and how they distinguish ports.</div>
+  <h3>Know what each test actually establishes</h3>
+  <table class="training-table"><thead><tr><th>Test</th><th>Evidence</th><th>Does not prove</th></tr></thead><tbody>
+    <tr><td>Ping gateway</td><td>IP reachability, if ICMP is permitted</td><td>TCP service or an RTU sensor</td></tr>
+    <tr><td>TCP port open</td><td>Listener reachable</td><td>Correct Unit ID or RTU wiring</td></tr>
+    <tr><td>FC03/FC04 valid read</td><td>Request serviced by a responding endpoint</td><td>That every other register, sensor or route works</td></tr>
+    <tr><td>0A / 0B exception</td><td>Gateway reports path/target problem</td><td>One uniquely identified cable failure</td></tr>
+  </tbody></table>
+  <p>Ask the manufacturer about client limits, request queuing, port-specific loading, retries and how requests are distributed among serial ports. A gateway accepting more TCP clients does not make the RTU segment faster.</p>
+  <p class="small">Source: <a href="https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-tcp.md" target="_blank" rel="noopener">KIS Modbus TCP reference</a>.</p>
+</article>

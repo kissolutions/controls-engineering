@@ -1,0 +1,139 @@
+{
+  "id": "modbus-path",
+  "title": "Who speaks to whom?",
+  "default_stage": "rtu",
+  "stages": [
+    {
+      "id": "rtu",
+      "label": "A · One direct RTU segment",
+      "summary": "One serial master initiates the transaction. The sensor responds on the shared RS-485 trunk; no other independent master arbitrates for the bus.",
+      "nodes": [
+        {
+          "id": "master",
+          "label": "Serial master",
+          "x": 100,
+          "y": 105,
+          "type": "client"
+        },
+        {
+          "id": "s1",
+          "label": "RTU slave 7",
+          "x": 415,
+          "y": 65,
+          "type": "sensor"
+        },
+        {
+          "id": "s2",
+          "label": "RTU slave 8",
+          "x": 690,
+          "y": 150,
+          "type": "sensor"
+        }
+      ],
+      "links": [
+        {
+          "from": "master",
+          "to": "s1",
+          "label": "RTU / RS-485"
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "label": "same trunk"
+        }
+      ]
+    },
+    {
+      "id": "gateway",
+      "label": "B · TCP client to RTU gateway",
+      "summary": "TCP requests include Unit ID. The gateway must map that ID to an RTU segment and serialize requests on that segment. Ping alone does not verify slave response.",
+      "nodes": [
+        {
+          "id": "client",
+          "label": "BAS TCP client",
+          "x": 100,
+          "y": 105,
+          "type": "client"
+        },
+        {
+          "id": "gateway",
+          "label": "TCP/RTU gateway",
+          "x": 390,
+          "y": 105,
+          "type": "gateway"
+        },
+        {
+          "id": "sensor",
+          "label": "RTU slave 7",
+          "x": 700,
+          "y": 105,
+          "type": "sensor"
+        }
+      ],
+      "links": [
+        {
+          "from": "client",
+          "to": "gateway",
+          "label": "Modbus TCP"
+        },
+        {
+          "from": "gateway",
+          "to": "sensor",
+          "label": "Modbus RTU"
+        }
+      ]
+    },
+    {
+      "id": "multiport",
+      "label": "C · Gateway with two RTU ports",
+      "summary": "One IP may serve multiple RTU segments, but the exact Unit ID-to-port mapping must be verified. Separate serial ports have separate physical buses and airtime.",
+      "nodes": [
+        {
+          "id": "client",
+          "label": "BAS TCP client",
+          "x": 90,
+          "y": 105,
+          "type": "client"
+        },
+        {
+          "id": "gateway",
+          "label": "2-port gateway",
+          "x": 360,
+          "y": 105,
+          "type": "gateway"
+        },
+        {
+          "id": "s1",
+          "label": "Port 1 · ID 7",
+          "x": 700,
+          "y": 55,
+          "type": "sensor"
+        },
+        {
+          "id": "s2",
+          "label": "Port 2 · ID 8",
+          "x": 700,
+          "y": 160,
+          "type": "sensor"
+        }
+      ],
+      "links": [
+        {
+          "from": "client",
+          "to": "gateway",
+          "label": "TCP"
+        },
+        {
+          "from": "gateway",
+          "to": "s1",
+          "label": "RTU port 1"
+        },
+        {
+          "from": "gateway",
+          "to": "s2",
+          "label": "RTU port 2"
+        }
+      ]
+    }
+  ]
+}
