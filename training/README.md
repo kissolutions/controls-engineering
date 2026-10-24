@@ -8,6 +8,7 @@ The training engine is a derived instructional layer. This `training/` directory
 
 - **[v0.2 frozen reference](engine/baselines/v0.2/index.html)** — do not modify this accepted standalone prototype.
 - **[v0.2 baseline contract](engine/baselines/v0.2/BASELINE.md)** — accepted interactions and known gaps.
+- **[MODBUS-001 canonical syllabus](courses/modbus-001/SYLLABUS.md)** — learning outcomes and audience/scenario variant generation contract; the syllabus owns instructional scope.
 - **[v0.3 Modbus 001 standalone course demo](engine/prototypes/v0.3/modbus-001.html)** — built from independent lesson stubs, scenario JSON and reusable widget code; opens in a browser without a server.
 - **[Engine/course architecture](ARCHITECTURE.md)** — authority and package boundaries.
 - **[Modbus 001 course map](courses/modbus-001/course.json)** — stable IDs and documented source revisions.
