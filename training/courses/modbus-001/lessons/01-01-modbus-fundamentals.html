@@ -1,0 +1,20 @@
+<article class="card learning-block" id="learn-principles" hidden>
+  <div class="sectiontag">01.1 · Academic learning · Protocol architecture</div>
+  <h2>Modbus fundamentals</h2>
+  <p class="lead">Modbus describes the request and response. RS-485 or Ethernet carries that message. A gateway bridges those two worlds, but it does not magically increase serial bandwidth.</p>
+  <h3>Build the mental model</h3>
+  <p>In conventional <strong>Modbus RTU</strong>, one serial master initiates requests, and a addressed slave responds. The segment has no token passing or native discovery. Each individually addressed slave normally uses an address from <strong>1–247</strong>; address 0 is reserved for broadcast commands that do not elicit a response.</p>
+  <div class="callout"><strong>From BACnet MS/TP:</strong> both may use RS-485 wiring, but MS/TP uses a token for bus access among masters. Modbus RTU generally relies on a single coordinated master. Identical cable does not imply identical protocol behavior.</div>
+  <h3>Explore the communication path</h3>
+  <p>Change the architecture. The diagram retains the same conceptual devices while showing who communicates over TCP versus RTU.</p>
+  <div class="scenario-widget" data-scenario="modbus-path"><label for="scenario-modbus-path">Architecture</label><select id="scenario-modbus-path" data-scenario-select="modbus-path"></select><div class="scenario-display" data-scenario-display="modbus-path" aria-live="polite"></div><p class="small" data-scenario-note="modbus-path"></p></div>
+  <h3>What travels in a request?</h3>
+  <div class="grid2">
+    <div class="metric"><span>RTU frame</span><strong style="font-size:15px">Address · Function · Data · CRC</strong><p>Serial framing and CRC validation; timing depends on baud and format.</p></div>
+    <div class="metric"><span>TCP application frame</span><strong style="font-size:15px">MBAP · Function · Data</strong><p>MBAP contains the Unit ID. No RTU CRC is carried inside the TCP application data unit.</p></div>
+  </div>
+  <h3>Diagnose by layer</h3>
+  <p><strong>Ping succeeds:</strong> gateway IP is reachable. <strong>TCP 502 opens:</strong> a TCP service is reachable. <strong>Valid Modbus response:</strong> an endpoint processed the request. Only a valid end-to-end response or meaningful downstream evidence demonstrates the target RTU transaction actually worked.</p>
+  <div class="callout warning"><strong>Engineering trap:</strong> 247 usable addresses do not establish 247 electrically allowable devices, 247 gateway routes, or acceptable polling performance.</div>
+  <p class="small">Sources: <a href="https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-rtu.md" target="_blank" rel="noopener">Modbus RTU reference</a> · <a href="https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-tcp.md" target="_blank" rel="noopener">Modbus TCP reference</a>.</p>
+</article>
