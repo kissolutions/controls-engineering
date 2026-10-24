@@ -1,0 +1,19 @@
+<article class="card learning-block" id="learn-performance-basics" hidden>
+  <div class="sectiontag">01.5 · Academic learning · Capacity and timing</div>
+  <h2>Polling &amp; fault budgets</h2>
+  <p class="lead">Protocol addressing, electrical unit loads, and the gateway's supported routes are separate constraints. Polling throughput is a fourth constraint: <strong>can the network meet its required scan interval?</strong></p>
+  <h3>A healthy FC03/FC04 transaction</h3>
+  <p>For a read of <strong>R</strong> 16-bit registers, a normal RTU request is 8 bytes and a normal response is 5 + 2R bytes. Approximate serial wire time:</p>
+  <div class="callout"><code>wire_time = (13 + 2 × R) × bits_per_character / baud</code><p>Then add measured/estimated device response, required silent gaps, and any gateway turnaround not already counted.</p></div>
+  <h3>Worked example · 30 hypothetical sensors</h3>
+  <p>Each device returns 10 registers using FC03 at 19,200 baud, 8E1 (11 bits/character), 20 ms device turnaround, 5 ms additional allowance, and a five-second target scan.</p>
+  <div class="grid2">
+    <div class="metric"><span>Nominal single transaction</span><strong>43.9 ms</strong><span>18.9 ms on wire + 25 ms allowance</span></div>
+    <div class="metric"><span>Thirty-sensor scan</span><strong>1.32 s</strong><span>26.3% of the five-second budget</span></div>
+  </div>
+  <h3>What if sensors stop responding?</h3>
+  <p>At 500 ms timeout and two <em>additional</em> retries, an offline device may consume about <strong>1.5 seconds</strong> instead of 43.9 ms. Three such failures can push the estimated full cycle to approximately <strong>5.69 seconds</strong>—past the target.</p>
+  <div class="callout warning">Healthy utilization below 100% is not a guarantee of acceptable performance. Other TCP clients, queueing, failure retries and vendor timing rules can consume the remaining budget.</div>
+  <button type="button" class="btn primary" data-open-calc="performance">Try the polling calculator →</button>
+  <p class="small">Source: <a href="https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/modbus-rtu-network-performance.md" target="_blank" rel="noopener">KIS Network Performance method</a> · <a href="https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/modbus-rtu-timeout-retry-impact.md" target="_blank" rel="noopener">Timeout &amp; Retry method</a>.</p>
+</article>
