@@ -169,42 +169,44 @@
     "kb/modbus-rtu": {
       "repo": "kissolutions/knowledgebase_wikijs",
       "path": "communications/modbus-rtu.md",
-      "ref": "a4123573cd7ab8fc38115a41a1b27ffda5cb9d1d",
-      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-rtu.md"
+      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-rtu.md",
+      "blob_sha": "a4123573cd7ab8fc38115a41a1b27ffda5cb9d1d"
     },
     "kb/modbus-tcp": {
       "repo": "kissolutions/knowledgebase_wikijs",
       "path": "communications/modbus-tcp.md",
-      "ref": "d148e857c3808a83e10ec26218d55a4d4602e378",
-      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-tcp.md"
+      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-tcp.md",
+      "blob_sha": "d148e857c3808a83e10ec26218d55a4d4602e378"
     },
     "kb/modbus-performance": {
       "repo": "kissolutions/knowledgebase_wikijs",
       "path": "engineering/calculators/communications/modbus-rtu-network-performance.md",
-      "ref": "e21c3f798e4f16347a161f1ab14c583b5829155f",
-      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/modbus-rtu-network-performance.md"
+      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/modbus-rtu-network-performance.md",
+      "blob_sha": "e21c3f798e4f16347a161f1ab14c583b5829155f"
     },
     "kb/modbus-failures": {
       "repo": "kissolutions/knowledgebase_wikijs",
       "path": "engineering/calculators/communications/modbus-rtu-timeout-retry-impact.md",
-      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/modbus-rtu-timeout-retry-impact.md"
+      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/modbus-rtu-timeout-retry-impact.md",
+      "blob_sha": "e655ab1a402cfcffad451eb7109ec3b75e607353"
     },
     "kb/rs485-loading": {
       "repo": "kissolutions/knowledgebase_wikijs",
       "path": "engineering/calculators/communications/rs485-electrical-loading.md",
-      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/rs485-electrical-loading.md"
+      "url": "https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/rs485-electrical-loading.md",
+      "blob_sha": "d2acdb7c808d8f348e852fcb28a72c49b8f83d3a"
     },
     "controls/modbus-network-design": {
       "repo": "kissolutions/controls-engineering",
       "path": "docs/design-playbooks/patterns/modbus-rtu-network-design.md",
-      "ref": "b8a0abd3cdcaa36781a1abe05152ed02d2d4787d",
-      "url": "https://github.com/kissolutions/controls-engineering/blob/main/docs/design-playbooks/patterns/modbus-rtu-network-design.md"
+      "url": "https://github.com/kissolutions/controls-engineering/blob/main/docs/design-playbooks/patterns/modbus-rtu-network-design.md",
+      "blob_sha": "b8a0abd3cdcaa36781a1abe05152ed02d2d4787d"
     },
     "controls/modbus-troubleshooting": {
       "repo": "kissolutions/controls-engineering",
       "path": "docs/design-playbooks/patterns/modbus-communications-troubleshooting.md",
-      "ref": "0ef82a2fc79e6fc8bc6e9cb0802e64054b037d4a",
-      "url": "https://github.com/kissolutions/controls-engineering/blob/main/docs/design-playbooks/patterns/modbus-communications-troubleshooting.md"
+      "url": "https://github.com/kissolutions/controls-engineering/blob/main/docs/design-playbooks/patterns/modbus-communications-troubleshooting.md",
+      "blob_sha": "0ef82a2fc79e6fc8bc6e9cb0802e64054b037d4a"
     }
   },
   "interactive_scenarios": [
