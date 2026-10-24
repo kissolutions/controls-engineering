@@ -9,6 +9,7 @@ Training is a **presentation and learning layer**, separate from systems enginee
 | Shared KIS Knowledgebase (`knowledgebase_wikijs`) | Canonical communication concepts, manufacturer-backed hardware facts, calculator methods | Local training navigation and student progress |
 | Controls Engineering (`controls-engineering`) | Network design and troubleshooting playbooks and engineering procedures | A duplicated source of shared theory or equations |
 | Training engine | Layout, sidebar, playbook navigator, scenario rendering, quizzes, progress UX | Engineering truth or course-specific claims |
+| Canonical course syllabus (`courses/<course-id>/SYLLABUS.md`) | Course learning outcomes, required curriculum, assessment coverage, and audience/scenario variation rules | Engine presentation, manufacturer-specific engineering truth |
 | Course packages | Lesson sequence, objectives, exercise variants, source pointers, question selection | Changes to canonical source documents |
 | Project engineering records | Project-specific network design inputs, dispositions and acceptance | Generic training question-bank truth |
 
