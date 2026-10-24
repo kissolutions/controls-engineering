@@ -1,0 +1,26 @@
+
+/* v0.3 lesson widgets, layered on frozen v0.2 shell styling */
+.learning-block a{color:#92d7ff;text-underline-offset:3px}
+.learning-block code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+.learning-block ol{padding-left:24px}
+.learning-block li{margin:7px 0}
+.learning-block .metric p{font-size:14px;margin:8px 0;color:#c4d2e1}
+.scenario-widget{border:1px solid var(--border);background:#0d192a;border-radius:12px;padding:16px;margin:18px 0}
+.scenario-widget label{display:block;color:var(--muted);font-size:13px;margin-bottom:7px}
+.scenario-widget select{min-height:44px;min-width:min(100%,320px)}
+.scenario-display{overflow-x:auto;margin-top:12px;border:1px solid var(--border);border-radius:9px}
+.scenario-display svg{width:100%;min-width:550px;height:auto;display:block;background:#0c1b2c}
+.scenario-link{stroke:#6fa9d8;stroke-width:3;fill:none}
+.scenario-linklabel{fill:#b5cbdf;font:12px system-ui,sans-serif}
+.scenario-device{stroke-width:2;fill:#1b3446}
+.scenario-device.client{stroke:#79b9ff}
+.scenario-device.gateway{stroke:#e1c87e}
+.scenario-device.sensor{stroke:#42c9b2}
+.scenario-device.bad{stroke:#ff8282;fill:#41292d}
+.scenario-device-label{fill:#eff6ff;font:13px system-ui,sans-serif}
+.scenario-widget [data-scenario-note]{margin:12px 0 0;line-height:1.5}
+.training-table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+.training-table th,.training-table td{text-align:left;vertical-align:top;border-bottom:1px solid var(--border);padding:10px}
+.training-table th{color:#b9d6ed;background:#1a2c41}
+@media(max-width:600px){.training-table{font-size:12px}.training-table th,.training-table td{padding:6px}.scenario-widget{padding:11px}}
+
