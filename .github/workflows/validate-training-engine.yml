@@ -28,4 +28,8 @@ jobs:
         run: git diff --exit-code -- training/engine/prototypes/v0.3/modbus-001.html
       - name: Validate manifest, scenario references, formulas and JavaScript syntax
         run: python -m unittest discover -s training/tests -p 'test_*.py' -v
-
+      - name: Package portable training demo
+        uses: actions/upload-artifact@v4
+        with:
+          name: kis-modbus-001-v0.3
+          path: training/engine/prototypes/v0.3/modbus-001.html
