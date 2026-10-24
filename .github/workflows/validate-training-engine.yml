@@ -1,0 +1,31 @@
+name: Validate KIS Training Course
+
+on:
+  pull_request:
+    paths:
+      - 'training/**'
+      - '.github/workflows/validate-training-engine.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'training/**'
+      - '.github/workflows/validate-training-engine.yml'
+
+jobs:
+  course-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compile offline HTML from frozen baseline and lesson stubs
+        run: python training/tools/build_modbus_001.py
+      - name: Ensure compiled demo is committed and reproducible
+        run: git diff --exit-code -- training/engine/prototypes/v0.3/modbus-001.html
+      - name: Validate manifest, scenario references, formulas and JavaScript syntax
+        run: python -m unittest discover -s training/tests -p 'test_*.py' -v
+
