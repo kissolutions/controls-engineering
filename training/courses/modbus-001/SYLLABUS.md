@@ -243,4 +243,4 @@ Before calling **MODBUS-001** a complete released course, confirm:
 - [Training architecture](../../ARCHITECTURE.md)
 - [MODBUS-001 course package](README.md)
 - [Frozen v0.2 training engine baseline](../../engine/baselines/v0.2/BASELINE.md)
-- [v0.3 course manifest and source snapshot](course.json) *(available on the current Modbus academic development branch until merged)*
+- [v0.3 course manifest and source snapshot (development branch)](https://github.com/kissolutions/controls-engineering/blob/work/modbus-001-vertical-slice/training/courses/modbus-001/course.json) *(not yet merged into `main`)*
