@@ -7,6 +7,8 @@
 - **[Frozen Training Engine v0.2](engine/baselines/v0.2/index.html)** — working standalone HTML UI/interaction demonstration.
 - **[v0.2 baseline contract](engine/baselines/v0.2/BASELINE.md)** — freeze boundaries and known gaps.
 - **[Training architecture](ARCHITECTURE.md)** — engine/course/technical-authority boundaries.
+- **[Course Assembly Contract](COURSE-ASSEMBLY-CONTRACT.md)** — reusable rules for generating scenario- and audience-specific course variants from a versioned syllabus.
+- **[MODBUS-001 detailed syllabus](courses/modbus-001/SYLLABUS.md)** — foundational blocks, lab catalog, half-day bench plan, gateway lunch-and-learn, and field briefing.
 - **[Modbus 001 course definition](courses/modbus-001/README.md)** — first from-scratch course build specification.
 
 ## Course user experience

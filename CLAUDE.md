@@ -57,3 +57,14 @@ Instantiate copies in authorized project storage and identify those copies as au
 ## Architecture / plant takeoff guardrails
 
 When sizing PLC, remote I/O, networks or gateways, separate the **signal source**, **physical termination**, **I/O resource**, **logic owner**, **enclosure**, and **Work Package**. Counts must distinguish hardwired base, excluded, conditional and network points. Never conflate backup CPU, network redundancy, hot backup and certified redundant-controller capabilities. See [`docs/engineering-data/point-allocation-and-counting-proposal.md`](docs/engineering-data/point-allocation-and-counting-proposal.md) and draft plant patterns in [`docs/design-playbooks/patterns/`](docs/design-playbooks/patterns/).
+
+## Training syllabus and scenario-specific course generation
+
+When an engineer asks for a training course, field-preparation brief, workshop or lunch-and-learn, follow the **[KIS Course Assembly Contract](training/COURSE-ASSEMBLY-CONTRACT.md)** before building an HTML page. For MODBUS-001, read the **[canonical modular syllabus](training/courses/modbus-001/SYLLABUS.md)**; that syllabus owns learning outcomes, mandatory conceptual floor, block IDs and labs.
+
+- Extract audience, reason for training, system/equipment, known/unknown issues, available time, delivery format, authorized tests and desired proficiency from the user's natural request. Do not require a long structured intake form.
+- Select and reorganize syllabus learning blocks, playbook steps, calculators, lab activities and assessments; preserve stable IDs and a coverage matrix. Keep unassessed competencies explicit.
+- Check technical claims against canonical Knowledgebase methods, domain playbooks and manufacturer documents for the exact models and revisions. Do not fabricate field facts, supported registers, gateway routes or hardware capacities.
+- Make a scenario-specific **derived** course variant, ideally portable/mobile-capable HTML when requested; version its profile, source snapshot, scope, assessment and generation record.
+- Keep project/client information and field evidence in approved private project storage. Only generic sanitized teaching examples belong in this public repository.
+- **Never modify the frozen v0.2 HTML baseline** to regenerate a variant. The v0.3 Modbus course prototype is separate and remains under development.

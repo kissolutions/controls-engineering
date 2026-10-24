@@ -2,6 +2,8 @@
 
 **Status:** Course development seed; not a completed course or released competency standard.
 
+**Curriculum authority:** [MODBUS-001 Canonical Syllabus v0.2.0 (draft)](SYLLABUS.md). This README is a condensed course-package overview, not a competing curriculum. The syllabus defines atomic blocks, labs, critical conceptual floor, assessment expectations, and generation profiles for a half-day lab, one-hour gateway session, or project-specific field brief. See the [Course Assembly Contract](../../COURSE-ASSEMBLY-CONTRACT.md) for reuse across KIS domains.
+
 **Engine reference:** [frozen v0.2](../../engine/baselines/v0.2/index.html).  
 **Technical sources:**
 - [Modbus RTU reference](https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-rtu.md)
