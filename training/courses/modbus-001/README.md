@@ -2,6 +2,8 @@
 
 **Status:** First academic vertical slice built (v0.3), complete course not yet accepted.
 
+> **Curriculum authority:** [MODBUS-001 canonical syllabus](SYLLABUS.md). This README tracks the course implementation; `course.json` is a delivery manifest, not an independent course curriculum. Audience/scenario variants derive from the syllabus.
+
 ## Try the course
 
 [Standalone v0.3 HTML demo](../../engine/prototypes/v0.3/modbus-001.html) — save/open locally in a browser. No server or external JS dependencies required.
