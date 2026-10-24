@@ -1,0 +1,27 @@
+<article class="card learning-block" id="learn-registers" hidden>
+  <div class="sectiontag">01.3 · Academic learning · Data model</div>
+  <h2>Registers &amp; addressing</h2>
+  <p class="lead">A correct request requires the right slave/Unit ID, function code, starting address and quantity. A successful transaction can still yield a nonsensical engineering value if decoding is wrong.</p>
+  <div class="grid2">
+    <div class="metric"><span>FC03</span><strong style="font-size:17px">Holding registers</strong><p>Read 16-bit holding-register values. Conventional display labels start with 4xxxx.</p></div>
+    <div class="metric"><span>FC04</span><strong style="font-size:17px">Input registers</strong><p>Read 16-bit input-register values. Conventional display labels start with 3xxxx.</p></div>
+  </div>
+  <h3>Try the address translator</h3>
+  <p>For the <strong>traditional five-digit 4xxxx display convention</strong>, the displayed holding register 40001 corresponds to transmitted starting offset 0. Some vendors and drivers use one-based fields instead: verify the actual manual.</p>
+  <div class="scenario-widget" data-register-tool>
+    <div class="grid2">
+      <div class="field"><label for="regDisplay">Displayed holding-register label</label><input id="regDisplay" inputmode="numeric" type="number" value="40101" min="40001" max="49999" step="1"></div>
+      <div class="metric"><span>Zero-based protocol starting offset</span><strong id="regOffset">100</strong><span id="regResult" aria-live="polite">40101 → offset 100</span></div>
+    </div>
+  </div>
+  <h3>Five checks before calling the data wrong</h3>
+  <ol>
+    <li>Slave ID or gateway Unit ID and serial port route.</li>
+    <li>Function code and register table (FC03 versus FC04).</li>
+    <li>Starting offset convention and requested register quantity.</li>
+    <li>Signedness, 16/32-bit width, and byte/word ordering.</li>
+    <li>Scale, engineering units, and manufacturer model/firmware revision.</li>
+  </ol>
+  <div class="callout">Example: a two-register 32-bit vibration reading needs not just the correct starting offset, but the documented word order and scaling. Modbus does not standardize how a particular manufacturer encodes that measurement.</div>
+  <p class="small">Source: <a href="https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-rtu.md" target="_blank" rel="noopener">KIS Modbus RTU reference</a>.</p>
+</article>
