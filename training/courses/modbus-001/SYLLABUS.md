@@ -23,7 +23,7 @@ Three compatible views of the same curriculum:
 
 1. **Five instructional strands** define the teaching content originally developed for this course: Understanding Modbus; RS-485 and Network Addressing; Modbus TCP and Gateways; Building a Modbus Request; Troubleshooting Modbus Networks. These are concepts, not fixed presentation chapters.
 2. **Four engine sections** organize the delivered interface: `01 Academic Learning`, `02 Engineering Playbooks`, `03 Engineering Calculators`, and `04 Knowledge Checks`.
-3. **Atomic learning blocks and labs** (`F01`, `E01`, `R01`, `G01`, `T01`, `LAB-01`, etc.) can be reordered, expanded, condensed, or selected without inventing a new course or changing their identity.
+3. **Atomic learning blocks and labs** (`F01`, `E01`, `R01`, `G01`, `X01`, `LAB-01`, etc.) can be reordered, expanded, condensed, or selected without inventing a new course or changing their identity.
 
 A four-hour bench training may teach a concept inside a lab; a 30-minute field briefing may show the same concept as a compact diagnostic card. Neither changes the canonical fact or learning outcome.
 
@@ -84,10 +84,10 @@ Every variant contains a proportionate, compact treatment of **CF-01 through CF-
 | **CF-02** | Addresses, data tables, function codes, starting offsets and quantities together define a request; zero/one-based notation can differ. | `F03`, `R01–R04` |
 | **CF-03** | RS-485 topology, two-end termination, bias, reference, A/B conventions and power have independent failure modes. | `E01–E05` |
 | **CF-04** | An RTU slave ID's usual 1–247 address range does **not** establish permissible node counts, gateway routes or polling bandwidth. | `F03`, `E06`, `G04` |
-| **CF-05** | Gateway ping, TCP socket reachability and a valid Modbus read establish **different things**; a responding gateway may generate exceptions itself. | `G01–G03`, `T01`, `T02` |
-| **CF-06** | Timeout is not a Modbus exception; codes 01/02/03 differ from gateway path/target reports 0A/0B. | `T02` |
-| **CF-07** | Healthy polling estimates do not prove degraded/failure-case performance; retries, queueing and multiple clients matter. | `G05`, `T04` |
-| **CF-08** | Preserve configuration and field evidence, use approved testing boundaries, avoid unsafe writes and do not add independent serial masters to an active RTU trunk. | `G06`, `T05`, `LAB-00` |
+| **CF-05** | Gateway ping, TCP socket reachability and a valid Modbus read establish **different things**; a responding gateway may generate exceptions itself. | `G01–G03`, `X01`, `X02` |
+| **CF-06** | Timeout is not a Modbus exception; codes 01/02/03 differ from gateway path/target reports 0A/0B. | `X02` |
+| **CF-07** | Healthy polling estimates do not prove degraded/failure-case performance; retries, queueing and multiple clients matter. | `G05`, `X04` |
+| **CF-08** | Preserve configuration and field evidence, use approved testing boundaries, avoid unsafe writes and do not add independent serial masters to an active RTU trunk. | `G06`, `X05`, `LAB-00` |
 
 **Nuance rule:** A variant that introduces a concept must not teach its oversimplified form as a universal truth. For example, a measured ~60 Ω across an isolated bus can be consistent with two 120 Ω terminations but does not prove they are at the correct physical ends; A/B labeling varies by manufacturer; a contiguous outage suggests but does not prove a cable break.
 
@@ -177,11 +177,11 @@ A block includes **Teach / show**, **Try / discuss**, and **Proof**. Typical exp
 
 | Block | Teach / show | Try / discuss | Proof |
 | --- | --- | --- | --- |
-| **T01** | Ethernet/IP, TCP listener, gateway routes, serial wiring, power, slave/Unit ID and register layers. | Start with one known-good request; choose the next test by actual observation. | Layered test plan rather than an unranked list of guesses. |
-| **T02** | Valid data; exception 01 illegal function, 02 illegal address, 03 illegal value; 0A gateway path and 0B gateway target; timeouts; who generated the exception may matter. | Sort sample traces by likely origin and next verification. | Explain why a timeout is not a Modbus exception. |
-| **T03** | Pattern evidence: all slaves on one port, contiguous physical group, scattered slaves, intermittent updates, wrong-but-valid values. | Given “last working / first failed” positions, propose **multiple** candidate causes. | Evidence-supported ranked hypotheses, not a prematurely declared root cause. |
-| **T04** | FC03/FC04 wire bytes, framing bits, turnaround, polling groups, timeout/retry budget, multi-client queueing. | Compare a normal 30-sensor estimate with three offline devices. | Calculate whether the target scan interval is plausible under assumptions. |
-| **T05** | Preserve as-found state, choose safe approved isolation, restore settings and test full-cycle operation. | Fill in a short field-evidence record and as-left validation. | Configuration backup, test evidence and outstanding uncertainties. |
+| **X01** | Ethernet/IP, TCP listener, gateway routes, serial wiring, power, slave/Unit ID and register layers. | Start with one known-good request; choose the next test by actual observation. | Layered test plan rather than an unranked list of guesses. |
+| **X02** | Valid data; exception 01 illegal function, 02 illegal address, 03 illegal value; 0A gateway path and 0B gateway target; timeouts; who generated the exception may matter. | Sort sample traces by likely origin and next verification. | Explain why a timeout is not a Modbus exception. |
+| **X03** | Pattern evidence: all slaves on one port, contiguous physical group, scattered slaves, intermittent updates, wrong-but-valid values. | Given “last working / first failed” positions, propose **multiple** candidate causes. | Evidence-supported ranked hypotheses, not a prematurely declared root cause. |
+| **X04** | FC03/FC04 wire bytes, framing bits, turnaround, polling groups, timeout/retry budget, multi-client queueing. | Compare a normal 30-sensor estimate with three offline devices. | Calculate whether the target scan interval is plausible under assumptions. |
+| **X05** | Preserve as-found state, choose safe approved isolation, restore settings and test full-cycle operation. | Fill in a short field-evidence record and as-left validation. | Configuration backup, test evidence and outstanding uncertainties. |
 
 **Worked scenario:** Thirty hypothetical vibration sensors, 10 registers/read, 19,200 baud, 8E1 (11 bits/character), 20 ms sensor response allowance, 5 ms additional allowance, five-second target scan. The canonical screening calculation yields ~1.317 s normal cycle (~26.3% nominal loading). With 500 ms timeout and **two additional retries**, three nonresponding devices can increase a simplified cycle to ~5.685 s—beyond the target. This is a modeling exercise, not measured Moxa/sensor behavior.
 
@@ -216,7 +216,7 @@ Playbook steps are **independent selectable teaching units**, presented as a lef
 | **T05** | Execute approved isolate/test/reconnect plan. | Preserve safe test boundaries and restore termination/bias as appropriate. |
 | **T06** | Verify exit criteria. | Normal/degraded cycle, plausible decoded data, backups, as-left configuration. |
 
-**Naming distinction:** The academic `T01–T05` blocks are conceptual teaching blocks; `T00–T06` here are canonical troubleshooting **playbook steps**. In a machine manifest use a type prefix (for example `academic:T01` versus `playbook:T01`) to avoid collisions. A later revision may migrate to namespaced typed IDs without altering presented step labels.
+**ID rule:** Academic diagnostic blocks use `X01–X05`; `T00–T06` are reserved for troubleshooting **playbook steps**. They are distinct stable identities, not a numbering collision. Generated manifests should also preserve typed unit categories (`academic`, `playbook`, `lab`, `calculator`, `assessment`).
 
 ## 5. Engineering calculators — Section 03
 
@@ -359,8 +359,8 @@ Every lab report should be able to record:
 | 01:00–01:25 | 25 min | Register/function/offset/decoding (`R01–R06`; `LAB-03`) | Complete decoded request |
 | 01:25–01:35 | 10 min | **Break** | — |
 | 01:35–02:15 | 40 min | TCP gateway transition, routing and two Unit IDs (`G01–G06`; `LAB-04`) | TCP-through-RTU reads and saved gateway config |
-| 02:15–02:45 | 30 min | Fault-injection stations and layered troubleshooting (`T01–T03`; `LAB-05`) | Classified exception/timeout and justified test |
-| 02:45–03:10 | 25 min | Nominal/degraded scan, loading and caveats (`T04`; `CAL-01–03`; `LAB-06`) | Calculator evidence |
+| 02:15–02:45 | 30 min | Fault-injection stations and layered troubleshooting (`X01–X03`; `LAB-05`) | Classified exception/timeout and justified test |
+| 02:45–03:10 | 25 min | Nominal/degraded scan, loading and caveats (`X04`; `CAL-01–03`; `LAB-06`) | Calculator evidence |
 | 03:10–03:45 | 35 min | Case exercise: 30-sensor system; design/troubleshooting flow (`D01–D10`, `T00–T06` as applicable; `LAB-07`) | Diagram, hypothesis/evidence trail, recommendation |
 | 03:45–04:00 | 15 min | Knowledge checks, teach-back, restore bench, collect work products (`KC-xx`) | Declared outcome coverage and as-left record |
 
@@ -403,7 +403,7 @@ Every lab report should be able to record:
 
 ### 09.C — Engineering-design/PE review track
 
-Expand `E01–E06`, `G02–G05`, `T04`, `D01–D10`, and `CAL-01–03`. Require actual manufacturer capacities, cable details, the source-backed poll schedule, a nominal/degraded timing analysis, and a design/commissioning acceptance record. Do not infer device-specific limits from an illustrative lab.
+Expand `E01–E06`, `G02–G05`, `X04`, `D01–D10`, and `CAL-01–03`. Require actual manufacturer capacities, cable details, the source-backed poll schedule, a nominal/degraded timing analysis, and a design/commissioning acceptance record. Do not infer device-specific limits from an illustrative lab.
 
 ## 10. Course variant generation — AI or instructor workflow
 
