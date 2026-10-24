@@ -1,0 +1,21 @@
+<article class="card learning-block" id="learn-physical" hidden>
+  <div class="sectiontag">01.2 · Academic learning · Physical layer</div>
+  <h2>RS-485 physical networks</h2>
+  <p class="lead">RS-485 is a shared differential electrical interface. A valid Modbus configuration cannot compensate for a broken conductor, excessive common-mode voltage, or an unsuitable topology.</p>
+  <h3>Walk a trunk in physical order</h3>
+  <p>Document the gateway port, the cable route, first and last sensors, taps, junctions, power supplies and possible isolation boundaries. <strong>Slave IDs do not describe physical cable order.</strong> RS-485 sensor nodes do not relay or regenerate downstream messages.</p>
+  <div class="scenario-widget" data-scenario="rs485-termination"><label for="scenario-rs485-termination">Termination experiment</label><select id="scenario-rs485-termination" data-scenario-select="rs485-termination"></select><div class="scenario-display" data-scenario-display="rs485-termination" aria-live="polite"></div><p class="small" data-scenario-note="rs485-termination"></p></div>
+  <h3>The field sequence</h3>
+  <ol>
+    <li>Measure sensor supply voltage at the near, middle, and far devices under normal load.</li>
+    <li>Verify A/B polarity using <em>both</em> manufacturers' documentation; the labels themselves are inconsistent across suppliers.</li>
+    <li>Confirm termination only at the <strong>two electrical ends</strong> of a supported linear bus.</li>
+    <li>Check biasing/fail-safe receiver behavior, signal reference, shielding, grounding and galvanic isolation.</li>
+    <li>Verify transceiver unit loads, cable specifications, stubs, topology and gateway-specific device limits independently.</li>
+  </ol>
+  <h3>What does the ohmmeter actually prove?</h3>
+  <p>With the network properly de-energized and measurements made only where safe and appropriate, two isolated 120 Ω terminations in parallel have an equivalent resistance near <strong>60 Ω</strong>. The reading can be influenced by connected circuitry and <strong>does not prove resistor placement</strong> or waveform integrity.</p>
+  <div class="callout warning"><strong>Safety:</strong> never resistance-test an energized trunk. Do not change grounds, disconnect active controls, or isolate sections without an approved operating plan. Restore proper termination/bias when temporarily shortening a test segment.</div>
+  <p>Go to <strong>02 → Communications troubleshooting → Physical</strong> for the interactive fault-isolation exercise, or to <strong>03 → RS-485 loading</strong> for a receiver unit-load screening estimate.</p>
+  <p class="small">Source: <a href="https://github.com/kissolutions/knowledgebase_wikijs/blob/main/communications/modbus-rtu.md" target="_blank" rel="noopener">KIS Modbus RTU reference</a> and <a href="https://github.com/kissolutions/knowledgebase_wikijs/blob/main/engineering/calculators/communications/rs485-electrical-loading.md" target="_blank" rel="noopener">RS-485 loading method</a>.</p>
+</article>
