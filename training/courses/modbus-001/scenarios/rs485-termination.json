@@ -1,0 +1,166 @@
+{
+  "id": "rs485-termination",
+  "title": "Termination placement",
+  "default_stage": "correct",
+  "stages": [
+    {
+      "id": "correct",
+      "label": "A · Both physical ends terminated",
+      "summary": "Idealized 120 Ω end terminations: parallel equivalent is about 60 Ω with the bus safely de-energized and isolated. This reading alone does not verify the resistors are in the right places.",
+      "measurement": "≈60 Ω ideal",
+      "nodes": [
+        {
+          "id": "master",
+          "label": "Gateway · 120Ω",
+          "x": 100,
+          "y": 100,
+          "type": "gateway"
+        },
+        {
+          "id": "s1",
+          "label": "Sensor 01",
+          "x": 325,
+          "y": 100,
+          "type": "sensor"
+        },
+        {
+          "id": "s2",
+          "label": "Sensor 02",
+          "x": 535,
+          "y": 100,
+          "type": "sensor"
+        },
+        {
+          "id": "s3",
+          "label": "Last · 120Ω",
+          "x": 755,
+          "y": 100,
+          "type": "sensor"
+        }
+      ],
+      "links": [
+        {
+          "from": "master",
+          "to": "s1",
+          "label": "RS-485"
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "label": "RS-485"
+        },
+        {
+          "from": "s2",
+          "to": "s3",
+          "label": "RS-485"
+        }
+      ]
+    },
+    {
+      "id": "missing",
+      "label": "B · Last termination missing",
+      "summary": "With only one ideal 120 Ω termination, the simplified equivalent is near 120 Ω. Reflections may impair communication, especially on long or fast trunks.",
+      "measurement": "≈120 Ω ideal",
+      "nodes": [
+        {
+          "id": "master",
+          "label": "Gateway · 120Ω",
+          "x": 100,
+          "y": 100,
+          "type": "gateway"
+        },
+        {
+          "id": "s1",
+          "label": "Sensor 01",
+          "x": 325,
+          "y": 100,
+          "type": "sensor"
+        },
+        {
+          "id": "s2",
+          "label": "Sensor 02",
+          "x": 535,
+          "y": 100,
+          "type": "sensor"
+        },
+        {
+          "id": "s3",
+          "label": "Last · open",
+          "x": 755,
+          "y": 100,
+          "type": "bad"
+        }
+      ],
+      "links": [
+        {
+          "from": "master",
+          "to": "s1",
+          "label": "RS-485"
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "label": "RS-485"
+        },
+        {
+          "from": "s2",
+          "to": "s3",
+          "label": "RS-485"
+        }
+      ]
+    },
+    {
+      "id": "extra",
+      "label": "C · Additional middle termination",
+      "summary": "Three ideal 120 Ω resistors in parallel read near 40 Ω. Extra terminations increase driver loading; confirm physical resistor locations, not just resistance.",
+      "measurement": "≈40 Ω ideal",
+      "nodes": [
+        {
+          "id": "master",
+          "label": "Gateway · 120Ω",
+          "x": 100,
+          "y": 100,
+          "type": "gateway"
+        },
+        {
+          "id": "s1",
+          "label": "Sensor 01",
+          "x": 325,
+          "y": 100,
+          "type": "sensor"
+        },
+        {
+          "id": "s2",
+          "label": "Sensor 02 · 120Ω",
+          "x": 535,
+          "y": 100,
+          "type": "bad"
+        },
+        {
+          "id": "s3",
+          "label": "Last · 120Ω",
+          "x": 755,
+          "y": 100,
+          "type": "sensor"
+        }
+      ],
+      "links": [
+        {
+          "from": "master",
+          "to": "s1",
+          "label": "RS-485"
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "label": "RS-485"
+        },
+        {
+          "from": "s2",
+          "to": "s3",
+          "label": "RS-485"
+        }
+      ]
+    }
+  ]
+}
