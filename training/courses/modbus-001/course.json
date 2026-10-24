@@ -214,6 +214,11 @@
       "lesson": "principles"
     },
     {
+      "id": "rs485-termination",
+      "file": "scenarios/rs485-termination.json",
+      "lesson": "physical"
+    },
+    {
       "id": "register-offset",
       "widget": "register-convention",
       "lesson": "registers"
