@@ -8,25 +8,29 @@ profile_version: 0.1
 
 # Klutch Document Model — Drawing Set
 
-A Klutch controls drawing set is organized in **sheet number groups**. Each group holds one kind of information, in a fixed order. Groups start at fixed numbers, so a sheet number tells the reader what kind of sheet it is.
+A Klutch controls drawing set is organized in **sheet number groups**. Each group holds one kind of information, and the groups always come in the same order. The group ranges are sized to the project at the start of the set, so a sheet number tells the reader what kind of sheet it is.
 
 ## Numbering rule
 
 - Sheet numbers are reserved by group, and **gaps are intentional**. A sheet added after a prior submittal goes into an open number in its group, so existing sheets keep their numbers and cross-references do not have to be reworked.
-- Group ranges below are the usual allocation. A project with many floor plans (or many wiring sheets) may widen a group; decide that at the start of the set, not by renumbering after a submittal.
+- **Group order is fixed; group size is not.** Each project sizes its groups at the start of the set (for example a building with six floors reserves more spatial sheets). Decide this before the first submittal, not by renumbering afterward.
+- **Multi-system sets give each system its own block of ten**, starting on a multiple of ten plus one (21, 31, 41, ...). Each block repeats the engineering pattern for that system.
+- A sheet number may carry more than one page (for example "Network diagrams, 1 of 2"). *(To confirm how pages within one sheet number are labelled.)*
 - Unused numbers are simply absent from the set. The table of contents lists only issued sheets.
 - Once a sheet number has been issued on a submittal, it is not reused for different content. *(To confirm.)*
 
 ## Sheet groups
 
-| Sheets (usual) | Group | Content |
+| Group | Usual sheets, single system | Content |
 |---|---|---|
-| 1 | Table of contents | Always the first sheet. Lists the issued sheets. |
-| 2–5 | Spatial | Floor plans locating equipment; demolition; wiring routes and wiring types; any other spatial information. |
-| 6–10 | Logical / network | Network diagrams and risers; device and object tables with addresses and instance IDs; typical object lists (standard points and connections for VFDs, gas analyzer networks and similar). |
-| 11–20 | Engineering (the core of the set) | In order: process diagrams, controls narrative and references, general arrangement, system wiring. See below. |
+| Table of contents | 1 | Always the first sheet. Lists the issued sheets. |
+| Spatial | 2–5 | Floor plans locating equipment; demolition; wiring routes and wiring types; any other spatial information. |
+| Logical / network | 6–10 | Network diagrams and risers; device and object tables with addresses and instance IDs; typical object lists (standard points and connections for VFDs, gas analyzer networks and similar). |
+| Engineering (the core of the set) | 11–20 | In order: process diagrams, controls narrative and references, general arrangement, system wiring. See below. |
 
-### Engineering group order (11–20)
+### Engineering block order
+
+Each engineering block, single-system (11–20) or per system (21–30, 31–40, ...), runs in this order:
 
 1. **Process diagrams.** Process and instrumentation diagram(s) for the system.
 2. **Narratives and references.** Controls narrative; references taken from the mechanical and electrical drawings that mark important requirements; design intent and specification extracts.
@@ -35,7 +39,7 @@ A Klutch controls drawing set is organized in **sheet number groups**. Each grou
    - The first one or two sheets: power, and complex field devices such as VFDs and actuators.
    - Then the controller sheets: KMC controller terminals and their field device wiring are condensed together on their own sheets. This follows from the paper-space needs of the KMC controllers and how the wiring diagrams were originally set up.
 
-## Example (sanitized): single AHU DDC upgrade
+## Example A (sanitized): single AHU DDC upgrade
 
 | Sheet | Title | Group |
 |---|---|---|
@@ -50,10 +54,29 @@ A Klutch controls drawing set is organized in **sheet number groups**. Each grou
 
 Sheets 3–5, 7–10 and 16–20 are open for later insertion.
 
+## Example B (sanitized): multi-floor, multi-system building
+
+Seven systems (four air handlers, three other systems, including two exhaust systems) across six floors.
+
+| Sheets | Content | Group |
+|---|---|---|
+| 1 | Table of contents | Table of contents |
+| 2–10 | Floor plans for six floors (spatial group widened) | Spatial |
+| 11 | Network diagrams and network device tables (two pages) | Logical / network (narrowed to one sheet number) |
+| 21–30 | System 1: P&ID through wiring | Engineering block |
+| 31–40 | System 2 | Engineering block |
+| 41–50 | System 3 | Engineering block |
+| 51–60 | System 4 | Engineering block |
+| ... | One block per remaining system | Engineering block |
+
+Sheets 12–20 are open.
+
 ## Open questions (owner to confirm)
 
-- Groups above 20: is 21+ reserved (for example details, schedules, as-built or commissioning records), or does the engineering group simply extend?
-- Where do the symbol legend, abbreviations and general notes live: sheet 1, or a reserved sheet in a group?
-- Does the instrument BOM always sit on the process diagram sheet, as in the example?
-- Title block fields, revision scheme (for example Rev 1 Initial Submittal) and file naming: capture here or in a separate page?
-- Multi-system projects: one set per system with the same numbering, or one set with groups subdivided by system?
+- How are pages within one sheet number labelled (11.1 / 11.2, "1 of 2", or sheet 11 and 12)?
+- In a multi-system set, is 12–20 reserved for anything (for example plant-wide or common narrative, typical details), or simply open?
+- Shared hardware across systems (one panel serving two systems, a common network): which block carries it?
+- Groups after the last system block: reserved for anything (details, schedules, as-built or commissioning records)?
+- Where do the symbol legend, abbreviations and general notes live: sheet 1, or a reserved sheet?
+- Does the instrument BOM always sit on the process diagram sheet?
+- Title block fields, revision scheme (for example Rev 1 Initial Submittal) and file naming: on this page or a separate one?
