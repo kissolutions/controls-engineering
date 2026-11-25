@@ -39,6 +39,22 @@ Each engineering block, single-system (11–20) or per system (21–30, 31–40,
    - The first one or two sheets: power, and complex field devices such as VFDs and actuators.
    - Then the controller sheets: KMC controller terminals and their field device wiring are condensed together on their own sheets. This follows from the paper-space needs of the KMC controllers and how the wiring diagrams were originally set up.
 
+## Rules for specific content
+
+- **No legend or general notes sheet.** These are shop drawings fully under Klutch's control. Every symbol that matters carries a tag or abbreviation that appears in a table on the same sheets (instrument BOM, device tables), so a separate legend adds nothing. Add one only if a project needs it.
+- **Instrument BOM sits with the P&ID.** The instrument BOM correlates directly to the process diagram and goes on the same sheet. If it does not fit while staying readable at 11x17, split the P&ID and its BOM across two sheets in the process position of the block; do not shrink the text.
+- **Pre-canned sheets.** Klutch keeps ready-made sheets for recurring subsystems (for example Honeywell gas analyzers, Machine Saver vibration sensor networks). They are added project by project when the subsystem is in scope, into the group their content belongs to (a sensor network's object list in the logical / network group, its wiring in the wiring position of the block). *(To confirm placement.)*
+- **Readability.** Sheets are laid out to be read at 11x17. When content does not fit, add a sheet; do not reduce text size.
+
+## CAD file and title block
+
+- **One file per set.** A drawing set is a single DWG (exchanged as DXF when needed). Model space holds the drawing content; each sheet is a paper space layout.
+- **Layout names are the sheet number.** Each paper space tab is named by its sheet number only (for example `11`, `12`, `21`).
+- **Title block lives in paper space**, one per layout. Its fields are either:
+  - static text in the block, the same on every sheet of the set (project, location, file name, engineer, job number, revision rows), or
+  - attributes set on each sheet: sheet title and sheet number.
+- The title block is a block definition, so a set-wide change (a new revision row, a date) is one edit to the block. *(To confirm: revision rows are static text in the block, not per-sheet attributes.)*
+
 ## Example A (sanitized): single AHU DDC upgrade
 
 | Sheet | Title | Group |
@@ -77,6 +93,4 @@ Sheets 12–20 are open.
 - In a multi-system set, is 12–20 reserved for anything (for example plant-wide or common narrative, typical details), or simply open?
 - Shared hardware across systems (one panel serving two systems, a common network): which block carries it?
 - Groups after the last system block: reserved for anything (details, schedules, as-built or commissioning records)?
-- Where do the symbol legend, abbreviations and general notes live: sheet 1, or a reserved sheet?
-- Does the instrument BOM always sit on the process diagram sheet?
-- Title block fields, revision scheme (for example Rev 1 Initial Submittal) and file naming: on this page or a separate one?
+- Revision scheme (for example Rev 1 Initial Submittal) and drawing file naming: on this page or a separate one?
