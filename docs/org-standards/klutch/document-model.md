@@ -15,7 +15,7 @@ A Klutch controls drawing set is organized in **sheet number groups**. Each grou
 - Sheet numbers are reserved by group, and **gaps are intentional**. A sheet added after a prior submittal goes into an open number in its group, so existing sheets keep their numbers and cross-references do not have to be reworked.
 - **Group order is fixed; group size is not.** Each project sizes its groups at the start of the set (for example a building with six floors reserves more spatial sheets). Decide this before the first submittal, not by renumbering afterward.
 - **Multi-system sets give each system its own block of ten**, starting on a multiple of ten plus one (21, 31, 41, ...). Each block repeats the engineering pattern for that system.
-- A sheet number may carry more than one page (for example "Network diagrams, 1 of 2"). *(To confirm how pages within one sheet number are labelled.)*
+- **One sheet per page.** Every page has exactly one sheet number and one sheet title. Content that needs more than one page takes consecutive sheet numbers, and the title says so: `SYSTEM WIRING (1 OF 2)`, `SYSTEM WIRING (2 OF 2)`.
 - Unused numbers are simply absent from the set. The table of contents lists only issued sheets.
 - Once a sheet number has been issued on a submittal, it is not reused for different content. *(To confirm.)*
 
@@ -38,6 +38,23 @@ Each engineering block, single-system (11–20) or per system (21–30, 31–40,
 4. **System wiring.** As many sheets as needed:
    - The first one or two sheets: power, and complex field devices such as VFDs and actuators.
    - Then the controller sheets: KMC controller terminals and their field device wiring are condensed together on their own sheets. This follows from the paper-space needs of the KMC controllers and how the wiring diagrams were originally set up.
+5. **Anything else the system needs shown**, after the wiring sheets.
+
+## Sheet titles
+
+Sheet titles are upper case and follow the same names on every set:
+
+| Sheet | Title |
+|---|---|
+| Table of contents | `TITLE PAGE` |
+| Floor plan | `L1 FLOORPLAN` (level prefix per floor) |
+| Network | `DEVICES & NETWORKS` |
+| Process | `PROCESS & INSTRUMENTATION DIAGRAM` |
+| Narrative | `CONTROLS NARRATIVE` |
+| General arrangement | `DDC PANEL LAYOUT` |
+| Wiring | `SYSTEM WIRING (1 OF n)` |
+
+Multi-sheet content numbers its pages in the title, `(1 OF n)`. *(To confirm: whether a multi-system set prefixes titles with the system tag, for example `AHU-1 CONTROLS NARRATIVE`, or carries the system only in the title block project field.)*
 
 ## Rules for specific content
 
@@ -78,19 +95,18 @@ Seven systems (four air handlers, three other systems, including two exhaust sys
 |---|---|---|
 | 1 | Table of contents | Table of contents |
 | 2–10 | Floor plans for six floors (spatial group widened) | Spatial |
-| 11 | Network diagrams and network device tables (two pages) | Logical / network (narrowed to one sheet number) |
+| 11–12 | Network diagrams and network device tables (two sheets) | Logical / network (narrowed) |
 | 21–30 | System 1: P&ID through wiring | Engineering block |
 | 31–40 | System 2 | Engineering block |
 | 41–50 | System 3 | Engineering block |
 | 51–60 | System 4 | Engineering block |
 | ... | One block per remaining system | Engineering block |
 
-Sheets 12–20 are open.
+Sheets 13–20 are open.
 
 ## Open questions (owner to confirm)
 
-- How are pages within one sheet number labelled (11.1 / 11.2, "1 of 2", or sheet 11 and 12)?
-- In a multi-system set, is 12–20 reserved for anything (for example plant-wide or common narrative, typical details), or simply open?
+- In a multi-system set, are the sheets between the network group and 21 reserved for anything (for example plant-wide or common narrative, typical details), or simply open?
 - Shared hardware across systems (one panel serving two systems, a common network): which block carries it?
 - Groups after the last system block: reserved for anything (details, schedules, as-built or commissioning records)?
 - Revision scheme (for example Rev 1 Initial Submittal) and drawing file naming: on this page or a separate one?
