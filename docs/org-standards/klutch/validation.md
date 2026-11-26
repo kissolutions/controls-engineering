@@ -60,11 +60,22 @@ Typical damper actuator: one command, fail closed, one feedback.
 - The single feedback is an end switch, usually set at 50% or more toward the open side. Check the setting direction against the damper's normally open or normally closed configuration.
 - Any departure from the typical set is a deviation: approve it or confirm it against the datasheet.
 
-## 5. Names match across the drawings
+## 5. Names match the EDP everywhere
 
-- Each device has one device tag (hyphenated) on every sheet, in every register, and matching the source documents.
-- Each point has one signal name (underscored) on every sheet and in the register, built from the owner's naming standard ([Naming](naming.md)).
-- Panels and equipment use the same tag on every sheet.
+The EDP is the source of truth for every device tag, signal name and SCADA name; the framework requirement is [Identifier consistency validation](../../engineering-data/identifier-consistency-validation.md). Klutch checks these places against the EDP:
+
+| Where | What to check |
+|---|---|
+| PER | Records, issues and RFIs that cite tags |
+| Network diagram and device tables (sheets 6–10) | Device tags, controller names, network addresses and instance IDs |
+| P&ID and instrument BOM | Device tags and signal names, paired as in the EDP |
+| Controls narrative | Signal names, setpoint names and device tags in the text and tables |
+| DDC panel layout and BOM | Panel, controller and component tags |
+| Wiring diagrams | Device tag on each device; signal name on each wire; terminal matches the EDP |
+| Floor plans | Device and equipment tags |
+| KMC programs and object lists | Object names match the signal / SCADA names |
+| SCADA (Iconics) | Point names match the SCADA names |
+| RFIs and transmittals to the owner | Tags used in questions match the EDP |
 
 ## 6. Drawing-to-register sync, after every drawing revision
 
