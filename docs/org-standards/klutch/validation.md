@@ -47,8 +47,9 @@ Every controllable valve actuator has a full set of commands and feedbacks:
 |---|---|---|
 | Analog (modulating) | One 2–10 VDC command | One 2–10 VDC position feedback |
 | Digital (open/close), spring return | One command | Two: open and closed end switches |
-| Digital (open/close), non-spring return | Two commands (drive open, drive closed) *(to confirm)* | Two: open and closed end switches |
+| Digital (open/close), non-spring return | Two commands (drive open, drive closed) | Two: open and closed end switches |
 
+- Every analog valve has a position feedback; a missing feedback is a deviation.
 - A valve without the typical feedback set (for example only one end switch) is a deviation: approve it or confirm it against the actuator datasheet.
 - Every valve states its fail position, and the fail position matches the actuator (spring return direction) and the specification.
 
@@ -116,6 +117,7 @@ Checks:
 See [Panel and hardware: KMC CAN modules and 4–20 mA inputs](panel-hardware.md#kmc-can-modules-and-4-20-ma-inputs).
 
 - Every Klutch-sourced 4–20 mA loop draws its power from TS-FP, downstream of the CR-FP contact (wiring diagrams and EDP power source field).
+- Every KMC panel with Klutch-powered 4–20 mA loops has CR-FP.
 - CR-FP's coil is on a **KMC1 relay output** (EDP IO LIST and wiring diagram). A CR-FP on a CAN module output is a failure.
 - The panel layout and the wiring sheet showing CR-FP carry the large boxed "disable CR-FP before first power-up" note next to CR-FP.
 - The logic handoff and the program include: relinquish default 0 on the CR-FP output, the reset-to-0 logic, and the EIO-network "CAN modules booted" permissive before CR-FP closes. Checked at programming review.
@@ -133,6 +135,4 @@ See [Panel and hardware: KMC CAN modules and 4–20 mA inputs](panel-hardware.md
 
 ## Open questions (owner to confirm)
 
-- Non-spring-return digital valves: two commands (open / close) as shown?
-- Analog valves: is position feedback always required, or only where the specification or owner asks?
 - Should these gates live in the EDP as columns or a check tab, so a script can run the mechanical ones (sections 1, 2, 5, 6)?

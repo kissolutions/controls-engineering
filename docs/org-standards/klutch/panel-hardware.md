@@ -102,7 +102,7 @@ The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common 
 
 **Known hardware problem (Klutch field experience, 2026):** on all KMC CAN expansion modules, the universal inputs start up in a state where a 4–20 mA input is a direct short until the module has booted. It is not fixed in firmware, and even a firmware fix would not cure it: the board itself needs a redesign. A 4–20 mA loop powered while a CAN module is booting is shorted through the input.
 
-**Rule:** every 4–20 mA loop powered by Klutch is dead until the CAN modules have booted.
+**Rule:** every 4–20 mA loop powered by Klutch is dead until the CAN modules have booted. **CR-FP is required on every KMC panel with Klutch-powered 4–20 mA loops**, whether or not any 4–20 mA input is on a CAN module.
 
 - Klutch-sourced 4–20 mA field power (FP) is switched by **CR-FP** and distributed on TS-FP1 / TS-FP2 downstream of its contact.
 - The directive allows separate field power groups so controlling and monitoring loops can be isolated from each other: for example CR-FP for the KMC1 controlling loops and a second relay (`CR-FP2`) for monitoring-only loops on a CAN module. Each group gets its own relay, fused 24 VDC terminal and TS-FP strips. Most panels will need only one group; the provision is there when a project calls for it.

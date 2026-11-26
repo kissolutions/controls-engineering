@@ -8,7 +8,7 @@ profile_version: 0.1
 
 # Klutch Revision Numbering
 
-Klutch deliverables (PER, EDP, drawing sets and other engineering documents) use software-style revision numbers: **MAJOR.MINOR.BUILD**.
+Klutch engineering registers (PER, EDP) and other engineering working documents use software-style revision numbers: **MAJOR.MINOR.BUILD**. Drawings follow their own revision system (see Drawings below).
 
 | Part | Increments when | Example |
 |---|---|---|
@@ -20,12 +20,18 @@ Klutch deliverables (PER, EDP, drawing sets and other engineering documents) use
 
 - **The owner decides how and when to uprev.** The agent proposes a MAJOR or MINOR uprev and does it only when the owner says so. The BUILD number goes up by one at each distinct agent / owner handoff unless the owner says otherwise.
 - **Before the first submittal**, work is `0.x.x`. When the `0.x.x` work is accepted as the first submittal, everything is uprevved together to `1.0.0`.
-- A MINOR uprev resets BUILD to 0; a MAJOR uprev resets MINOR and BUILD to 0. *(To confirm.)*
+- **MAJOR and MINOR stay aligned** across the PER and EDP. BUILD may differ between them.
+- BUILD resets to 0 after a MAJOR or MINOR uprev; a MAJOR uprev also resets MINOR to 0.
 - An uprev records a revision number only. It is not human acceptance, a snapshot or a configuration baseline; those are recorded separately in the PER.
 - Every uprev gets a change log entry naming what changed.
 
+## Drawings
+
+- The drawing set does **not** carry MAJOR.MINOR.BUILD. CAD follows its own revision system.
+- **Every transmittal is a drawing revision** (Rev 1, Rev 2, ... with a description such as INITIAL SUBMITTAL). The transmittal is currently the only client-facing, revision-controlled document.
+- The PER, EDP and programming logic hold enough information to rebuild the drawings almost from scratch; the registers' revision numbers carry the engineering history, the drawing revision carries the client-facing issue history.
+- Record which register revision each drawing transmittal was built from (PER SOURCES entry for the drawing set, or the change log).
+
 ## Open questions (owner to confirm)
 
-- How the drawing title block revision (for example "Rev 1 INITIAL SUBMITTAL") relates to `MAJOR.MINOR.BUILD`: does the title block show only MAJOR with a description, or the full number?
 - File naming: for example `<PROJECT>_PER_v1.2.3.xlsx`.
-- Whether the PER, EDP and drawings share one revision number or each keeps its own.
