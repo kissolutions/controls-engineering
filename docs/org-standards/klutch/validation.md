@@ -62,7 +62,7 @@ Typical damper actuator: one command, fail closed, one feedback.
 
 ## 5. Names match the EDP everywhere
 
-The EDP is the source of truth for every device tag, signal name and SCADA name; the framework requirement is [Identifier consistency validation](../../engineering-data/identifier-consistency-validation.md). Klutch checks these places against the EDP:
+The EDP is the source of truth for every device tag, signal name and SCADA name; the framework requirement is [Identifier consistency validation](../../engineering-data/identifier-consistency-validation.md). Do not run these checks until every EDP row in scope has its Source Document Tag and Operational / SCADA Name filled in (framework precondition). Klutch then checks these places against the EDP:
 
 | Where | What to check |
 |---|---|

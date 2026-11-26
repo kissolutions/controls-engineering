@@ -17,6 +17,14 @@ Every name and tag for a System, Equipment, Device and Point is validated agains
 - A naming change is made in the EDP first and logged; downstream artifacts are then updated and re-checked. An artifact is never corrected by editing it alone (consistent with "never edit a generated view as an alternate source of truth").
 - The convention for building names (separators, prefixes, owner naming standards) is recorded once, by the project, against the EDP. Validation checks artifacts against the EDP values, not against the convention.
 
+## Precondition
+
+**Validation is not performed until the EDP has the Source Document Tag and the Operational / SCADA Name filled in** for every row in scope. A blank, placeholder (`TBD`, `##`) or unresolved value is not a valid reference.
+
+- Before running the checks, list the EDP rows missing either value. Those rows are open items, not passes.
+- Partial validation is allowed only for the rows that meet the precondition, and the record says which rows were excluded and why.
+- A row whose source document has no tag records that fact (with the provisional tag assigned and its open item), rather than leaving the field blank.
+
 ## What each check confirms
 
 | Check | Confirms |
