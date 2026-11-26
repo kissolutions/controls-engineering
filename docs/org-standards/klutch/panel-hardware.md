@@ -12,18 +12,58 @@ Standard DDC panel conventions that the pre-canned panel design implements. Proj
 
 ## Panel power
 
-- **One building branch circuit** feeds the panel. A separate building circuit for dampers is not expected.
-- **Separate 120 VAC fuses inside the panel** (no additional breakers):
-  1. **Controls:** a 120 VAC fuse for the 24 VDC power supply and everything it feeds.
-  2. **24 VAC:** a separate 120 VAC fuse for the 24 VAC transformer that feeds the damper actuators (existing Klutch practice).
-- **24 VAC distribution on fused terminal blocks.** The transformer secondary is broken out to a few fused terminal blocks (the existing Klutch motif). Damper actuators and the damper proving circuit get their own fused 24 VAC terminal.
-- Pulling or replacing the 24 VDC power supply, or pulling its 120 VAC fuse, does not affect anything on 24 VAC. The controllers can be isolated or removed while the dampers stay live for HAND or bypass operation.
-- **Caution:** the panel main breaker, or the 120 VAC fuse feeding the 24 VAC transformer, removes damper power. With only one branch circuit in the panel, label which 120 VAC fuse feeds the transformer, and label the 24 VAC damper terminals as live with the controls off.
+Reference: Klutch pre-canned DDC panel power sheet (2026), drawn once for several air handlers with per-unit variants of the 24 VAC and 24 VDC groups.
+
+### 120 VAC distribution
+
+- One incoming branch circuit: 120 VAC line, neutral and equipment grounding conductor (E.G.C.).
+- Line passes through one supplemental circuit breaker in the panel (CB2, 10 A on the reference sheet), then to the **TS-120VAC** fused terminal blocks (14 AWG):
+
+| Fused terminal | Fuse (reference) | Feeds |
+|---|---|---|
+| 1 | 1 A | PS1, the 24 VDC power supply |
+| 2 | 5 A | Panel receptacle |
+| 3 | 1 A | XFMR1, the 24 VAC transformer |
+| 4 | — | Spare |
+
+- Neutrals return on the TS-120VAC neutral terminals. The receptacle and transformer are grounded (#14 green).
+
+### 24 VAC distribution (XFMR1)
+
+- **TB-24AC**: the transformer secondary feeds fused terminals (1T, 2T), which feed one load terminal per device (3T, 4T, 5T, ...). Each load returns on its own B terminal.
+- Loads on the reference sheet: the control valve actuators (CV-CW, CV-HW), the outdoor air damper (OAD ON/OFF), and spares. A unit variant adds a 24 VAC field supply pair.
+- The 24 VAC common is grounded at the terminal strip.
+
+### 24 VDC distribution (PS1)
+
+- Each group of equipment is on its own fused terminal (1 A on the reference sheet), with its own return terminal:
+
+| Fused terminal | Feeds |
+|---|---|
+| 1T | Router (ROU1) |
+| 2T | KMC1 and KMC2 |
+| 3T | KMC3 and KMC4 |
+| 4T | Field power, FP(+) / FP(−) |
+| 5T | General terminal strip, TS-GEN |
+| 6T–8T | Spares (a unit variant uses one for a second field power group) |
+
+### Field 24 VDC power (FP)
+
+- Field device loop power (FP) is switched through a contact of relay **CR-FP**, then distributed on terminal strips **TS-FP1** (+) and **TS-FP2** (−). *(To confirm: CR-FP is the relay that cycles field loop power, the KMC 4–20 mA mitigation below.)*
+
+### Standard relays
+
+The pre-canned sheet carries **CR-FP**, **CR-INTLK** and **CR-DPR** (coil plus one 11–14 contact each).
+
+### Isolation
+
+- Pulling PS1's 1 A fuse removes 24 VDC (controllers, router, field power) without affecting anything on 24 VAC: valves and dampers keep their power for HAND or bypass operation.
+- Pulling XFMR1's 1 A fuse, or opening CB2, removes 24 VAC. Label which fuse feeds the transformer, and label the 24 VAC terminals as live with the 24 VDC off.
 
 ## Damper actuator power: dedicated 24 VAC transformer
 
 - **Damper actuators are 24 VAC.** Specify 24 VAC (or 24 VAC/DC) actuators and power them only from the damper transformer. This makes damper operation independent of the 24 VDC power supply.
-- The transformer is a Class 2 control transformer in the panel's existing 24 VAC transformer provision, sized as the **smallest standard size that does the job**:
+- The transformer is XFMR1, a Class 2 control transformer in the panel's existing 24 VAC provision, sized as the **smallest standard size that does the job**:
   - sum the running (sizing) VA of every actuator on it from the datasheets, plus the relay coils it feeds;
   - add margin *(Klutch margin to confirm, for example 25%)*;
   - select the next standard size up.
@@ -54,4 +94,5 @@ Two-position dampers switched by relay contacts do not have this problem.
 
 - Damper transformer sizing margin.
 - Standard transformer sizes used in the pre-canned design.
-- 120 VAC fuse ratings for the 24 VDC supply and the 24 VAC transformer; fuse ratings for the 24 VAC terminal blocks.
+- Fuse ratings on TB-24AC (1T, 2T).
+- Is the 24 VDC common (PS1 −) also grounded? With the 24 VAC common grounded and modulating valve actuators on 24 VAC, the two commons are tied through ground.
