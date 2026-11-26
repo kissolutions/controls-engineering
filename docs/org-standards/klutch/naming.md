@@ -31,6 +31,17 @@ The device tag ties the controls drawings to the engineered and architectural dr
 - Signal names use underscores only. Never put a hyphen in a signal or object name.
 - Device tags and signal names are different identifiers from the framework's internal IDs (`D-##`, `P-##`) and from vendor part numbers. A field that holds a name never holds a part number.
 
+## Software points
+
+| Point | Naming |
+|---|---|
+| All I/O points | Owner standard |
+| Setpoints and commands available through SCADA | Owner standard |
+| Software points exposed and used day to day on the SCADA system (for example unit mode, alarm status) | Owner standard |
+| Internal values not needed to operate the system (state machine words such as `TRIP_WORD` and `ALARM_WORD`, timers, tunables such as `FAN_PROOF_DLY`) | Programmer's names; the owner standard is not required |
+
+In practice, everything labelled on a drawing follows the owner standard. The exception is internal values named in the controls narrative. When an internal value is later exposed on the SCADA system for operators, it is renamed to the owner standard. *(To confirm.)*
+
 ## Panels and controllers
 
 | Item | Form | Kind | Example |
@@ -51,4 +62,3 @@ Controller tags are Klutch's internal labels for drawings and terminal reference
 ## Open questions (owner to confirm)
 
 - Standard signal suffixes: these come from each owner's standard, so the profile should not carry one master list. Capture a list only for Klutch's default form.
-- Software points (mode, alarm words, setpoints): same underscored form?
