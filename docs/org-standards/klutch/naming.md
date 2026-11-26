@@ -38,9 +38,9 @@ The device tag ties the controls drawings to the engineered and architectural dr
 | All I/O points | Owner standard |
 | Setpoints and commands available through SCADA | Owner standard |
 | Software points exposed and used day to day on the SCADA system (for example unit mode, alarm status) | Owner standard |
-| Internal values not needed to operate the system (state machine words such as `TRIP_WORD` and `ALARM_WORD`, timers, tunables such as `FAN_PROOF_DLY`) | Programmer's names; the owner standard is not required |
+| Internal values not needed to operate the system (state machine words such as `TRIP_WORD` and `ALARM_WORD`, timers, tunables such as `FAN_PROOF_DLY`) | Some follow the owner standard and some may use programmer's names. *(Criterion to confirm.)* |
 
-In practice, everything labelled on a drawing follows the owner standard. The exception is internal values named in the controls narrative. When an internal value is later exposed on the SCADA system for operators, it is renamed to the owner standard. *(To confirm.)*
+In practice, everything labelled on a drawing follows the owner standard. The possible exception is internal values named in the controls narrative. When an internal value is later exposed on the SCADA system for operators, it is renamed to the owner standard.
 
 ## Panels and controllers
 
@@ -61,4 +61,5 @@ Controller tags are Klutch's internal labels for drawings and terminal reference
 
 ## Open questions (owner to confirm)
 
+- Which internal values must follow the owner standard, and by what criterion (for example anything trended, anything a technician adjusts at commissioning, anything shown in the narrative)?
 - Standard signal suffixes: these come from each owner's standard, so the profile should not carry one master list. Capture a list only for Klutch's default form.
