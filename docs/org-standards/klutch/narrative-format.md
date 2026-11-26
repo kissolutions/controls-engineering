@@ -47,7 +47,7 @@ The basic state machine, as a table: one row per mode, with the condition that e
 | What the system does | Outputs in this mode: fan or pump, valves, dampers, loops held or released |
 | Leaves to | Next mode(s) and the condition for each |
 
-The standard mode set is SAFETY, FREEZE, DISABLED, ALARM, READY, STARTUP, RUN, STOPPING and ABORTING. The full definition of each mode (entry, exit, TRIP_WORD and ALARM_WORD handling, the drive HAND/OFF rule) belongs to the canonical state machine in the logic package (`kissolutions/bas-logic-gen`). The narrative states how this system uses it and leaves out modes the system does not need.
+The standard mode set is SAFETY, FREEZE, DISABLED, ALARM, READY, STARTUP, RUN, STOPPING and ABORTING. The full definition of each mode (entry, exit, TRIP_WORD and ALARM_WORD handling, the drive HAND/OFF rule) belongs to the canonical state machine in the logic domain (`kissolutions/bas-logic-gen`, when installed and confirmed as a dependency). The narrative states how this system uses it and leaves out modes the system does not need.
 
 ## 4. System sections
 
