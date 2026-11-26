@@ -31,6 +31,15 @@ The device tag ties the controls drawings to the engineered and architectural dr
 - Signal names use underscores only. Never put a hyphen in a signal or object name.
 - Device tags and signal names are different identifiers from the framework's internal IDs (`D-##`, `P-##`) and from vendor part numbers. A field that holds a name never holds a part number.
 
+## Panels and controllers
+
+| Item | Form | Kind | Example |
+|---|---|---|---|
+| DDC panel | `DDC-<SYSTEM>` | Equipment tag (hyphenated; the panel is an equipment assembly) | `DDC-AHU4-1` |
+| Controller | `KMC1`, `KMC2`, ... | Internal tag, numbered in sequence for successive KMC controllers in the panel | `KMC1` (main controller), `KMC2` (expansion) |
+
+Controller tags are Klutch's internal labels for drawings and terminal references (`KMC1 UI3`). They are not the controllers' BACnet device names, which follow the owner's naming standard.
+
 ## Mapping to the framework registers
 
 | Klutch name | EDP field |
@@ -41,6 +50,5 @@ The device tag ties the controls drawings to the engineered and architectural dr
 
 ## Open questions (owner to confirm)
 
-- Panel and controller names: panel `DDC-<SYSTEM>` (for example `DDC-AHU4-1`), controllers `KMC1`, `KMC2`: are these the standard forms, and is the panel name hyphenated as a device tag?
 - Standard signal suffixes: these come from each owner's standard, so the profile should not carry one master list. Capture a list only for Klutch's default form.
 - Software points (mode, alarm words, setpoints): same underscored form?
