@@ -47,7 +47,7 @@ Sheet titles are upper case and follow the same names on every set:
 | Sheet | Title |
 |---|---|
 | Table of contents | `TITLE PAGE` |
-| Floor plan | `L<level> <NEW / DEMO> FLOOR PLAN`, for example `L1 NEW FLOOR PLAN`, `L3 DEMO PLAN` |
+| Floor plan | `L<level> NEW FLOOR PLAN` or `L<level> DEMO PLAN`, for example `L1 NEW FLOOR PLAN`, `L3 DEMO PLAN` |
 | Network | `DEVICES & NETWORKS` |
 | Process | `PROCESS & INSTRUMENTATION DIAGRAM` |
 | Narrative | `CONTROLS NARRATIVE` |
@@ -57,7 +57,7 @@ Sheet titles are upper case and follow the same names on every set:
 - Floor plans are named by level and by whether they show new work or demolition.
 - Multi-sheet content numbers its pages in the title, `(1 OF n)`.
 - In a multi-system set, every sheet in a system block is prefixed with the system tag: `AHU-1 PROCESS & INSTRUMENTATION DIAGRAM`, `AHU-1 SYSTEM WIRING (1 OF 2)`. A single-system set may omit the prefix.
-- The AHU-4-1 set's `L1 FLOORPLAN` predates this convention. *(To confirm the exact wording: `FLOOR PLAN` vs `PLAN`, as in `L3 DEMO PLAN`.)*
+- The AHU-4-1 set's `L1 FLOORPLAN` predates this convention. New-work sheets say `FLOOR PLAN` and demolition sheets say `DEMO PLAN`, following common architectural usage.
 
 ## Rules for specific content
 
