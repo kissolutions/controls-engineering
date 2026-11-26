@@ -36,7 +36,12 @@ Reference: Klutch pre-canned DDC panel power sheet (2026), drawn once for severa
 
 - **TB-24AC**: one fused terminal block per actuator (each valve, each damper), fed from the transformer secondary, with its own return terminal. No unfused distribution terminals between the fuse and the device.
 - Loads on the reference sheet: the control valve actuators (CV-CW, CV-HW), the outdoor air damper (OAD ON/OFF), and spares. A unit variant adds a 24 VAC field supply pair.
-- The 24 VAC common is grounded at the terminal strip.
+
+### Grounding and common reference
+
+- The 24 VAC transformer's negative (common) terminal is connected to ground **before any fusing**.
+- PS1(−) is bonded to that same point **directly from the power supply**, not through terminal blocks.
+- The 24 VAC and 24 VDC circuits therefore share one deliberate reference. Analog signals between the KMC (DC side) and 24 VAC actuators, such as 2–10 VDC valve commands, work against that common reference.
 
 ### 24 VDC distribution (PS1)
 
@@ -53,7 +58,7 @@ Reference: Klutch pre-canned DDC panel power sheet (2026), drawn once for severa
 
 ### Field 24 VDC power (FP)
 
-- Field device loop power (FP) is switched through a contact of relay **CR-FP**, then distributed on terminal strips **TS-FP1** (+) and **TS-FP2** (−). *(To confirm: CR-FP is the relay that cycles field loop power, the KMC 4–20 mA mitigation below.)*
+- Field device loop power (FP) is switched through a contact of relay **CR-FP**, then distributed on terminal strips **TS-FP1** (+) and **TS-FP2** (−). CR-FP cycles the 4–20 mA field power (see KMC controllers below).
 
 ### Standard relays
 
@@ -74,15 +79,9 @@ The pre-canned sheet carries **CR-FP**, **CR-INTLK** and **CR-DPR** (coil plus o
 - Everything in the damper proving circuit runs from this transformer: actuator power switched by the KMC relay output, with the CR-DPR contact in parallel; the CR-DPR coil, switched by the drive or bypass "started" relay output; and the CR-ES coil, switched by the damper end switch.
 - Only dry relay contacts cross between the damper circuit, the 24 VDC controls circuit and the drive or bypass inputs. Commons are not connected across those boundaries.
 
-### Caution: modulating dampers
+### Modulating actuators
 
-A modulating actuator commanded by a KMC analog output (2–10 VDC) shares its signal common with the controller. Its 24 VAC supply common is then tied to the controller's DC common. If a project has modulating dampers:
-
-- tie the damper transformer secondary common to the controller common at one point only, deliberately and drawn;
-- keep that transformer for half-wave devices that share the common (do not also feed full-wave devices or rectified loads from it);
-- otherwise use a separate transformer for the modulating actuators.
-
-Two-position dampers switched by relay contacts do not have this problem.
+The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common reference), so a modulating actuator on 24 VAC can take a 2–10 VDC command from the KMC. Keep that single bond point; do not add further common-to-ground connections at terminals or field devices, and do not feed full-wave rectified loads from XFMR1.
 
 ## Relay coils switched by drive or bypass outputs
 
@@ -92,11 +91,11 @@ Two-position dampers switched by relay contacts do not have this problem.
 ## KMC controllers
 
 - The KMC output that commands a damper is always a relay output.
-- Land 4–20 mA inputs on the main controller, not on CAN expansion modules, and leave panel space for a relay to switch field loop power. *(Reason and affected models to be documented from the KMC source.)*
+- Land 4–20 mA inputs on the main controller, not on CAN expansion modules. *(Reason and affected models to be documented from the KMC source.)*
+- Field loop power for 4–20 mA devices is switched by **CR-FP**, so the controller (or a technician) can cycle field power to recover the loops.
 
 ## Open questions
 
 - Damper transformer sizing margin.
 - Standard transformer sizes used in the pre-canned design.
 - Fuse ratings on TB-24AC (1T, 2T).
-- Is the 24 VDC common (PS1 −) also grounded? With the 24 VAC common grounded and modulating valve actuators on 24 VAC, the two commons are tied through ground.
