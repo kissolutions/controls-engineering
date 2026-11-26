@@ -18,7 +18,7 @@ Klutch builds deliverables on one repeated motif so that content is copy/paste b
 | [Document model](document-model.md) | Drawing set structure, sheet numbering, what each sheet group carries | draft |
 | [Naming](naming.md) | Device tags vs signal names; panel, controller, point, SCADA and object names | draft |
 | [Narrative format](narrative-format.md) | Controls narrative layout and required content | draft |
-| Panel and hardware | Controller, I/O, power and relay conventions | planned |
+| [Panel and hardware](panel-hardware.md) | Panel power, damper 24 VAC circuit, relay suppression, KMC rules | draft |
 | [Validation](validation.md) | Device, point and drawing-representation gates before issue | draft |
 | [Client conventions: UTMB](client-conventions/utmb.md) | UTMB unwritten expectations (VFD fire/safety, damper interlocks) and Klutch's solutions | draft |
 | Drawing standards | CAD symbols and go-by drawings | deferred until CAD go-bys exist |
