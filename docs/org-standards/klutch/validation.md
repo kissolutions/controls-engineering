@@ -84,7 +84,16 @@ The EDP is the source of truth for every device tag, signal name and SCADA name;
 - Terminal assignments in the EDP match the wiring sheets.
 - Removed scope is removed everywhere: search every register note, BOM row, wiring sheet and narrative for the removed tags.
 
-## 7. Issue checks
+## 7. Field loop power and KMC CAN modules
+
+See [Panel and hardware: KMC CAN modules and 4–20 mA inputs](panel-hardware.md#kmc-can-modules-and-4-20-ma-inputs).
+
+- Every Klutch-sourced 4–20 mA loop draws its power from TS-FP, downstream of the CR-FP contact (wiring diagrams and EDP power source field).
+- CR-FP's coil is on a **KMC1 relay output** (EDP IO LIST and wiring diagram). A CR-FP on a CAN module output is a failure.
+- The logic handoff and the program include: relinquish default 0 on the CR-FP output, the reset-to-0 logic, and the EIO-network "CAN modules booted" permissive before CR-FP closes. Checked at programming review.
+- Every 4–20 mA input on a CAN module is listed. An externally powered 4–20 mA device on a CAN module is recorded as an open risk.
+
+## 8. Issue checks
 
 - Every sheet shows the same revision, date and description for the issue.
 - The issued PDF was exported after the last drawing edit.
