@@ -13,11 +13,12 @@ Standard DDC panel conventions that the pre-canned panel design implements. Proj
 ## Panel power
 
 - **One building branch circuit** feeds the panel. A separate building circuit for dampers is not expected.
-- **Two supplemental circuit breakers** inside the panel on that branch circuit:
-  1. **Controls:** the 24 VDC power supply and everything it feeds (controllers, transmitters, I/O groups, each on its own fused output).
-  2. **Damper actuators:** the dedicated 24 VAC transformer below.
-- Either breaker can be opened on its own, so the controllers can be isolated or removed while the damper circuit stays live for HAND or bypass operation, and the reverse.
-- Label the damper circuit as a source that remains live with the controls breaker off.
+- **Separate 120 VAC protection inside the panel** (supplemental circuit breakers or fuses) for:
+  1. **Controls:** the 24 VDC power supply and everything it feeds.
+  2. **24 VAC:** the 24 VAC transformer that feeds the damper actuators.
+- **24 VAC distribution on fused terminal blocks.** The transformer secondary is broken out to a few fused terminal blocks (the existing Klutch motif). Damper actuators and the damper proving circuit get their own fused 24 VAC terminal.
+- Pulling or replacing the 24 VDC power supply, or opening its 120 VAC protection, does not affect anything on 24 VAC. The controllers can be isolated or removed while the dampers stay live for HAND or bypass operation.
+- **Caution:** the panel main breaker, or the 120 VAC breaker or fuse feeding the 24 VAC transformer, removes damper power. With only one branch circuit in the panel, label which 120 VAC device feeds the transformer, and label the 24 VAC damper terminals as live with the controls off.
 
 ## Damper actuator power: dedicated 24 VAC transformer
 
@@ -53,4 +54,4 @@ Two-position dampers switched by relay contacts do not have this problem.
 
 - Damper transformer sizing margin.
 - Standard transformer sizes used in the pre-canned design.
-- Whether the controls breaker or the damper breaker comes first, and breaker ratings.
+- Breaker and fuse ratings for the 24 VDC supply and the 24 VAC transformer; fuse ratings for the 24 VAC terminal blocks.
