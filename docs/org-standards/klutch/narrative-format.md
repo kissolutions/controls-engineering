@@ -86,6 +86,6 @@ One table of every alarm.
 - Every setpoint says what it controls (no ambiguous names such as a bare `STPT` used for both discharge air and room).
 - No "proposed", "TBD" or drafting language remains unless it is an open item agreed with the owner.
 
-## Open questions (owner to confirm)
+## Trial status
 
-- Column sets for the modes, setpoints and alarms tables above are proposed from the AHU-4-1 narrative; confirm or replace with the standard ones.
+The table column sets above are adopted for trial use (owner, 2026-11-26); there was no prior standard. Revise them from project use and record changes in the profile CHANGELOG.
