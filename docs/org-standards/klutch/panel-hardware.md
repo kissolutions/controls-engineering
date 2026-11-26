@@ -30,7 +30,7 @@ Reference: Klutch pre-canned DDC panel power sheet (2026), drawn once for severa
 
 ### 24 VAC distribution (XFMR1)
 
-- **TB-24AC**: the transformer secondary feeds fused terminals (1T, 2T), which feed one load terminal per device (3T, 4T, 5T, ...). Each load returns on its own B terminal.
+- **TB-24AC**: one fused terminal block per actuator (each valve, each damper), fed from the transformer secondary, with its own return terminal. No unfused distribution terminals between the fuse and the device.
 - Loads on the reference sheet: the control valve actuators (CV-CW, CV-HW), the outdoor air damper (OAD ON/OFF), and spares. A unit variant adds a 24 VAC field supply pair.
 - The 24 VAC common is grounded at the terminal strip.
 
@@ -62,7 +62,7 @@ The pre-canned sheet carries **CR-FP**, **CR-INTLK** and **CR-DPR** (coil plus o
 
 ## Actuator power: 24 VAC transformer (XFMR1)
 
-- **Valve and damper actuators are 24 VAC.** Specify 24 VAC (or 24 VAC/DC) actuators and power them from XFMR1, each on its own TB-24AC terminal. This makes actuator operation independent of the 24 VDC power supply.
+- **Valve and damper actuators are 24 VAC.** Specify 24 VAC (or 24 VAC/DC) actuators and power them from XFMR1, each on its own fused TB-24AC terminal block. This makes actuator operation independent of the 24 VDC power supply.
 - The transformer is XFMR1, a Class 2 control transformer in the panel's existing 24 VAC provision, sized as the **smallest standard size that does the job**:
   - sum the running (sizing) VA of every valve and damper actuator on it from the datasheets, plus the relay coils it feeds;
   - add margin *(Klutch margin to confirm, for example 25%)*;
