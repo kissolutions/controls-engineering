@@ -91,7 +91,8 @@ The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common 
 ## KMC controllers
 
 - The KMC output that commands a damper is always a relay output.
-- Prefer landing 4–20 mA inputs on the main controller (KMC1) rather than on CAN expansion modules (see below).
+- **All 4–20 mA inputs are packed into KMC1**, never landed on CAN expansion modules (see below).
+- KMC1 normally offers 8 UIs on its terminal blocks (UI3–UI10). UI1 and UI2 sit on the RJ45 room sensor port. When more than 8 4–20 mA inputs are needed, use the KMC RJ45 breakout board on that port to use UI1 and UI2 as standard UIs. The room sensor port has nothing special about it beyond making KMC thermostats easy to connect. *(Record the breakout board part number.)*
 
 ### KMC CAN modules and 4–20 mA inputs
 
@@ -102,10 +103,11 @@ The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common 
 - Klutch-sourced 4–20 mA field power (FP) is switched by **CR-FP** and distributed on TS-FP1 / TS-FP2 downstream of its contact.
 - **CR-FP is driven by a KMC1 relay output**, never by a CAN module output. Its placement on KMC1 is critical.
 - **CR-FP starts open (field power off).** KMC1 firmware retains the output position through a power cycle, so the program sets the output's relinquish default to 0, and resets it to 0 whenever it finds it at 1. The relay is then all but guaranteed to start open.
-- **CR-FP closes only after KMC1 has confirmed, by polling the EIO network, that the CAN modules are booted.** *(To confirm: whether CR-FP opens again if a CAN module drops off the EIO network or reboots.)*
+- **CR-FP closes only after KMC1 has confirmed, by polling the EIO network, that the CAN modules are booted.**
+- **Under discovery:** what happens if a CAN module drops off the EIO network or reboots while running, and whether CR-FP should open again. Current belief is that the short occurs only after a power-off. Revise this section as field findings come in.
 - This programming is part of the engineering-to-logic handoff for every panel with CR-FP, and is checked at programming review.
 
-**Open item:** behavior of the CAN module inputs with externally powered (4-wire, self-powered) 4–20 mA transmitters is not known. CR-FP protects the 2-wire loops Klutch sources; it does not remove power from an externally powered transmitter. Treat an externally powered 4–20 mA device on a CAN module as an unresolved risk and record it.
+**Open item (under discovery):** behavior of the CAN module inputs with externally powered (4-wire, self-powered) 4–20 mA transmitters is not known. CR-FP protects the 2-wire loops Klutch sources; it does not remove power from an externally powered transmitter. Treat an externally powered 4–20 mA device on a CAN module as an unresolved risk and record it.
 
 ## Open questions
 
