@@ -90,6 +90,7 @@ See [Panel and hardware: KMC CAN modules and 4–20 mA inputs](panel-hardware.md
 
 - Every Klutch-sourced 4–20 mA loop draws its power from TS-FP, downstream of the CR-FP contact (wiring diagrams and EDP power source field).
 - CR-FP's coil is on a **KMC1 relay output** (EDP IO LIST and wiring diagram). A CR-FP on a CAN module output is a failure.
+- The panel layout and the wiring sheet showing CR-FP carry the large boxed "disable CR-FP before first power-up" note next to CR-FP.
 - The logic handoff and the program include: relinquish default 0 on the CR-FP output, the reset-to-0 logic, and the EIO-network "CAN modules booted" permissive before CR-FP closes. Checked at programming review.
 - Every 4–20 mA input is classified in the EDP as **controlling** or **monitoring-only**.
 - **Every controlling 4–20 mA input is on KMC1**, for every system the controller serves. A controlling input on a CAN module is a failure.
