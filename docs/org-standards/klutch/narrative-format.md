@@ -52,7 +52,7 @@ Write rules that are required by code or standard as rules, not as options (for 
 
 ## 4. Setpoints
 
-One table of every value the narrative relies on.
+One table of everything an operator needs to operate the system: setpoints and tunables (deadbands, proof delays, ramp times, alarm limits), whether adjustable by the operator, set by TAB or fixed at commissioning.
 
 | Column | Content |
 |---|---|
@@ -84,5 +84,4 @@ One table of every alarm.
 ## Open questions (owner to confirm)
 
 - Column sets for the modes, setpoints and alarms tables above are proposed from the AHU-4-1 narrative; confirm or replace with the standard ones.
-- Does the setpoints section cover only operator- and TAB-adjustable values, or also internal tunables (proof delays, ramp times)?
 - Do references from the mechanical and electrical drawings and design intent extracts go in the narrative, or on their own sheet after it?
