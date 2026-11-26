@@ -19,6 +19,7 @@ The controls narrative sits in the narrative position of each engineering block 
 | 3 | System sections | Variable: as many as the system needs |
 | 4 | Setpoints | Fixed |
 | 5 | Alarms | Fixed |
+| — | Requirements | When the system has M/E references or design specifications to cite |
 
 ## 1. Overview
 
@@ -61,6 +62,10 @@ One table of everything an operator needs to operate the system: setpoints and t
 | Default | Value and units |
 | Adjusted by | TAB, operator (SCADA), or fixed at commissioning |
 
+## Requirements (references)
+
+References taken from the mechanical and electrical drawings and specifications go in their own section of the narrative, titled for what they are (for example "Requirements" or "Design Specifications"), not scattered through the system sections. Each reference gives the source and locator (document, sheet or section) and what it requires, so the narrative's control can be traced to it. Where the narrative departs from a reference, say so and cite the precedence override. *(To confirm: position of this section in the order.)*
+
 ## 5. Alarms
 
 One table of every alarm.
@@ -84,4 +89,4 @@ One table of every alarm.
 ## Open questions (owner to confirm)
 
 - Column sets for the modes, setpoints and alarms tables above are proposed from the AHU-4-1 narrative; confirm or replace with the standard ones.
-- Do references from the mechanical and electrical drawings and design intent extracts go in the narrative, or on their own sheet after it?
+- Where the Requirements section sits in the order (after Overview, or after Alarms).
