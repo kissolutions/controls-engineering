@@ -91,7 +91,11 @@ The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common 
 ## KMC controllers
 
 - The KMC output that commands a damper is always a relay output.
-- **All 4–20 mA inputs are packed into KMC1**, never landed on CAN expansion modules (see below).
+- **4–20 mA inputs are packed into KMC1 by priority (critical rule):**
+  1. **Controlling inputs first:** every 4–20 mA sensor that any control loop or sequence acts on goes on KMC1. This applies to every system the controller serves, including secondary systems that share it (for example an exhaust fan that does not warrant its own controller).
+  2. **Monitoring-only inputs next**, in the KMC1 UIs left over.
+  3. **Overflow:** only monitoring-only 4–20 mA inputs may go to KMC2 (a CAN module), and only behind their own switched field power (see below). A controlling 4–20 mA input never goes on a CAN module.
+- Classify every 4–20 mA input as controlling or monitoring-only in the EDP before allocating terminals.
 - KMC1 normally offers 8 UIs on its terminal blocks (UI3–UI10). UI1 and UI2 sit on the RJ45 room sensor port. When more than 8 4–20 mA inputs are needed, use the KMC RJ45 breakout board on that port to use UI1 and UI2 as standard UIs. The room sensor port has nothing special about it beyond making KMC thermostats easy to connect. *(Record the breakout board part number.)*
 
 ### KMC CAN modules and 4–20 mA inputs
@@ -101,6 +105,7 @@ The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common 
 **Rule:** every 4–20 mA loop powered by Klutch is dead until the CAN modules have booted.
 
 - Klutch-sourced 4–20 mA field power (FP) is switched by **CR-FP** and distributed on TS-FP1 / TS-FP2 downstream of its contact.
+- The directive allows separate field power groups so controlling and monitoring loops can be isolated from each other: for example CR-FP for the KMC1 controlling loops and a second relay (`CR-FP2`) for monitoring-only loops on a CAN module. Each group gets its own relay, fused 24 VDC terminal and TS-FP strips. Most panels will need only one group; the provision is there when a project calls for it.
 - **CR-FP is driven by a KMC1 relay output**, never by a CAN module output. Its placement on KMC1 is critical.
 - **CR-FP starts open (field power off).** KMC1 firmware retains the output position through a power cycle, so the program sets the output's relinquish default to 0, and resets it to 0 whenever it finds it at 1. The relay is then all but guaranteed to start open.
 - **CR-FP closes only after KMC1 has confirmed, by polling the EIO network, that the CAN modules are booted.**

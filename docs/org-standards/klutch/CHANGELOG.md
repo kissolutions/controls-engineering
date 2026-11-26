@@ -7,3 +7,4 @@
 - Validation gates drafted (device representation, completeness, valves, dampers, names, drawing sync, issue checks). UTMB client conventions page added.
 - Panel and hardware page drafted: separate 120 VAC fuses for the 24 VDC supply and the 24 VAC transformer, fused 24 VAC terminal distribution; dedicated 24 VAC transformer for damper actuators and the damper proving circuit; relay suppression; KMC rules.
 - KMC CAN 4–20 mA problem documented; CR-FP rules (KMC1 relay output, starts open, released after EIO boot confirmation) and validation checks added.
+- Critical rule: 4–20 mA packing priority on KMC1 (controlling inputs first, across all systems on the controller; monitoring-only overflow to CAN behind its own switched field power, optional CR-FP2).
