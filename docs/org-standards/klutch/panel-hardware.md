@@ -94,7 +94,7 @@ The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common 
 - **4–20 mA inputs are packed into KMC1 by priority (critical rule):**
   1. **Controlling inputs first:** every 4–20 mA sensor that any control loop or sequence acts on goes on KMC1. This applies to every system the controller serves, including secondary systems that share it (for example an exhaust fan that does not warrant its own controller).
   2. **Monitoring-only inputs next**, in the KMC1 UIs left over.
-  3. **Overflow:** only monitoring-only 4–20 mA inputs may go to KMC2 (a CAN module), and only behind their own switched field power (see below). A controlling 4–20 mA input never goes on a CAN module.
+  3. **Overflow:** monitoring-only 4–20 mA inputs go to a CAN module first, behind switched field power (see below). A controlling 4–20 mA input may go on a CAN module only after a failure-mode analysis and owner discussion, with PE approval recorded as a deviation.
 - Classify every 4–20 mA input as controlling or monitoring-only in the EDP before allocating terminals.
 - KMC1 normally offers 8 UIs on its terminal blocks (UI3–UI10). UI1 and UI2 sit on the RJ45 room sensor port. When more than 8 4–20 mA inputs are needed, use the KMC RJ45 breakout board on that port to use UI1 and UI2 as standard UIs. The room sensor port has nothing special about it beyond making KMC thermostats easy to connect. *(Record the breakout board part number.)*
 
