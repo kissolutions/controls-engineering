@@ -62,10 +62,6 @@ One table of everything an operator needs to operate the system: setpoints and t
 | Default | Value and units |
 | Adjusted by | TAB, operator (SCADA), or fixed at commissioning |
 
-## Requirements (references)
-
-References taken from the mechanical and electrical drawings and specifications go in their own section of the narrative, titled for what they are (for example "Requirements" or "Design Specifications"), not scattered through the system sections. Each reference gives the source and locator (document, sheet or section) and what it requires, so the narrative's control can be traced to it. Where the narrative departs from a reference, say so and cite the precedence override. *(To confirm: position of this section in the order.)*
-
 ## 5. Alarms
 
 One table of every alarm.
@@ -77,6 +73,10 @@ One table of every alarm.
 | Limit / delay | Threshold and time delay |
 | Type | Trip (shuts the system down) or Warning (monitoring only) |
 | Action / notes | What the system does, and reset |
+
+## Requirements (references)
+
+References taken from the mechanical and electrical drawings and specifications go in their own section of the narrative, titled for what they are (for example "Requirements" or "Design Specifications"), not scattered through the system sections. Each reference gives the source and locator (document, sheet or section) and what it requires, so the narrative's control can be traced to it. Where the narrative departs from a reference, say so and cite the precedence override. *(To confirm: position of this section in the order.)*
 
 ## Before issue
 
