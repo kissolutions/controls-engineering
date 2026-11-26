@@ -57,7 +57,7 @@ Result: if the controller fails, the fans can still be run in HAND from the keyp
 ### Panel power and isolation for damper proving
 
 - Neither the bypass board nor the drive supplies damper actuators (typically 10–20 W). For reference, the ACH580 drive's auxiliary +24 VDC is 6.0 W total (250 mA) and non-isolated; the bypass board's capacity is unverified.
-- Damper power follows the Klutch [panel standard](../panel-hardware.md#damper-actuator-power-dedicated-24-vac-transformer): a dedicated 24 VAC transformer on its own supplemental breaker.
+- Damper power follows the Klutch [panel standard](../panel-hardware.md#damper-actuator-power-dedicated-24-vac-transformer): a dedicated 24 VAC transformer on its own 120 VAC fuse, with damper loads on their own fused 24 VAC terminal.
 - Power the CR-DPR coil from the panel's damper circuit, switched through the bypass RO3 dry contact. The coil then lives on the same dedicated fuse as the actuators it serves, and only a dry contact crosses the boundary. Fit a flyback diode on a DC coil (ABB requires diodes on DC relay coils switched by bypass outputs, per the ACH550 E-Bypass supplement; *verify for ACH580*).
 - Every crossing between the drive and the Klutch panel is a dry relay contact. The drive's 24 V and the panel's 24 V commons are never connected.
 - Damper actuator power is on its own fuse, so the controller and other loads can be switched off and isolated while the dampers can still be driven for HAND operation. Label it as a source that remains live with the controller off.
