@@ -70,6 +70,6 @@ Controller tags are Klutch's internal labels for drawings and terminal reference
 | Signal name (as on the drawing) | IO LIST `Signal Name` |
 | Full SCADA object name | IO LIST / DEVICE LIST `Operational / SCADA Name` |
 
-## Open questions (owner to confirm)
+## Open questions
 
-- Standard signal suffixes: these come from each owner's standard, so the profile should not carry one master list. Capture a list only for Klutch's default form.
+None. Signal suffixes come from each owner's standard, so the profile carries no master suffix list.
