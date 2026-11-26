@@ -60,11 +60,11 @@ The pre-canned sheet carries **CR-FP**, **CR-INTLK** and **CR-DPR** (coil plus o
 - Pulling PS1's 1 A fuse removes 24 VDC (controllers, router, field power) without affecting anything on 24 VAC: valves and dampers keep their power for HAND or bypass operation.
 - Pulling XFMR1's 1 A fuse, or opening CB2, removes 24 VAC. Label which fuse feeds the transformer, and label the 24 VAC terminals as live with the 24 VDC off.
 
-## Damper actuator power: dedicated 24 VAC transformer
+## Actuator power: 24 VAC transformer (XFMR1)
 
-- **Damper actuators are 24 VAC.** Specify 24 VAC (or 24 VAC/DC) actuators and power them only from the damper transformer. This makes damper operation independent of the 24 VDC power supply.
+- **Valve and damper actuators are 24 VAC.** Specify 24 VAC (or 24 VAC/DC) actuators and power them from XFMR1, each on its own TB-24AC terminal. This makes actuator operation independent of the 24 VDC power supply.
 - The transformer is XFMR1, a Class 2 control transformer in the panel's existing 24 VAC provision, sized as the **smallest standard size that does the job**:
-  - sum the running (sizing) VA of every actuator on it from the datasheets, plus the relay coils it feeds;
+  - sum the running (sizing) VA of every valve and damper actuator on it from the datasheets, plus the relay coils it feeds;
   - add margin *(Klutch margin to confirm, for example 25%)*;
   - select the next standard size up.
 - Everything in the damper proving circuit runs from this transformer: actuator power switched by the KMC relay output, with the CR-DPR contact in parallel; the CR-DPR coil, switched by the drive or bypass "started" relay output; and the CR-ES coil, switched by the damper end switch.
