@@ -21,6 +21,10 @@ Klutch builds deliverables on one repeated motif so that content is copy/paste b
 | [Panel and hardware](panel-hardware.md) | Panel power, damper 24 VAC circuit, relay suppression, KMC rules | draft |
 | [Validation](validation.md) | Device, point and drawing-representation gates before issue | draft |
 | [Client conventions: UTMB](client-conventions/utmb.md) | UTMB unwritten expectations (VFD fire/safety, damper interlocks) and Klutch's solutions | draft |
+| [Device selection](device-selection.md) | Requirements, EQ Library preselection, ranges into the EDP and CAD tables | draft |
+| [Issues and RFIs](issues-and-rfis.md) | Internal Issues vs external RFIs; owner approval to raise an RFI | draft |
+| [Intake checklist](intake-checklist.md) | Questions to settle at intake (door switches, naming standard) | draft |
+| [Terminal allocation](terminal-allocation.md) | Agent first pass in chat, PE tweaks, then apply to EDP and drawings | draft (trial) |
 | Drawing standards | CAD symbols and go-by drawings | deferred until CAD go-bys exist |
 
 No client data, project records or pricing in this profile. Project examples are cited only in sanitized form.

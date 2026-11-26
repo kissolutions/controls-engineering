@@ -84,6 +84,33 @@ The EDP is the source of truth for every device tag, signal name and SCADA name;
 - Terminal assignments in the EDP match the wiring sheets.
 - Removed scope is removed everywhere: search every register note, BOM row, wiring sheet and narrative for the removed tags.
 
+## 6a. Device selection, ranges and output cards
+
+The checks in [Device selection and signal ranges](device-selection.md): requirements to selection, datasheet to EDP, EDP to CAD tables (sensor range in each instrument description), outputs to HPO cards, and visible assumptions.
+
+## 6b. Fail states
+
+The EDP DEVICE tab holds the **final answer** for each controllable device's fail state, which every downstream item (narrative, drawings, valve and damper schedules, programming) is validated against. Each device records:
+
+| Field | Content |
+|---|---|
+| Fail position | On loss of power, signal and controller (open, closed, last position, ...) |
+| Manual means | HOA, keypad, bypass or manual override, or none |
+| Determination status | **Finalized**: with the closed Issue or RFI that settled it. **Open**: subject to change, with the open RFI or Issue. **Undetermined**: with the reason and what is known so far |
+
+Checks:
+
+- Every controllable output device has all three fields.
+- The narrative, drawings and schedules show the same fail position as the DEVICE row.
+- A finalized fail state cites a closed Issue or RFI; an open one cites an open item.
+
+*(Framework template proposal: add these as DEVICE LIST columns in the EDP template.)*
+
+## 6c. Intake items
+
+- Every air handler has a DOOR-SW input reserved, or a recorded answer that no door switches exist ([Intake checklist](intake-checklist.md)).
+- Every reserved safety input without a device is jumpered on the drawings and carried as an open item.
+
 ## 7. Field loop power and KMC CAN modules
 
 See [Panel and hardware: KMC CAN modules and 4–20 mA inputs](panel-hardware.md#kmc-can-modules-and-4-20-ma-inputs).
