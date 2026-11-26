@@ -15,11 +15,11 @@ The controls narrative sits in the narrative position of each engineering block 
 | # | Section | Fixed or variable |
 |---|---|---|
 | 1 | Overview | Fixed |
-| 2 | Operating modes | Fixed |
-| 3 | System sections | Variable: as many as the system needs |
-| 4 | Setpoints | Fixed |
-| 5 | Alarms | Fixed |
-| — | Requirements | When the system has M/E references or design specifications to cite |
+| 2 | Requirements | When the system has M/E references or design specifications to cite |
+| 3 | Operating modes | Fixed |
+| 4 | System sections | Variable: as many as the system needs |
+| 5 | Setpoints | Fixed |
+| 6 | Alarms | Fixed |
 
 ## 1. Overview
 
@@ -32,7 +32,11 @@ A short description of the system and its controls:
 
 No drafting or review language ("this draft", "proposed") on an issued sheet.
 
-## 2. Operating modes
+## 2. Requirements
+
+References taken from the mechanical and electrical drawings and specifications go in their own section of the narrative, titled for what they are (for example "Requirements" or "Design Specifications"), not scattered through the system sections. Each reference gives the source and locator (document, sheet or section) and what it requires, so the narrative's control can be traced to it. Where the narrative departs from a reference, say so and cite the precedence override.
+
+## 3. Operating modes
 
 The basic state machine, as a table: one row per mode, with the condition that enters it, what the system does in it, and where it goes next.
 
@@ -45,13 +49,13 @@ The basic state machine, as a table: one row per mode, with the condition that e
 
 The standard mode set is SAFETY, FREEZE, DISABLED, ALARM, READY, STARTUP, RUN, STOPPING and ABORTING. The full definition of each mode (entry, exit, TRIP_WORD and ALARM_WORD handling, the drive HAND/OFF rule) belongs to the canonical state machine in the logic package (`kissolutions/bas-logic-gen`). The narrative states how this system uses it and leaves out modes the system does not need.
 
-## 3. System sections
+## 4. System sections
 
-As many sections as the system needs, named by function. For example, an air handler: Start & Stop, Fan Speeds, Heating & Cooling, Safeties. Each section describes the control in steps or short rules, using signal names for points and the setpoint names from section 4.
+As many sections as the system needs, named by function. For example, an air handler: Start & Stop, Fan Speeds, Heating & Cooling, Safeties. Each section describes the control in steps or short rules, using signal names for points and the setpoint names from section 5.
 
 Write rules that are required by code or standard as rules, not as options (for example: heating and cooling never run at the same time).
 
-## 4. Setpoints
+## 5. Setpoints
 
 One table of everything an operator needs to operate the system: setpoints and tunables (deadbands, proof delays, ramp times, alarm limits), whether adjustable by the operator, set by TAB or fixed at commissioning.
 
@@ -62,7 +66,7 @@ One table of everything an operator needs to operate the system: setpoints and t
 | Default | Value and units |
 | Adjusted by | TAB, operator (SCADA), or fixed at commissioning |
 
-## 5. Alarms
+## 6. Alarms
 
 One table of every alarm.
 
@@ -73,10 +77,6 @@ One table of every alarm.
 | Limit / delay | Threshold and time delay |
 | Type | Trip (shuts the system down) or Warning (monitoring only) |
 | Action / notes | What the system does, and reset |
-
-## Requirements (references)
-
-References taken from the mechanical and electrical drawings and specifications go in their own section of the narrative, titled for what they are (for example "Requirements" or "Design Specifications"), not scattered through the system sections. Each reference gives the source and locator (document, sheet or section) and what it requires, so the narrative's control can be traced to it. Where the narrative departs from a reference, say so and cite the precedence override. *(To confirm: position of this section in the order.)*
 
 ## Before issue
 
@@ -89,4 +89,3 @@ References taken from the mechanical and electrical drawings and specifications 
 ## Open questions (owner to confirm)
 
 - Column sets for the modes, setpoints and alarms tables above are proposed from the AHU-4-1 narrative; confirm or replace with the standard ones.
-- Where the Requirements section sits in the order (after Overview, or after Alarms).
