@@ -17,7 +17,7 @@ Klutch builds deliverables on one repeated motif so that content is copy/paste b
 |---|---|---|
 | [Document model](document-model.md) | Drawing set structure, sheet numbering, what each sheet group carries | draft |
 | [Naming](naming.md) | Device tags vs signal names; panel, controller, point, SCADA and object names | draft |
-| Narrative format | Controls narrative layout and required content | planned |
+| [Narrative format](narrative-format.md) | Controls narrative layout and required content | draft |
 | Panel and hardware | Controller, I/O, power and relay conventions | planned |
 | Validation | Klutch review gates before issue | planned |
 | Drawing standards | CAD symbols and go-by drawings | deferred until CAD go-bys exist |
