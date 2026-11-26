@@ -9,3 +9,4 @@
 - KMC CAN 4–20 mA problem documented; CR-FP rules (KMC1 relay output, starts open, released after EIO boot confirmation) and validation checks added.
 - Critical rule: 4–20 mA packing priority on KMC1 (controlling inputs first, across all systems on the controller; monitoring-only overflow to CAN behind its own switched field power, optional CR-FP2).
 - Added device selection (EQ Library, ranges, HPO cards), issues and RFIs, intake checklist (door switches), terminal allocation handoff; validation for ranges, fail states (DEVICE tab final answer) and intake items.
+- Revision numbering page: MAJOR.MINOR.BUILD.

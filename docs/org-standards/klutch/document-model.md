@@ -114,4 +114,4 @@ Sheets 13–20 are open.
 
 - Shared hardware across systems (one panel serving two systems, a common network): which block carries it?
 - Groups after the last system block: reserved for anything (details, schedules, as-built or commissioning records)?
-- Revision scheme (for example Rev 1 Initial Submittal) and drawing file naming: on this page or a separate one?
+- Revision scheme: see [Revision numbering](revisions.md).
