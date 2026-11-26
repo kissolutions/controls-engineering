@@ -37,10 +37,17 @@ Read from a Klutch wiring diagram for a large outdoor air handler (2026). All dr
 
 **Klutch solution:**
 
-- **CR-DPR** (interposing relay in the Klutch panel): energized by the KMC damper output **in parallel with** the bypass/drive "started" relay output (RO1 is used on the reference drawing; *verify which relay output function is assigned*). The drive therefore opens its own damper whenever it starts, with or without the controller.
+- **CR-DPR** (interposing relay in the Klutch panel): its coil is driven by the drive's "started" / damper-control relay output (RO1 on the reference drawing; RO1's HVAC default function in the ACH580 is "Damper control", *verify the bypass configuration*). Its N.O. contact is wired **in parallel with the KMC relay output** that powers the damper actuator. The drive therefore opens its own damper whenever it starts, with or without the controller. The KMC damper output is always a relay output.
+- **Damper actuator power** must stay on when the controller is removed or isolated: it is on its own fused 24 V circuit, separate from the controller's fuse group (see Panel power below).
 - **CR-ES** (interposing relay in the Klutch panel; `CR-ES1`, `CR-ES2`, ... for multiple dampers): energized by the damper end switch. Two poles: one reports the end switch to a KMC input for monitoring; the other goes to **DI2 start permissive** (bypass X2 terminal 6, `_VSD_PERM`). The drive holds speed until the damper proves open, without showing a fault.
 
 Result: if the controller fails, the fans can still be run in HAND from the keypad or the bypass, with the damper opened and proven.
+
+### Panel power and isolation for damper proving
+
+- The ACH580 auxiliary +24 VDC output is limited to 6.0 W total (250 mA), minus any option modules, and is non-isolated. It cannot power damper actuators (typically 10–20 W). Use it only to wet the drive's own inputs, or a relay coil of a few hundred milliwatts.
+- Every crossing between the drive and the Klutch panel is a dry relay contact. The drive's 24 V and the panel's 24 V commons are never connected.
+- Damper actuator power is on its own fuse, so the controller and other loads can be switched off and isolated while the dampers can still be driven for HAND operation. Label it as a source that remains live with the controller off.
 
 ### To verify on the next drawing
 
