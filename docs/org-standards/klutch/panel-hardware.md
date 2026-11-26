@@ -10,6 +10,10 @@ profile_version: 0.1
 
 Standard DDC panel conventions that the pre-canned panel design implements. Project-specific deviations are recorded as precedence overrides or EDP notes.
 
+## Terminal designations
+
+Panel distribution uses **double-deck terminal blocks**. A terminal reference is the block position plus the deck: `3T` is terminal 3, top deck; `3B` is terminal 3, bottom deck. On power distribution strips the supply (+ or line) is on the top deck and its return (− or common) on the bottom deck of the same block, so each load's feed and return share one position.
+
 ## Panel power
 
 Reference: Klutch pre-canned DDC panel power sheet (2026), drawn once for several air handlers with per-unit variants of the 24 VAC and 24 VDC groups.
@@ -36,7 +40,7 @@ Reference: Klutch pre-canned DDC panel power sheet (2026), drawn once for severa
 
 ### 24 VDC distribution (PS1)
 
-- Each group of equipment is on its own fused terminal (1 A on the reference sheet), with its own return terminal:
+- Each group of equipment is on its own fused terminal (1 A on the reference sheet), supply on the top deck and return on the bottom deck:
 
 | Fused terminal | Feeds |
 |---|---|
