@@ -20,7 +20,8 @@ The device tag ties the controls drawings to the engineered and architectural dr
 ## On the drawings
 
 - **Wiring diagrams:** the device is labelled with its **hyphenated device tag**. On the wire, near the I/O terminal, the **underscored signal name** is shown: the SCADA name with the prefix common to the whole system left off, to save space. The leading underscore marks where that prefix attaches. For example, the SCADA name `<SITE>_<BLDG>_<SYSTEM>_HW_VLV` is shown on the wire as `_HW_VLV`; the prefix is stated once in the register, not on every wire.
-- **P&ID and instrument BOM:** device tags. *(To confirm: whether signal names also appear on the P&ID, as `_WTR_DET` did on the AHU-4-1 P&ID.)*
+- **P&ID and instrument BOM:** device tags only. Signal names do not appear on the P&ID.
+- **The system wiring diagram is the one place that correlates device tags to signal names.** Do not repeat that correlation on other sheets.
 - **Network and object tables:** signal / object names.
 
 ## Rules
