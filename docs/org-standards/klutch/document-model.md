@@ -14,7 +14,10 @@ A Klutch controls drawing set is organized in **sheet number groups**. Each grou
 
 - Sheet numbers are reserved by group, and **gaps are intentional**. A sheet added after a prior submittal goes into an open number in its group, so existing sheets keep their numbers and cross-references do not have to be reworked.
 - **Group order is fixed; group size is not.** Each project sizes its groups at the start of the set (for example a building with six floors reserves more spatial sheets). Decide this before the first submittal, not by renumbering afterward.
-- **Multi-system sets give each system its own block of ten**, starting on a multiple of ten plus one (21, 31, 41, ...). Each block repeats the engineering pattern for that system.
+- **Spare sheets, like spare I/O.** Fill a group's sheets in order until the content is done, and always leave spare numbers after the last used sheet before the next group starts. Never start the next group on the sheet right after the last used one.
+- **Allocate in steps of five.** Group boundaries fall on fives (1, 6, 11, 16, 21, ...), so a group grows or a new one starts at the next five-sheet boundary.
+- **Multi-system sets give each system its own block of ten**, starting on a multiple of ten plus one (21, 31, 41, ...). Each block repeats the engineering pattern for that system and leaves the rest of its ten as spares. For example: a system using 21–26 (three wiring sheets) leaves 27–30 spare; the next system starts at 31 even if it only needs 31–35.
+- A system that needs more than ten sheets takes the next whole block as well, and the following system starts at the next free block. *(To confirm.)*
 - **One sheet per page.** Every page has exactly one sheet number and one sheet title. Content that needs more than one page takes consecutive sheet numbers, and the title says so: `SYSTEM WIRING (1 OF 2)`, `SYSTEM WIRING (2 OF 2)`.
 - Unused numbers are simply absent from the set. The table of contents lists only issued sheets.
 - Once a sheet number has been issued on a submittal, it is not reused for different content. *(To confirm.)*
@@ -109,7 +112,6 @@ Sheets 13–20 are open.
 
 ## Open questions (owner to confirm)
 
-- In a multi-system set, are the sheets between the network group and 21 reserved for anything (for example plant-wide or common narrative, typical details), or simply open?
 - Shared hardware across systems (one panel serving two systems, a common network): which block carries it?
 - Groups after the last system block: reserved for anything (details, schedules, as-built or commissioning records)?
 - Revision scheme (for example Rev 1 Initial Submittal) and drawing file naming: on this page or a separate one?
