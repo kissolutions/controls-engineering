@@ -18,7 +18,9 @@ Writing rules that follow from this:
 - Decision tables instead of prose where a choice depends on several inputs.
 - Checklists with pass / fail outcomes. Each check names its inputs (which register, tab, sheet) and the form of its finding.
 - Explanations and background are kept apart from the rules, so the rules can be read on their own.
-- Speed tiers say which checks run at each depth (for example: quick = presence and exact-match checks; standard = plus cross-document sync; deep = plus independent completeness pass and failure-mode review).
+- Speed tiers say which checks run at each depth during working reviews (for example: quick = presence and exact-match checks; standard = plus cross-document sync; deep = plus independent completeness pass and failure-mode review).
+- **The release gate is fixed.** Speed tiers never change the acceptance criteria for an issued deliverable. Any check not performed is recorded as not performed.
+- Every rule in the rule catalog declares: rule ID, applicability, required inputs, evaluation, finding (what to report), severity, evidence, and closure condition.
 
 ## Tasks that benefit from a deeper model
 

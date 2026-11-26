@@ -71,14 +71,14 @@ Sheet titles are upper case and follow the same names on every set:
 
 ## Rules for specific content
 
-- **No legend or general notes sheet.** These are shop drawings fully under Klutch's control. Every symbol that matters carries a tag or abbreviation that appears in a table on the same sheets (instrument BOM, device tables), so a separate legend adds nothing. Add one only if a project needs it.
+- **No legend or general notes sheet by default.** These are shop drawings fully under Klutch's control. Every symbol and line convention used must be interpretable from the sheets themselves (a tag in a table on the same sheets, or a label). Where a symbol or line type is not explained that way, add a legend.
 - **Instrument BOM sits with the P&ID.** The instrument BOM correlates directly to the process diagram and goes on the same sheet. If it does not fit while staying readable at 11x17, split the P&ID and its BOM across two sheets in the process position of the block; do not shrink the text.
 - **Pre-canned sheets.** Klutch keeps ready-made sheets for recurring subsystems (for example Honeywell gas analyzers, Machine Saver vibration sensor networks). They are added project by project when the subsystem is in scope, into the group their content belongs to (a sensor network's object list in the logical / network group, its wiring in the wiring position of the block).
 - **Readability.** Sheets are laid out to be read at 11x17. When content does not fit, add a sheet; do not reduce text size.
 
 ## CAD file and title block
 
-- **One file per set.** A drawing set is a single DWG (exchanged as DXF when needed). Model space holds the drawing content; each sheet is a paper space layout.
+- **One file per set (house production default, subject to project deliverable requirements).** A drawing set is a single DWG (exchanged as DXF when needed). Model space holds the drawing content; each sheet is a paper space layout.
 - **Layout names are the sheet number.** Each paper space tab is named by its sheet number only (for example `11`, `12`, `21`).
 - **Title block lives in paper space**, one per layout. Its fields are either:
   - static text in the block, the same on every sheet of the set (project, location, file name, engineer, job number, revision rows), or

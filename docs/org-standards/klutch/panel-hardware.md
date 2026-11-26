@@ -39,6 +39,9 @@ Reference: Klutch pre-canned DDC panel power sheet (2026), drawn once for severa
 
 ### Grounding and common reference
 
+**Applies to:** Klutch DDC panels whose controllers (BAC-5901-series and expansion modules) are powered from the panel 24 VDC supply, with 24 VAC used only for actuators. It does not apply as-is to controllers powered from 24 VAC (for example VAV-specific controllers): for those, follow KMC's transformer guidance (floating secondary unless deliberately grounded, with care for mixed half-wave and full-wave devices).
+
+
 - The 24 VAC transformer's negative (common) terminal is connected to ground **before any fusing**.
 - PS1(−) is bonded to that same point **directly from the power supply**, not through terminal blocks.
 - The 24 VAC and 24 VDC circuits therefore share one deliberate reference. Analog signals between the KMC (DC side) and 24 VAC actuators, such as 2–10 VDC valve commands, work against that common reference.
@@ -100,7 +103,9 @@ The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common 
 
 ### KMC CAN modules and 4–20 mA inputs
 
-**Known hardware problem (Klutch field experience, 2026):** on all KMC CAN expansion modules, the universal inputs start up in a state where a 4–20 mA input is a direct short until the module has booted. It is not fixed in firmware, and even a firmware fix would not cure it: the board itself needs a redesign. A 4–20 mA loop powered while a CAN module is booting is shorted through the input.
+**Known hardware problem.** *Evidence: Klutch field experience (2026); not confirmed in public KMC documentation; attach manufacturer correspondence when available.* **Applicability:** record the CAN module model, hardware revision and firmware for each project; the KMC CAN installation guide notes that output behavior on EIO communications loss differs on older firmware. on all KMC CAN expansion modules, the universal inputs start up in a state where a 4–20 mA input is a direct short until the module has booted. It is not fixed in firmware, and even a firmware fix would not cure it: the board itself needs a redesign. A 4–20 mA loop powered while a CAN module is booting is shorted through the input.
+
+**Status:** CR-FP is a **provisional mitigation** until the failure behavior is established.
 
 **Rule:** every 4–20 mA loop powered by Klutch is dead until the CAN modules have booted. **CR-FP is required on every KMC panel with Klutch-powered 4–20 mA loops**, whether or not any 4–20 mA input is on a CAN module.
 
@@ -115,6 +120,14 @@ The 24 VAC and 24 VDC commons are bonded at one point (see Grounding and common 
 - **Drawing note:** the drawings carry a **large boxed note next to CR-FP** (panel layout and the wiring sheet that shows CR-FP) stating this. Proposed wording:
 
   > **CAUTION — DISABLE CR-FP BEFORE FIRST POWER-UP.** KMC controllers ship with no configuration or CR-FP logic. Before energizing the panel, pull the CR-FP fuse holder and leave it out. Do not remove the CR-FP relay. Reinstall the fuse holder only after KMC1 is configured and the CR-FP startup logic is loaded and verified. Powering 4–20 mA field loops before the CAN modules boot can damage the CAN module inputs.
+
+**Open items for the CR-FP sequence (under discovery):**
+
+- A CAN module restarting while CR-FP stays energized: is the short repeated, and can software detect the restart before damage?
+- Whether the EIO "running" status proves the CAN input circuitry is ready.
+- A retained command, a BACnet priority above relinquish default, or a physical output override holding CR-FP on.
+- Exactly which circuit the CR-FP fuse holder isolates (field power only, or also the coil).
+- Timing: measure, or obtain from KMC, how fast the condition develops against how fast KMC1 can open CR-FP.
 
 **Open item (under discovery):** behavior of the CAN module inputs with externally powered (4-wire, self-powered) 4–20 mA transmitters is not known. CR-FP protects the 2-wire loops Klutch sources; it does not remove power from an externally powered transmitter. Treat an externally powered 4–20 mA device on a CAN module as an unresolved risk and record it.
 

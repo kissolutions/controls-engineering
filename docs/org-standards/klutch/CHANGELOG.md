@@ -10,3 +10,4 @@
 - Critical rule: 4–20 mA packing priority on KMC1 (controlling inputs first, across all systems on the controller; monitoring-only overflow to CAN behind its own switched field power, optional CR-FP2).
 - Added device selection (EQ Library, ranges, HPO cards), issues and RFIs, intake checklist (door switches), terminal allocation handoff; validation for ranges, fail states (DEVICE tab final answer) and intake items.
 - Revision numbering page: MAJOR.MINOR.BUILD.
+- Applied outside review (2026-11-26): structured fail behavior columns; DOOR-SW disposition before issue; jumper purpose and class; analog valve feedback as a default with approved exceptions; damper 50% as a default; removed scope keeps history; legend rule; production default; release manifest; CR-FP marked provisional with evidence and open sequence questions; grounding topology scoped; ABB configuration and controller-removed test; monitoring-only defined.

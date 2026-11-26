@@ -20,6 +20,8 @@ Profiles are versioned and owned independently of the framework. A framework cha
 2. Agents read the parent framework, then this package, then the declared profile.
 3. A profile may add conventions and stricter checks. It may not redefine framework terms, IDs or acceptance/baseline rules.
 
+**Framework invariants** cannot be overridden by a profile, a client convention or a precedence override: canonical terms and object types, stable internal IDs, register ownership, and the acceptance / snapshot / baseline rules. Everything else is a convention and can be overridden as below.
+
 ## Precedence
 
 Default order, highest first:
@@ -29,7 +31,7 @@ Default order, highest first:
 3. Organization standards profile
 4. Framework defaults
 
-The order is a default, not a law. Any rule can be overruled for a project, system, equipment item or device by a **precedence override** record. Specifications are sometimes knowingly set aside when everyone agrees they are wrong but nobody will run the update process; the override records that agreement instead of leaving it implicit.
+The order is a default, not a law. Any convention (not a framework invariant) can be overruled for a project, system, equipment item or device by a **precedence override** record. Specifications are sometimes knowingly set aside when everyone agrees they are wrong but nobody will run the update process; the override records that agreement instead of leaving it implicit.
 
 ### Precedence override record
 
@@ -42,7 +44,8 @@ Recorded as a PER RECORDS row (Record Type `Decision`) until the template carrie
 | Prevailing rule | What applies instead, with its source ID |
 | Scope | Project, system, equipment, device or point IDs it applies to; never implied wider |
 | Reason | Why the higher-ranked rule is set aside |
-| Agreed by | Who agreed (name, role, organization) and how (meeting, email, RFI answer) |
+| Approval authority | Who has the authority to approve this departure (for a client requirement, the client or its delegate; Klutch alone cannot waive a client requirement) |
+| Agreed by | Who participated in the agreement (name, role, organization) and how (meeting, email, RFI answer) |
 | Evidence | Source ID of the agreement |
 | Date | When agreed |
 | Review / expiry | When or on what event it is re-checked (next spec revision, closeout) |
@@ -50,6 +53,7 @@ Recorded as a PER RECORDS row (Record Type `Decision`) until the template carrie
 
 Rules:
 
-- An override without an agreement source is `proposed`, and the higher-ranked rule still governs.
+- An override without evidence of agreement **by the approval authority** is `proposed`, and the higher-ranked rule still governs.
+- The record documents a departure and its authorization; the record's existence does not itself authorize the departure.
 - Silence is not an override. A deliverable that departs from a higher-ranked rule without an agreed override is a finding.
 - Overrides are scoped; one override never generalizes to other projects or into the profile. Repeated overrides of the same profile rule are a signal to change the profile.

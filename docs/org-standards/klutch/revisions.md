@@ -24,6 +24,7 @@ Klutch engineering registers (PER, EDP) and other engineering working documents 
 - BUILD resets to 0 after a MAJOR or MINOR uprev; a MAJOR uprev also resets MINOR to 0.
 - An uprev records a revision number only. It is not human acceptance, a snapshot or a configuration baseline; those are recorded separately in the PER.
 - Every uprev gets a change log entry naming what changed.
+- **Release manifest:** every issue to others (a submittal, a logic handoff) records the exact compatible set: PER, EDP, drawing transmittal revision and logic handoff revision. Matching version numbers alone do not establish compatibility.
 
 ## Drawings
 

@@ -62,6 +62,12 @@ Result: if the controller fails, the fans can still be run in HAND from the keyp
 - Every crossing between the drive and the Klutch panel is a dry relay contact. The drive's 24 V and the panel's 24 V commons are never connected.
 - Damper actuator power is on its own fuse, so the controller and other loads can be switched off and isolated while the dampers can still be driven for HAND operation. Label it as a source that remains live with the controller off.
 
+### Configuration and proof
+
+- Terminal numbers alone do not establish function. Record the **E-Clipse macro and the parameter values** used (for example the damper macro with DI2 as run permissive, and the relay output assigned to System Started) alongside the wiring.
+- **Trace every path that can keep the damper energized** (KMC relay output, CR-DPR contact) and confirm each required shutdown (fire, safety, stop) defeats the right paths.
+- **Test with the controller physically removed:** the fan runs in HAND and in bypass, the damper opens and proves, and the safeties still stop the fan. Independent actuator power does not by itself prove independent control.
+
 ### To verify on the next drawing
 
 - "DI7" and "DI6" in earlier notes were the bypass **X2 terminal numbers** (7 and 6); the inputs are bypass DI3 and DI2.

@@ -10,31 +10,41 @@ page_status: draft
 
 ## Requirement
 
-Every name and tag for a System, Equipment, Device and Point is validated against **one source of truth** wherever it appears, through the whole project life: engineering registers, submittal drawings, the logic handoff, controller programs, SCADA configuration and closeout records.
+Every name and tag for Equipment, Devices and Points is validated against **its authoritative register** wherever it appears, through the whole project life: engineering registers, submittal drawings, the logic handoff, controller programs, SCADA configuration and closeout records.
 
-- The **project equipment/device/points register (EDP)** is the source of truth for tags and names. Each row carries the identifiers that apply to it: internal ID, source document tag, signal name, operational / SCADA name, network address or object name.
-- Every other artifact **references** those identifiers. It does not define them. A name that appears in an artifact but not in the EDP, or differs from the EDP, is a finding.
-- A naming change is made in the EDP first and logged; downstream artifacts are then updated and re-checked. An artifact is never corrected by editing it alone (consistent with "never edit a generated view as an alternate source of truth").
-- The convention for building names (separators, prefixes, owner naming standards) is recorded once, by the project, against the EDP. Validation checks artifacts against the EDP values, not against the convention.
+### Ownership
 
-## Precondition
-
-**Validation is not performed until the EDP has the Source Document Tag and the Operational / SCADA Name filled in** for every row in scope. A blank, placeholder (`TBD`, `##`) or unresolved value is not a valid reference.
-
-- Before running the checks, list the EDP rows missing either value. Those rows are open items, not passes.
-- Partial validation is allowed only for the rows that meet the precondition, and the record says which rows were excluded and why.
-- A row whose source document has no tag records that fact (with the provisional tag assigned and its open item), rather than leaving the field blank.
-
-## What each check confirms
-
-| Check | Confirms |
+| Information | Authoritative location |
 |---|---|
-| Presence | Every EDP identifier that an artifact is required to show appears there |
-| No orphans | Every identifier in an artifact exists in the EDP |
-| Exact match | Spelling, case and separators match the EDP value |
-| Correct pairing | A device tag and its signal names appear together as the EDP pairs them (no point shown on the wrong device) |
-| Removed scope | Identifiers retired in the EDP no longer appear in active artifacts |
-| Revision trace | The check records the EDP revision and the artifact revision compared |
+| Systems, scopes, sources, issues, RFIs and decisions | PER (canonical model ownership) |
+| Equipment, devices, points and their approved engineering names | EDP |
+| Original source spelling of a tag | EDP Source Document Tag, linked to its source; preserved as observed |
+| Approved downstream spelling or abbreviation (for example a SCADA prefix omitted on drawings) | An explicit naming mapping recorded by the project |
+| Actual installed or programmed condition | Verification evidence, reconciled with the approved design |
+
+- **Stable IDs carry identity; tags are attributes.** A rename (VSD-1 to VFD-1) changes the tag on the same internal ID; it never creates a new device.
+- **Conflicting source tags are preserved** as source observations, each with its source, and resolved by an open item; the register is not rewritten to look consistent.
+- Every other artifact **references** EDP identifiers. A name in an artifact that is not in the EDP, or differs from it after the naming mapping is applied, is a finding.
+- A naming change is made in the EDP first and logged; downstream artifacts are then updated and re-checked. An artifact is never corrected by editing it alone.
+- **Removed scope** leaves the current deliverables but keeps its history: the EDP row stays with a retired / removed disposition and the change that removed it.
+
+## Field applicability
+
+Which identifier fields a row must have depends on what the row is. A field marked "required" that is blank or a placeholder (`TBD`, `##`) is a finding. A field marked "n/a" records the reason.
+
+| Row class | Source Document Tag | Operational / SCADA Name | Notes |
+|---|---|---|---|
+| Field device or point with a source tag | Required | Required if it has a SCADA point | |
+| New Klutch device with no source tag (for example a new panel or relay) | Provisional tag, with "no source tag" recorded | Required if it has a SCADA point | |
+| Interface-only device with no point | Required if the source tags it | n/a: no point | |
+| Internal software value not exposed | n/a | n/a, unless it meets the naming page's owner-standard rule | |
+| Reserved input (device not yet confirmed) | Provisional | Required | Disposition required before issue |
+
+### Missing names do not stop other checks
+
+- Missing required names **block a clean identifier-validation result** for the affected rows, and are listed as open items.
+- All other checks still run on every row: duplicate terminals, wrong device / point pairing, BOM quantity, removed-scope sweep.
+- The validation record states which rows were incomplete and which checks were therefore not conclusive.
 
 ## Artifacts in scope
 

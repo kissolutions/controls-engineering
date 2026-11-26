@@ -47,7 +47,11 @@ The basic state machine, as a table: one row per mode, with the condition that e
 | What the system does | Outputs in this mode: fan or pump, valves, dampers, loops held or released |
 | Leaves to | Next mode(s) and the condition for each |
 
-The standard mode set is SAFETY, FREEZE, DISABLED, ALARM, READY, STARTUP, RUN, STOPPING and ABORTING. The full definition of each mode (entry, exit, TRIP_WORD and ALARM_WORD handling, the drive HAND/OFF rule) belongs to the canonical state machine in the logic domain (`kissolutions/bas-logic-gen`, when installed and confirmed as a dependency). The narrative states how this system uses it and leaves out modes the system does not need.
+The standard mode set is SAFETY, FREEZE, DISABLED, ALARM, READY, STARTUP, RUN, STOPPING and ABORTING.
+
+- **Engineering owns the required behavior:** the approved narrative states the modes, transitions, interlocks, stopped positions and alarm actions this system must have. It is the requirement the program is checked against.
+- **The logic domain owns the implementation:** the implementation state machine and reusable programming patterns (`kissolutions/bas-logic-gen`, when installed and selected for the project).
+- The logic handoff names the approved engineering revision, the logic revision and any unresolved decisions. A logic change that changes required behavior comes back through engineering review; a programming change never silently changes the requirement.
 
 ## 4. System sections
 
