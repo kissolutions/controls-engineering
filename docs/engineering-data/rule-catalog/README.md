@@ -38,6 +38,8 @@ One catalog of executable checks. Each rule has **one authoritative home** here;
 2. Run every rule whose `stages` includes the stage (release gate) or whose `tier` is at or below the chosen tier (working review).
 3. Report each finding with rule ID, severity, the IDs listed in `finding`, and the inputs read (with revisions).
 4. Record rules not run and why.
+5. **Group findings by root cause.** When several rules fail on the same object (for example a removed device still drawn fails FW-SCOPE-01 and FW-ID-04), report one finding for the object listing every rule ID it breaks.
+6. **Missing columns.** When a rule's required input column does not exist in the register, the rule FAILS (the register cannot show compliance); it is NOT PERFORMED only when a whole input document is absent from the package.
 
 ## Status
 

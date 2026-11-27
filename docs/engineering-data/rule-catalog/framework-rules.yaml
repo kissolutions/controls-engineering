@@ -32,7 +32,7 @@ decision_tables:
     rows:
       - class: field device or point with a source tag
         source_tag: required
-        scada_name: required if the row has a SCADA point
+        scada_name: required on point rows; on a device row only if the device itself is a SCADA / network object (controller, networked drive)
       - class: new device with no source tag (new panel, relay)
         source_tag: provisional tag, with "no source tag" recorded
         scada_name: required if the row has a SCADA point
@@ -196,7 +196,7 @@ rules:
     title: Release manifest present
     applies_to: every issue to others (submittal, transmittal, logic handoff)
     inputs: [PER change log or SOURCES, transmittal record]
-    evaluate: the issue records the exact PER, EDP, drawing and logic handoff revisions it contains
+    evaluate: the issue records the exact revision of each artifact it contains (for a submittal: PER, EDP and drawing transmittal revision; logic handoff revision only when a handoff is part of the issue)
     finding: list the missing revisions
     severity: blocker
     evidence: manifest entry

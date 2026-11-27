@@ -155,7 +155,7 @@ rules:
     title: Point has terminal, signal type, range and units
     applies_to: every active hardwired EDP point
     inputs: [EDP IO LIST columns Terminal / Channel, Physical Signal Type, Eng Range, Eng Units]
-    evaluate: each of the four fields is filled with a non-placeholder value (units may be n/a for binary points)
+    evaluate: each of the four fields is filled with a non-placeholder value; for binary points Eng Units may be blank or "n/a"
     finding: list point ID and missing fields
     severity: major
     evidence: n/a
@@ -326,7 +326,7 @@ rules:
     title: Fail behavior columns complete
     applies_to: every active controllable output device
     inputs: [EDP DEVICE LIST fail behavior columns]
-    evaluate: each of the six condition columns is filled, or "n/a" with a reason
+    evaluate: the row has a filled value, or "n/a" with a reason, for each of the six conditions (normal stop position, loss of actuator power, loss of command signal, controller failure, expansion comms loss, HAND / manual operation). If the EDP has no columns for them, the rule FAILS for every device it applies to.
     finding: list device and empty columns
     severity: major
     evidence: n/a
@@ -339,7 +339,7 @@ rules:
     title: Fail determination evidenced
     applies_to: every device with a determination status
     inputs: [EDP DEVICE LIST, PER ISSUES, PER RFI REGISTER, PER RECORDS]
-    evaluate: Finalized cites a closed item; Open cites an open item; Undetermined states a reason
+    evaluate: Finalized cites a closed Issue, closed RFI, approved PER record or a source document locator; Open cites an open item; Undetermined states a reason
     finding: list device and status
     severity: major
     evidence: cited item
@@ -442,7 +442,7 @@ rules:
 
   - id: KL-PWR-02
     title: CR-FP coil on a KMC1 relay output
-    applies_to: every CR-FP
+    applies_to: every CR-FP (if none exists, report NOT APPLICABLE: covered by KL-PWR-01)
     inputs: [EDP IO LIST, wiring sheets]
     evaluate: the coil is driven by a KMC1 relay output
     finding: CR-FP and its driving output
@@ -468,7 +468,7 @@ rules:
 
   - id: KL-PWR-04
     title: CR-FP first power-up note
-    applies_to: panel layout and the wiring sheet showing CR-FP
+    applies_to: panel layout and the wiring sheet showing CR-FP (if no CR-FP exists, report NOT APPLICABLE: covered by KL-PWR-01)
     inputs: [drawing set]
     evaluate: the boxed "pull the CR-FP fuse holder before first power-up" note appears next to CR-FP on both sheets
     finding: list sheet
