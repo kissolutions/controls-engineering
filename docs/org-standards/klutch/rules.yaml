@@ -59,7 +59,7 @@ decision_tables:
         points: none unless monitored
         p_and_id: no
         network_diagram: required for routers, gateways and converters
-        wiring: required
+        wiring: required for components with electrical connections (not the enclosure)
         panel_layout: required, with BOM row
       - class: consumable / stock material (standard design stock)
         examples: terminal blocks, fuses and fuse holders, DIN rail, wire duct, wire, end stops, labels, ferrules, mounting hardware
@@ -335,7 +335,7 @@ rules:
 
   - id: KL-FAIL-01
     title: Fail behavior columns complete
-    applies_to: every active controllable output device
+    applies_to: every active device that has at least one command (output) point, including relays driven by a controller output
     inputs: [EDP DEVICE LIST fail behavior columns]
     evaluate: the row has a filled value, or "n/a" with a reason, for each of the six conditions (normal stop position, loss of actuator power, loss of command signal, controller failure, expansion comms loss, HAND / manual operation). If the EDP has no columns for them, the rule FAILS for every device it applies to.
     finding: list device and empty columns

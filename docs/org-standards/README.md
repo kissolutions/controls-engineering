@@ -35,7 +35,7 @@ The order is a default, not a law. Any convention (not a framework invariant) ca
 
 ### Precedence override record
 
-Recorded as a PER RECORDS row (Record Type `Decision`) until the template carries a dedicated field set.
+Recorded as a PER RECORDS row (Record Type `Decision`, statement beginning `Override:`) until the template carries a dedicated field set.
 
 | Field | Content |
 |---|---|

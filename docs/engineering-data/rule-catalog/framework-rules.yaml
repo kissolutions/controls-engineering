@@ -32,7 +32,7 @@ decision_tables:
     rows:
       - class: field device or point with a source tag
         source_tag: required
-        scada_name: required on point rows; on a device row only if the device itself is a SCADA / network object (controller, networked drive)
+        scada_name: required on point rows; on a device or equipment row only if it has its own BACnet device object visible to SCADA (for example a BACnet controller, router or networked drive; not an expansion module on a private bus)
       - class: new device with no source tag (new panel, relay)
         source_tag: provisional tag, with "no source tag" recorded
         scada_name: required if the row has a SCADA point
@@ -220,7 +220,7 @@ rules:
 
   - id: FW-OVR-01
     title: Overrides authorized by the approval authority
-    applies_to: every precedence override record (PER Decision)
+    applies_to: every precedence override record (PER RECORDS row of type Decision whose statement begins "Override:")
     inputs: [PER RECORDS]
     evaluate: the record names the approval authority and cites evidence of that authority's agreement
     finding: list override IDs lacking authority or evidence (they stay "proposed")
