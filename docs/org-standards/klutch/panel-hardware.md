@@ -10,6 +10,13 @@ profile_version: 0.1
 
 Standard DDC panel conventions that the pre-canned panel design implements. Project-specific deviations are recorded as precedence overrides or EDP notes.
 
+## What goes in the EDP
+
+- **Engineered panel components** are EDP DEVICE rows (parent: the panel): anything named on the general arrangement BOM that has consequential design specs or points to integrate. Enclosure, controllers, safety relay, power supplies and transformers, UPS, BACnet routers, gateways and protocol converters, and relays.
+- **Consumables** (standard stock material: terminal blocks, fuses, DIN rail, wire duct, wire, end stops, labels, mounting hardware) are on the BOM only, not in the EDP.
+- Listing the supplies and the enclosure in the EDP lets the EDP support panel analyses, such as a power and heat analysis of the enclosure.
+- Classes and representation rules: `rules.yaml` DT-DEVICE.
+
 ## Terminal designations
 
 Panel distribution uses **double-deck terminal blocks**. A terminal reference is the block position plus the deck: `3T` is terminal 3, top deck; `3B` is terminal 3, bottom deck. On power distribution strips the supply (+ or line) is on the top deck and its return (− or common) on the bottom deck of the same block, so each load's feed and return share one position.

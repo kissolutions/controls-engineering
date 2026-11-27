@@ -12,3 +12,4 @@
 - Revision numbering page: MAJOR.MINOR.BUILD.
 - Applied outside review (2026-11-26): structured fail behavior columns; DOOR-SW disposition before issue; jumper purpose and class; analog valve feedback as a default with approved exceptions; damper 50% as a default; removed scope keeps history; legend rule; production default; release manifest; CR-FP marked provisional with evidence and open sequence questions; grounding topology scoped; ABB configuration and controller-removed test; monitoring-only defined.
 - Rule catalog v0.1: Klutch rules.yaml with four decision tables; framework rule catalog with DT-SCOPE and DT-NAME.
+- EDP scope for panel parts: engineered panel components in the EDP; consumables BOM only (DT-DEVICE, FW-ID-04 exemption, KL-SYNC-01 scope).

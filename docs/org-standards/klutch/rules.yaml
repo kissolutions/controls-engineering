@@ -53,12 +53,23 @@ decision_tables:
         network_diagram: required
         wiring: required
         panel_layout: required, with BOM row
-      - class: panel component (relay, power supply, fuse, terminal, transformer)
+      - class: engineered panel component (named on the general arrangement BOM and has consequential design specs or points to integrate)
+        examples: enclosure, controllers, safety relay, power supplies and transformers, UPS, BACnet routers, gateways and protocol converters, relays (CR-SS, CR-FP, CR-DPR, CR-ES), output interface cards (HPO) (confirm)
+        edp_row: required (DEVICE LIST, parent = the panel equipment)
         points: none unless monitored
         p_and_id: no
-        network_diagram: no
+        network_diagram: required for routers, gateways and converters
         wiring: required
         panel_layout: required, with BOM row
+      - class: consumable / stock material (standard design stock)
+        examples: terminal blocks, fuses and fuse holders, DIN rail, wire duct, wire, end stops, labels, ferrules, mounting hardware
+        edp_row: none (BOM only)
+        points: none
+        p_and_id: no
+        network_diagram: no
+        wiring: shown as needed
+        panel_layout: BOM row
+    notes: Engineered panel components are in the EDP so it can support panel analyses (for example a power analysis of the enclosure from the listed supplies and loads). Consumables are exempt from FW-ID-04 and FW-ID-05.
 
   DT-ACTUATOR:
     title: Actuator type -> commands, feedback and fail behavior columns
@@ -508,7 +519,7 @@ rules:
   # --- Drawing-to-register sync ---
   - id: KL-SYNC-01
     title: BOM quantity equals uses
-    applies_to: every panel and instrument BOM row
+    applies_to: every instrument BOM row and every panel BOM row for an engineered panel component (consumables excluded)
     inputs: [BOM tables, wiring sheets, EDP]
     evaluate: the BOM quantity equals the number of instances on the wiring sheets and in the EDP
     finding: list part, BOM quantity, counted quantity, where counted

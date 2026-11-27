@@ -92,7 +92,7 @@ rules:
     title: No orphan identifiers in artifacts
     applies_to: each artifact in the organization's artifact list (drawings, narrative, PER, programs, SCADA export)
     inputs: [artifact text or export, EDP, project naming mapping]
-    evaluate: every device tag and signal name found in the artifact maps to an active EDP row
+    evaluate: every device tag and signal name found in the artifact maps to an active EDP row; items the organization profile classes as consumable / stock material are exempt
     finding: list each unmatched name with artifact, sheet or location
     severity: major
     evidence: n/a
