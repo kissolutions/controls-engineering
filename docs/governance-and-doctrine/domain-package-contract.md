@@ -15,6 +15,7 @@ A **Domain** is a coherent area of engineering knowledge. A **Domain Package** i
 - **Maturity:** bootstrap proposal
 - **Parent:** `kissolutions/knowledgebase_wikijs`; KIS Systems Engineering Framework v1.0
 - **Optional downstream consumer:** `kissolutions/bas-logic-gen`
+- **Optional dependency (proposed):** a *logic domain*, to help write and validate controls narratives (operating modes / state machine, sequences, alarm and permissive logic). `kissolutions/bas-logic-gen` is the current logic domain.
 - **Parallel example domain:** `kissolutions/lv-lighting-design`
 - **Project data:** outside repository, governed by project manifest and source/revision matrix
 
@@ -38,5 +39,7 @@ A **Domain** is a coherent area of engineering knowledge. A **Domain Package** i
 3. A cross-package handoff includes producer/consumer version, authoritative project registry revision and source/baseline identifiers.
 4. Never mark a package/process validated solely because a reference example passes or another agent once executed it.
 5. Keep the WikiJS `Domains` index (when created) as a package *catalog* and navigation layer, not a second authoritative copy of every domain's executable rules.
+
+6. *(Proposed.)* Optional dependencies are declared in each package's head files (`README.md`, `CLAUDE.md`). A package that can serve as a dependency (for example a logic domain) registers itself as a candidate when installed; the owner confirms it as a dependency at install time or first use. Each project records which dependency packages and versions it uses; installing or updating a package never changes an existing project's behavior until the project selects it. Until confirmed, the depending package works without it and says which steps lose support (for example, narrative mode tables are not checked against a canonical state machine).
 
 This is documentation only; no plugin loader, automatic dependency resolution or release automation is implemented by this scaffold.

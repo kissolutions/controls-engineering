@@ -1,0 +1,704 @@
+# Klutch rule catalog — candidate v0.1 (draft, 2026-11-26)
+# Schema: docs/engineering-data/rule-catalog/README.md. Framework rules (FW-*) also apply.
+# Explanations live on the pages named in `source`; this file is the authoritative statement of each check.
+
+catalog: klutch
+version: 0.1.0
+depends_on: framework 0.1.0
+
+decision_tables:
+
+  DT-STAGE:
+    title: Issue stage -> rules that must run (release gate)
+    rows:
+      - stage: working
+        meaning: any agent / owner handoff (BUILD uprev)
+        run: rules with stages including "working"
+      - stage: submittal
+        meaning: drawing transmittal to the client (drawing revision)
+        run: rules with stages including "submittal"
+      - stage: logic_handoff
+        meaning: engineering-to-logic handoff
+        run: rules with stages including "logic_handoff"
+      - stage: closeout
+        meaning: as-built and closeout records
+        run: rules with stages including "closeout"
+    notes: Speed tiers never reduce the rules run at submittal, logic_handoff or closeout (FW-REL-02).
+
+  DT-DEVICE:
+    title: Device class -> required points and drawing representation
+    input: EDP DEVICE LIST row
+    rows:
+      - class: field device with points Klutch uses (sensor, switch, actuator)
+        points: one EDP point per signal used
+        p_and_id: required (device tag and signal names)
+        network_diagram: no
+        wiring: required if Klutch wires it
+        panel_layout: no
+      - class: network-connected device with points used (drive on BACnet, gas analyzer)
+        points: one EDP point per object used
+        p_and_id: required
+        network_diagram: required
+        wiring: only the parts Klutch wires
+        panel_layout: no
+      - class: interface-only device, no points used
+        points: none; reason recorded in the DEVICE row
+        p_and_id: only if it acts in a Klutch circuit (for example a fire alarm contact in a safety string)
+        network_diagram: required if network-connected
+        wiring: required if Klutch wires to it
+        panel_layout: no
+      - class: controller or expansion module
+        points: none of its own (it is the endpoint)
+        p_and_id: no
+        network_diagram: required
+        wiring: required
+        panel_layout: required, with BOM row
+      - class: engineered panel component (named on the general arrangement BOM and has consequential design specs or points to integrate)
+        examples: enclosure, controllers, safety relay, power supplies and transformers, UPS, BACnet routers, gateways and protocol converters, relays (CR-SS, CR-FP, CR-DPR, CR-ES), output interface cards (HPO) (confirm)
+        edp_row: required (DEVICE LIST, parent = the panel equipment)
+        points: none unless monitored
+        p_and_id: no
+        network_diagram: required for routers, gateways and converters
+        wiring: required for components with electrical connections (not the enclosure)
+        panel_layout: required, with BOM row
+      - class: consumable / stock material (standard design stock)
+        examples: terminal blocks, fuses and fuse holders, DIN rail, wire duct, wire, end stops, labels, ferrules, mounting hardware
+        edp_row: none (BOM only)
+        points: none
+        p_and_id: no
+        network_diagram: no
+        wiring: shown as needed
+        panel_layout: BOM row
+    notes: Engineered panel components are in the EDP so it can support panel analyses (for example a power analysis of the enclosure from the listed supplies and loads). Consumables are exempt from FW-ID-04 and FW-ID-05.
+
+  DT-ACTUATOR:
+    title: Actuator type -> commands, feedback and fail behavior columns
+    input: EDP DEVICE LIST row for a valve or damper actuator
+    rows:
+      - type: valve, modulating (2-10 VDC)
+        commands: 1 analog output, 2-10 VDC
+        feedback: 1 analog input, 2-10 VDC (default; exception needs approval)
+        fail_columns: all six (validation 6b)
+      - type: valve, two-position, spring return
+        commands: 1 binary output
+        feedback: 2 end switches (open, closed)
+        fail_columns: all six
+      - type: valve, two-position, non-spring return
+        commands: 2 binary outputs (open, close)
+        feedback: 2 end switches (open, closed)
+        fail_columns: all six
+      - type: damper, two-position (typical)
+        commands: 1 binary output, fail closed (confirm against datasheet and spec)
+        feedback: 1 end switch, default at 50% or more toward open; confirm per application and NO / NC configuration
+        fail_columns: all six
+      - type: damper, modulating
+        commands: 1 analog output, 2-10 VDC
+        feedback: per datasheet and spec; record the choice
+        fail_columns: all six
+    notes: Any departure from the row is a deviation needing owner approval or a cited datasheet (KL-ACT-03). A damper that appears to need two commands is flagged for owner approval.
+
+  DT-ALLOC:
+    title: Point use -> allocation priority
+    input: EDP IO LIST row
+    definitions:
+      controlling: the value drives any loop, sequence, alarm action, interlock or permissive
+      monitoring_only: displayed, trended or alarmed with no automatic action
+    rows:
+      - use: 4-20 mA, controlling (any system on the controller, including ancillary systems)
+        allocate_to: KMC1 terminal UIs first, then KMC1 UI1 / UI2 via the RJ45 breakout
+        overflow: CAN module only with a failure-mode analysis and PE-approved deviation
+      - use: 4-20 mA, monitoring-only
+        allocate_to: remaining KMC1 UIs
+        overflow: CAN module, on a switched field power group released after CAN boot
+      - use: binary inputs, 2-10 VDC inputs
+        allocate_to: CAN modules (KMC2 ...) or remaining KMC1 UIs
+        overflow: next CAN module
+      - use: outputs commanding a damper
+        allocate_to: a relay output
+        overflow: n/a
+      - use: CR-FP coil
+        allocate_to: a KMC1 relay output
+        overflow: never on a CAN module
+
+rules:
+
+  # --- Representation and completeness ---
+  - id: KL-REP-01
+    title: Device shown where DT-DEVICE requires
+    applies_to: every active EDP device
+    inputs: [EDP DEVICE LIST, drawing set (PDF text or DXF), DT-DEVICE]
+    evaluate: the device tag appears on every sheet type DT-DEVICE marks required for its class
+    finding: list device ID, tag, missing sheet type
+    severity: major
+    evidence: n/a
+    closure: device added to the sheet
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-REP-02
+    title: Points shown on the P&ID
+    applies_to: every active EDP point whose device class requires the P&ID
+    inputs: [EDP IO LIST, P&ID sheet]
+    evaluate: the point's signal name appears on the P&ID next to its device
+    finding: list point ID, signal name
+    severity: major
+    evidence: n/a
+    closure: signal name added
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-DEV-01
+    title: Device has points or a reason
+    applies_to: every active EDP device whose class in DT-DEVICE expects points
+    inputs: [EDP DEVICE LIST, EDP IO LIST]
+    evaluate: at least one active point references the device, or the DEVICE row states why it has none
+    finding: list device ID and tag
+    severity: major
+    evidence: n/a
+    closure: point added, or reason recorded
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-DEV-02
+    title: Point has terminal, signal type, range and units
+    applies_to: every active hardwired EDP point
+    inputs: [EDP IO LIST columns Terminal / Channel, Physical Signal Type, Eng Range, Eng Units]
+    evaluate: each of the four fields is filled with a non-placeholder value; for binary points Eng Units may be blank or "n/a"
+    finding: list point ID and missing fields
+    severity: major
+    evidence: n/a
+    closure: fields filled
+    stages: [submittal, logic_handoff]
+    tier: quick
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-DEV-03
+    title: Device placeholders counted
+    applies_to: every active EDP device and point
+    inputs: [EDP]
+    evaluate: no tag, model or location field contains TBD, ## or a blank unless an open item ID is cited in the row
+    finding: list row ID, field, value
+    severity: minor
+    evidence: open item ID
+    closure: value filled or open item cited
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-DEV-04
+    title: Sensor type fits the location
+    applies_to: every room or space sensor
+    inputs: [EDP DEVICE LIST, project specification, PER SOURCES]
+    evaluate: the selected sensor type matches the specification for the location type (for example stainless wall plate in common areas)
+    finding: list device, location type, selected type, required type
+    severity: major
+    evidence: specification section
+    closure: device changed, or precedence override recorded
+    stages: [submittal]
+    tier: deep
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-DEV-05
+    title: Power source and conductor count recorded
+    applies_to: every active field device Klutch wires
+    inputs: [EDP DEVICE LIST]
+    evaluate: the row records its power source and conductor count
+    finding: list device ID
+    severity: minor
+    evidence: datasheet
+    closure: recorded
+    stages: [submittal]
+    tier: quick
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-DEV-06
+    title: Vendor model carried everywhere
+    applies_to: every vendor-furnished device
+    inputs: [EDP DEVICE LIST, vendor submittal, drawing set]
+    evaluate: the full model number from the vendor submittal appears in the EDP and on every sheet that names the model
+    finding: list device, model found, model in submittal, location
+    severity: major
+    evidence: submittal page
+    closure: corrected
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/validation.md
+
+  # --- Device selection and ranges ---
+  - id: KL-SEL-01
+    title: Range covers the requirement
+    applies_to: every active transmitter and analog sensor
+    inputs: [EDP DEVICE LIST range, PER RECORDS requirement or labelled assumption, datasheet]
+    evaluate: the design value lies inside the selected span with margin
+    finding: list device, design value, span
+    severity: blocker
+    evidence: requirement source and datasheet
+    closure: device or span changed
+    stages: [working, submittal]
+    tier: standard
+    source: docs/org-standards/klutch/device-selection.md
+
+  - id: KL-SEL-02
+    title: Datasheet matches EDP
+    applies_to: every active device with a selected model
+    inputs: [EDP DEVICE LIST, EQ Library datasheet]
+    evaluate: model, range, signal type, units and power in the EDP match the datasheet
+    finding: list device and mismatched fields
+    severity: major
+    evidence: datasheet file and page
+    closure: corrected
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/device-selection.md
+
+  - id: KL-SEL-03
+    title: CAD tables match EDP
+    applies_to: every row of the P&ID instrument table and other CAD device tables
+    inputs: [drawing tables, EDP DEVICE LIST]
+    evaluate: tag, description (including sensor range), model and quantity match the EDP
+    finding: list table row and mismatched fields
+    severity: major
+    evidence: n/a
+    closure: corrected
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/device-selection.md
+
+  - id: KL-SEL-04
+    title: Output card matches output signal
+    applies_to: every KMC output with an HPO interface card
+    inputs: [EDP IO LIST, panel BOM, wiring sheets]
+    evaluate: the HPO card type matches the output's signal type and range
+    finding: list output, card, signal
+    severity: major
+    evidence: card datasheet
+    closure: corrected
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/device-selection.md
+
+  - id: KL-SEL-05
+    title: Assumptions visible
+    applies_to: every EDP value derived from a typical assumption
+    inputs: [EDP, PER RECORDS type Assumption]
+    evaluate: the value is marked as an assumption and linked to its PER record
+    finding: list row and field
+    severity: minor
+    evidence: PER record ID
+    closure: marked, or replaced by a source value
+    stages: [submittal]
+    tier: deep
+    source: docs/org-standards/klutch/device-selection.md
+
+  # --- Actuators and fail behavior ---
+  - id: KL-ACT-01
+    title: Actuator commands per DT-ACTUATOR
+    applies_to: every active valve and damper actuator
+    inputs: [EDP DEVICE LIST, EDP IO LIST, DT-ACTUATOR]
+    evaluate: the number and type of command points equal the DT-ACTUATOR row
+    finding: list device, expected, found
+    severity: major
+    evidence: approved deviation or datasheet if different
+    closure: points corrected, or deviation approved (KL-ACT-03)
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-ACT-02
+    title: Actuator feedback per DT-ACTUATOR
+    applies_to: every active valve and damper actuator
+    inputs: [EDP DEVICE LIST, EDP IO LIST, DT-ACTUATOR]
+    evaluate: the number and type of feedback points equal the DT-ACTUATOR row
+    finding: list device, expected, found
+    severity: major
+    evidence: approved deviation or datasheet if different
+    closure: points corrected, or deviation approved (KL-ACT-03)
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-ACT-03
+    title: Actuator deviation documented
+    applies_to: every actuator failing KL-ACT-01 or KL-ACT-02 that is kept as designed
+    inputs: [PER RECORDS, datasheet]
+    evaluate: a PER Decision or datasheet citation supports the departure
+    finding: list device
+    severity: major
+    evidence: record ID or datasheet page
+    closure: evidence cited
+    stages: [submittal]
+    tier: quick
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-FAIL-01
+    title: Fail behavior columns complete
+    applies_to: every active device that has at least one command (output) point, including relays driven by a controller output
+    inputs: [EDP DEVICE LIST fail behavior columns]
+    evaluate: the row has a filled value, or "n/a" with a reason, for each of the six conditions (normal stop position, loss of actuator power, loss of command signal, controller failure, expansion comms loss, HAND / manual operation). If the EDP has no columns for them, the rule FAILS for every device it applies to.
+    finding: list device and empty columns
+    severity: major
+    evidence: n/a
+    closure: filled
+    stages: [submittal, logic_handoff]
+    tier: quick
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-FAIL-02
+    title: Fail determination evidenced
+    applies_to: every device with a determination status
+    inputs: [EDP DEVICE LIST, PER ISSUES, PER RFI REGISTER, PER RECORDS]
+    evaluate: Finalized cites a closed Issue, closed RFI, approved PER record or a source document locator; Open cites an open item; Undetermined states a reason
+    finding: list device and status
+    severity: major
+    evidence: cited item
+    closure: evidence cited or status corrected
+    stages: [submittal, logic_handoff]
+    tier: standard
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-FAIL-03
+    title: Downstream matches fail behavior
+    applies_to: every device with fail behavior columns
+    inputs: [EDP DEVICE LIST, controls narrative, drawings, schedules]
+    evaluate: the narrative, drawings and schedules state the same position for each condition they mention
+    finding: list device, condition, artifact, stated value, EDP value
+    severity: major
+    evidence: n/a
+    closure: artifact or EDP corrected
+    stages: [submittal, logic_handoff]
+    tier: deep
+    source: docs/org-standards/klutch/validation.md
+
+  # --- Allocation, field power, KMC ---
+  - id: KL-ALLOC-01
+    title: 4-20 mA inputs classified
+    applies_to: every active 4-20 mA input
+    inputs: [EDP IO LIST]
+    evaluate: the point is classified controlling or monitoring-only per DT-ALLOC definitions
+    finding: list point ID
+    severity: major
+    evidence: n/a
+    closure: classified
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-ALLOC-02
+    title: Controlling 4-20 mA on KMC1
+    applies_to: every controlling 4-20 mA input
+    inputs: [EDP IO LIST Terminal / Channel]
+    evaluate: the terminal is on KMC1, or a failure-mode analysis and PE-approved deviation are cited
+    finding: list point ID and terminal
+    severity: blocker
+    evidence: deviation record and failure-mode analysis
+    closure: moved to KMC1, or evidence cited
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-ALLOC-03
+    title: Controlling before monitoring on KMC1
+    applies_to: every monitoring-only 4-20 mA input on KMC1
+    inputs: [EDP IO LIST]
+    evaluate: no controlling 4-20 mA input of any system on this controller is off KMC1
+    finding: list the monitoring point on KMC1 and the controlling point elsewhere
+    severity: major
+    evidence: n/a
+    closure: swapped
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-ALLOC-04
+    title: Terminal allocation unique
+    applies_to: every active physical point
+    inputs: [EDP IO LIST Terminal / Channel]
+    evaluate: no other active point uses the same controller / module / terminal
+    finding: list both point IDs and the shared terminal
+    severity: blocker
+    evidence: n/a
+    closure: one point moved
+    stages: [working, submittal, logic_handoff]
+    tier: quick
+    source: docs/org-standards/klutch/terminal-allocation.md
+
+  - id: KL-ALLOC-05
+    title: Damper commands on relay outputs
+    applies_to: every damper command point
+    inputs: [EDP IO LIST]
+    evaluate: the terminal is a KMC relay output
+    finding: list point and terminal
+    severity: major
+    evidence: n/a
+    closure: moved
+    stages: [submittal]
+    tier: quick
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-PWR-01
+    title: CR-FP present
+    applies_to: every KMC panel with Klutch-powered 4-20 mA loops (not BAC-9300 VAV controllers)
+    inputs: [EDP DEVICE LIST, panel BOM]
+    evaluate: a CR-FP relay exists in the EDP and the panel BOM
+    finding: panel ID
+    severity: blocker
+    evidence: n/a
+    closure: CR-FP added
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-PWR-02
+    title: CR-FP coil on a KMC1 relay output
+    applies_to: every CR-FP (if none exists, report NOT APPLICABLE: covered by KL-PWR-01)
+    inputs: [EDP IO LIST, wiring sheets]
+    evaluate: the coil is driven by a KMC1 relay output
+    finding: CR-FP and its driving output
+    severity: blocker
+    evidence: n/a
+    closure: moved to KMC1
+    stages: [submittal, logic_handoff]
+    tier: quick
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-PWR-03
+    title: Klutch-powered loops downstream of CR-FP
+    applies_to: every Klutch-powered 4-20 mA loop
+    inputs: [EDP DEVICE LIST power source, wiring sheets]
+    evaluate: the loop's power comes from TS-FP downstream of a CR-FP contact
+    finding: list device and its power source
+    severity: blocker
+    evidence: n/a
+    closure: rewired
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-PWR-04
+    title: CR-FP first power-up note
+    applies_to: panel layout and the wiring sheet showing CR-FP (if no CR-FP exists, report NOT APPLICABLE: covered by KL-PWR-01)
+    inputs: [drawing set]
+    evaluate: the boxed "pull the CR-FP fuse holder before first power-up" note appears next to CR-FP on both sheets
+    finding: list sheet
+    severity: major
+    evidence: n/a
+    closure: note added
+    stages: [submittal]
+    tier: quick
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-PWR-05
+    title: CR-FP startup logic in the handoff
+    applies_to: every panel with CR-FP
+    inputs: [logic handoff, program]
+    evaluate: the handoff and program include relinquish default 0, reset-to-0 logic, and the EIO "CAN modules booted" permissive before closing CR-FP
+    finding: list the missing elements
+    severity: blocker
+    evidence: program review record
+    closure: added and reviewed
+    stages: [logic_handoff]
+    tier: quick
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  - id: KL-PWR-06
+    title: Actuators on fused 24 VAC
+    applies_to: every valve and damper actuator in a DC-powered panel
+    inputs: [EDP DEVICE LIST, panel power sheet]
+    evaluate: the actuator is powered from XFMR1 on its own fused TB-24AC terminal
+    finding: list device and its power source
+    severity: major
+    evidence: n/a
+    closure: rewired
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/panel-hardware.md
+
+  # --- Drawing-to-register sync ---
+  - id: KL-SYNC-01
+    title: BOM quantity equals uses
+    applies_to: every instrument BOM row and every panel BOM row for an engineered panel component (consumables excluded)
+    inputs: [BOM tables, wiring sheets, EDP]
+    evaluate: the BOM quantity equals the number of instances on the wiring sheets and in the EDP
+    finding: list part, BOM quantity, counted quantity, where counted
+    severity: major
+    evidence: n/a
+    closure: quantity corrected
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-SYNC-02
+    title: BOM part matches description
+    applies_to: every BOM row
+    inputs: [BOM tables, datasheets]
+    evaluate: the part number and description describe the same item (size, model, rating)
+    finding: list row, part number, description, datasheet value
+    severity: major
+    evidence: datasheet
+    closure: corrected
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/validation.md
+
+  - id: KL-SYNC-03
+    title: Drawing terminals match EDP
+    applies_to: every point shown at a terminal on a wiring sheet
+    inputs: [wiring sheets, EDP IO LIST Terminal / Channel]
+    evaluate: the terminal on the drawing equals the EDP terminal
+    finding: list point, drawing terminal, EDP terminal, sheet
+    severity: major
+    evidence: n/a
+    closure: corrected
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/validation.md
+
+  # --- Intake and safety provisions ---
+  - id: KL-INT-01
+    title: DOOR-SW disposition before issue
+    applies_to: every AHU
+    inputs: [EDP, PER]
+    evaluate: the DOOR-SW provision is dispositioned (device confirmed, or confirmed absent with a source)
+    finding: AHU tag
+    severity: major
+    evidence: source or RFI answer
+    closure: dispositioned
+    stages: [submittal]
+    tier: quick
+    source: docs/org-standards/klutch/intake-checklist.md
+
+  - id: KL-INT-02
+    title: Safety jumpers documented
+    applies_to: every jumper on a safety input
+    inputs: [wiring sheets, EDP, PER]
+    evaluate: the jumper is drawn with its purpose, removal condition and class (unused provision, or missing required safety with owner acknowledgment)
+    finding: list jumper location and missing items
+    severity: major
+    evidence: owner acknowledgment for a missing required safety
+    closure: documented
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/intake-checklist.md
+
+  # --- Narrative ---
+  - id: KL-NARR-01
+    title: Every mode states its outputs
+    applies_to: every mode in the narrative's operating modes table
+    inputs: [controls narrative]
+    evaluate: the mode row states fan / pump, valve, damper and loop status
+    finding: list mode and missing items
+    severity: major
+    evidence: n/a
+    closure: added
+    stages: [submittal, logic_handoff]
+    tier: quick
+    source: docs/org-standards/klutch/narrative-format.md
+
+  - id: KL-NARR-02
+    title: Every alarm typed
+    applies_to: every alarm in the narrative's alarms table
+    inputs: [controls narrative]
+    evaluate: the alarm states trip or warning, limit and delay
+    finding: list alarm and missing items
+    severity: major
+    evidence: n/a
+    closure: added
+    stages: [submittal, logic_handoff]
+    tier: quick
+    source: docs/org-standards/klutch/narrative-format.md
+
+  - id: KL-NARR-03
+    title: Every setpoint defined
+    applies_to: every setpoint or tunable named in the narrative text
+    inputs: [controls narrative]
+    evaluate: the name appears in the setpoints table with purpose, default and adjusted-by
+    finding: list name
+    severity: major
+    evidence: n/a
+    closure: added
+    stages: [submittal, logic_handoff]
+    tier: quick
+    source: docs/org-standards/klutch/narrative-format.md
+
+  - id: KL-NARR-04
+    title: No drafting language on issue
+    applies_to: issued narrative sheets
+    inputs: [controls narrative]
+    evaluate: the text contains no "proposed", "TBD", "this draft" unless linked to an agreed open item
+    finding: list occurrence
+    severity: minor
+    evidence: open item ID
+    closure: removed or linked
+    stages: [submittal]
+    tier: quick
+    source: docs/org-standards/klutch/narrative-format.md
+
+  # --- Issues and RFIs ---
+  - id: KL-RFI-01
+    title: RFI has source Issue and PE approval
+    applies_to: every RFI
+    inputs: [PER RFI REGISTER, PER ISSUES]
+    evaluate: the RFI cites a source Issue and records the PE's approval to raise it
+    finding: list RFI
+    severity: minor
+    evidence: Issue ID and approval note
+    closure: cited
+    stages: [working]
+    tier: standard
+    source: docs/org-standards/klutch/issues-and-rfis.md
+
+  - id: KL-RFI-02
+    title: RFI asks or notifies one thing, externally
+    applies_to: every RFI
+    inputs: [PER RFI REGISTER]
+    evaluate: the RFI is addressed outside Klutch, covers one question or notification, and has no internal-only content
+    finding: list RFI and the problem
+    severity: minor
+    evidence: n/a
+    closure: split, rewritten, or moved back to Issues
+    stages: [working]
+    tier: deep
+    source: docs/org-standards/klutch/issues-and-rfis.md
+
+  # --- Client conventions (activate per project) ---
+  - id: KL-UTMB-01
+    title: VFD fire and safety interlock
+    applies_to: every VFD on a project with the UTMB conventions active
+    inputs: [wiring sheets, EDP]
+    evaluate: the fire alarm contact is in series with the DDC safety relay contact into the bypass interlock input
+    finding: VFD tag
+    severity: major
+    evidence: n/a
+    closure: rewired
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/client-conventions/utmb.md
+
+  - id: KL-UTMB-02
+    title: Damper interlock relays
+    applies_to: every damper that can block a fan, on a project with the UTMB conventions active
+    inputs: [wiring sheets, EDP]
+    evaluate: CR-DPR (coil from the bypass System Started output, contact parallel to the KMC relay output) and CR-ES (one per end switch, into the run permissive input) are present
+    finding: damper tag and missing relay
+    severity: major
+    evidence: n/a
+    closure: added
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/klutch/client-conventions/utmb.md
+
+  - id: KL-UTMB-03
+    title: Bypass configuration recorded
+    applies_to: every E-Clipse bypass on a project with the UTMB conventions active
+    inputs: [EDP DEVICE LIST, drive configuration record]
+    evaluate: the macro and parameter values for the inputs and outputs used are recorded with the wiring
+    finding: VFD tag
+    severity: major
+    evidence: configuration record
+    closure: recorded
+    stages: [submittal, closeout]
+    tier: standard
+    source: docs/org-standards/klutch/client-conventions/utmb.md
