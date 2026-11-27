@@ -1,0 +1,245 @@
+# Framework rule catalog — candidate v0.1 (draft, 2026-11-26)
+# Schema: see README.md. Organization-neutral rules only.
+
+catalog: framework
+version: 0.1.0
+
+decision_tables:
+
+  DT-SCOPE:
+    title: Scope / disposition status -> inclusion in current artifacts
+    input: EDP row disposition (equipment, device, point) or PER scope status
+    rows:
+      - status: in_scope
+        current_artifacts: include
+        history: n/a
+      - status: interface_only
+        current_artifacts: include on network diagram and P&ID where points are used; no wiring unless Klutch wires it
+        history: n/a
+      - status: unresolved
+        current_artifacts: include, marked provisional, with the open item ID
+        history: n/a
+      - status: removed / excluded
+        current_artifacts: exclude from every current deliverable
+        history: keep the register row with its disposition and the change log entry that removed it
+      - status: superseded
+        current_artifacts: exclude
+        history: keep, linked to the replacing row
+
+  DT-NAME:
+    title: Row class -> required identifier fields
+    input: EDP row class
+    rows:
+      - class: field device or point with a source tag
+        source_tag: required
+        scada_name: required if the row has a SCADA point
+      - class: new device with no source tag (new panel, relay)
+        source_tag: provisional tag, with "no source tag" recorded
+        scada_name: required if the row has a SCADA point
+      - class: interface-only device with no point
+        source_tag: required if the source tags it
+        scada_name: n/a (no point)
+      - class: internal software value not exposed
+        source_tag: n/a
+        scada_name: n/a unless the organization's naming rule requires it
+      - class: reserved input (device not yet confirmed)
+        source_tag: provisional
+        scada_name: required
+    notes: A blank or placeholder (TBD, ##) in a required field is a finding (FW-ID-01). "n/a" must state the reason.
+
+rules:
+
+  - id: FW-ID-01
+    title: Required identifier fields present
+    applies_to: every active EDP row (equipment, device, point)
+    inputs: [EDP EQUIPMENT, EDP DEVICE LIST, EDP IO LIST; columns Source Document Tag, Operational / SCADA Name]
+    evaluate: each field DT-NAME marks required for the row's class is filled with a non-placeholder value
+    finding: list the row IDs and the missing fields
+    severity: major
+    evidence: n/a
+    closure: field filled, or the row reclassified with a stated reason
+    stages: [submittal, logic_handoff, closeout]
+    tier: quick
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-ID-02
+    title: Internal IDs unique and never reused
+    applies_to: all EDP and PER IDs
+    inputs: [EDP all tabs ID columns, PER all tabs ID columns, change logs]
+    evaluate: no ID appears twice, and no retired ID is assigned to a different object
+    finding: list the duplicated or reused IDs and their rows
+    severity: blocker
+    evidence: n/a
+    closure: duplicate resolved with a new ID; reuse reverted
+    stages: [working, submittal, logic_handoff, closeout]
+    tier: quick
+    source: docs/ontology/canonical-model/README.md
+
+  - id: FW-ID-03
+    title: Rename keeps identity
+    applies_to: every EDP row whose tag changed since the previous revision
+    inputs: [EDP current and previous revision]
+    evaluate: the renamed tag sits on the same internal ID as before
+    finding: list old tag, new tag, old ID, new ID
+    severity: major
+    evidence: change log entry for the rename
+    closure: tag moved back onto the original ID
+    stages: [submittal, logic_handoff]
+    tier: standard
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-ID-04
+    title: No orphan identifiers in artifacts
+    applies_to: each artifact in the organization's artifact list (drawings, narrative, PER, programs, SCADA export)
+    inputs: [artifact text or export, EDP, project naming mapping]
+    evaluate: every device tag and signal name found in the artifact maps to an active EDP row
+    finding: list each unmatched name with artifact, sheet or location
+    severity: major
+    evidence: n/a
+    closure: name corrected in the artifact, or EDP row added through the normal change process
+    stages: [submittal, logic_handoff, closeout]
+    tier: standard
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-ID-05
+    title: Required identifiers present in artifacts
+    applies_to: each active EDP row and each artifact the organization requires it to appear on
+    inputs: [EDP, artifact, organization representation table]
+    evaluate: the row's tag or signal name appears on every artifact required for its class
+    finding: list row ID, missing artifact and sheet
+    severity: major
+    evidence: n/a
+    closure: identifier added to the artifact
+    stages: [submittal]
+    tier: standard
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-ID-06
+    title: Exact match after naming mapping
+    applies_to: every identifier occurrence matched by FW-ID-04
+    inputs: [artifact, EDP, project naming mapping]
+    evaluate: the occurrence equals the EDP value after applying the recorded mapping (spelling, case, separators)
+    finding: list occurrence, expected value, location
+    severity: major
+    evidence: n/a
+    closure: occurrence corrected
+    stages: [submittal, logic_handoff, closeout]
+    tier: quick
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-ID-07
+    title: Naming mapping is unique
+    applies_to: the project naming mapping (for example prefix omitted on drawings)
+    inputs: [project naming mapping, EDP IO LIST]
+    evaluate: applying the mapping to every active point gives unique displayed names
+    finding: list the colliding points
+    severity: blocker
+    evidence: n/a
+    closure: mapping or names changed so displayed names are unique
+    stages: [submittal, logic_handoff]
+    tier: quick
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-ID-08
+    title: Device / point pairing
+    applies_to: every point shown on an artifact next to a device
+    inputs: [artifact, EDP IO LIST Device Internal ID]
+    evaluate: the point appears with the device the EDP assigns it to
+    finding: list point, device shown, device expected, location
+    severity: major
+    evidence: n/a
+    closure: artifact or EDP corrected
+    stages: [submittal, logic_handoff]
+    tier: standard
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-ID-09
+    title: Conflicting source tags preserved
+    applies_to: every EDP row whose sources give different tags
+    inputs: [EDP, PER SOURCES]
+    evaluate: each conflicting source tag is recorded with its source, and an open item tracks the resolution
+    finding: list row ID and the unrecorded source tag
+    severity: minor
+    evidence: source IDs and locators
+    closure: tags recorded and the open item linked
+    stages: [submittal]
+    tier: deep
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-SCOPE-01
+    title: Removed scope absent from current artifacts
+    applies_to: every EDP or PER row whose status DT-SCOPE marks "exclude"
+    inputs: [EDP, PER, every current artifact]
+    evaluate: the row's identifiers do not appear in any current artifact
+    finding: list identifier, artifact, location
+    severity: major
+    evidence: n/a
+    closure: identifier removed from the artifact
+    stages: [submittal, logic_handoff]
+    tier: standard
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-SCOPE-02
+    title: Removed scope keeps history
+    applies_to: every row whose status changed to removed, excluded or superseded
+    inputs: [EDP, PER, change logs]
+    evaluate: the row still exists with its new status and a change log entry
+    finding: list rows deleted instead of dispositioned
+    severity: major
+    evidence: change log ID
+    closure: row restored with its disposition
+    stages: [working, submittal]
+    tier: quick
+    source: docs/engineering-data/identifier-consistency-validation.md
+
+  - id: FW-REL-01
+    title: Release manifest present
+    applies_to: every issue to others (submittal, transmittal, logic handoff)
+    inputs: [PER change log or SOURCES, transmittal record]
+    evaluate: the issue records the exact PER, EDP, drawing and logic handoff revisions it contains
+    finding: list the missing revisions
+    severity: blocker
+    evidence: manifest entry
+    closure: manifest recorded
+    stages: [submittal, logic_handoff, closeout]
+    tier: quick
+    source: docs/org-standards/klutch/revisions.md
+
+  - id: FW-REL-02
+    title: Checks not performed are recorded
+    applies_to: every validation run
+    inputs: [validation record]
+    evaluate: every rule required for the stage is reported as passed, failed, accepted exception or not performed with a reason
+    finding: list the rules with no outcome
+    severity: blocker
+    evidence: validation record
+    closure: outcome recorded
+    stages: [submittal, logic_handoff, closeout]
+    tier: quick
+    source: docs/governance-and-doctrine/agent-execution-profile-proposal.md
+
+  - id: FW-OVR-01
+    title: Overrides authorized by the approval authority
+    applies_to: every precedence override record (PER Decision)
+    inputs: [PER RECORDS]
+    evaluate: the record names the approval authority and cites evidence of that authority's agreement
+    finding: list override IDs lacking authority or evidence (they stay "proposed")
+    severity: major
+    evidence: agreement source ID
+    closure: evidence attached, or the higher-ranked rule followed
+    stages: [submittal]
+    tier: standard
+    source: docs/org-standards/README.md
+
+  - id: FW-OVR-02
+    title: No override of framework invariants
+    applies_to: every precedence override record
+    inputs: [PER RECORDS, list of framework invariants]
+    evaluate: the overridden rule is not a framework invariant (terms, stable IDs, register ownership, acceptance / baseline rules)
+    finding: list the override and the invariant it targets
+    severity: blocker
+    evidence: n/a
+    closure: override withdrawn
+    stages: [working, submittal]
+    tier: quick
+    source: docs/org-standards/README.md

@@ -25,6 +25,7 @@ Klutch builds deliverables on one repeated motif so that content is copy/paste b
 | [Issues and RFIs](issues-and-rfis.md) | Internal Issues vs external RFIs; owner approval to raise an RFI | draft |
 | [Intake checklist](intake-checklist.md) | Questions to settle at intake (door switches, naming standard) | draft |
 | [Terminal allocation](terminal-allocation.md) | Agent first pass in chat, PE tweaks, then apply to EDP and drawings | draft (trial) |
+| [Rule catalog](rules.yaml) | Executable Klutch checks and decision tables (DT-STAGE, DT-DEVICE, DT-ACTUATOR, DT-ALLOC); framework rules in `docs/engineering-data/rule-catalog/` | draft |
 | [Revision numbering](revisions.md) | MAJOR.MINOR.BUILD; owner decides uprevs; first submittal is 1.0.0 | draft |
 | Drawing standards | CAD symbols and go-by drawings | deferred until CAD go-bys exist |
 
