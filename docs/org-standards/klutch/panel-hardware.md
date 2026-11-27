@@ -39,7 +39,9 @@ Reference: Klutch pre-canned DDC panel power sheet (2026), drawn once for severa
 
 ### Grounding and common reference
 
-**Applies to:** Klutch DDC panels whose controllers (BAC-5901-series and expansion modules) are powered from the panel 24 VDC supply, with 24 VAC used only for actuators. It does not apply as-is to controllers powered from 24 VAC (for example VAV-specific controllers): for those, follow KMC's transformer guidance (floating secondary unless deliberately grounded, with care for mixed half-wave and full-wave devices).
+**Applies to:** Klutch DDC panels, where controllers (BAC-5901 series and CAN expansion modules) are powered from the panel 24 VDC supply and 24 VAC is used only for actuators. Klutch controllers are DC-powered except in VAV applications.
+
+**VAV exception:** VAV controllers (KMC BAC-9300 series) are powered from 24 VAC, because there is no room for a power supply at the VAV box. They carry no 4–20 mA inputs, so the CR-FP rules do not apply to them. Their grounding follows KMC's transformer guidance (floating secondary unless deliberately grounded, with care for mixed half-wave and full-wave devices), not the panel bonding scheme above.
 
 
 - The 24 VAC transformer's negative (common) terminal is connected to ground **before any fusing**.
