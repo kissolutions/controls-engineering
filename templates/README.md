@@ -18,7 +18,7 @@ Rules:
 Examples (built 2026-11-26 from a sanitized single air handler retrofit):
 
 - `examples/PROJECT_PER_v1.2_EXAMPLE.xlsx`: 2 systems (one in scope, one interface-only), 2 scopes, 3 work packages, 5 sources, 4 records, 2 issues, 3 RFIs (one answered, one open, one notification), 6 links, 3 change log entries using MAJOR.MINOR.BUILD, 1 baseline. Every record, issue and RFI cites the scopes, systems and work packages it affects.
-- `examples/Equipment_Device_Points_Template_v1.0_EXAMPLE.xlsx`: 2 equipment items (the AHU and its DDC panel), 8 devices, 8 points. Shows source tags vs signal names vs SCADA names, fail state in the DEVICE notes, a reserved safety input, an interface-only device with no point, and points cross-referenced to PER scopes, work packages, records and RFIs.
+- `examples/Equipment_Device_Points_Template_v1.0_EXAMPLE.xlsx`: 2 equipment items (the AHU and its DDC panel), 13 devices (including engineered panel components: enclosure, power supply, transformer, relays), 9 points. Shows source tags vs signal names vs SCADA names, fail state in the DEVICE notes, a reserved safety input, an interface-only device with no point, and points cross-referenced to PER scopes, work packages, records and RFIs.
 - All values are illustrative; names, owner and site are fictional.
 
 Current state:
